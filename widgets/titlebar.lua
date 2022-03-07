@@ -1,22 +1,29 @@
+-- Awesome
 local awful = require('awful')
 local theme = require('beautiful')
 local dpi = theme.xresources.apply_dpi
 local wibox = require('wibox')
 
+awful.titlebar.enable_tooltip = false
+awful.titlebar.fallback_name = ''
+
 local _M = function(c)
+
+    local titlebar = awful.titlebar(c, {
+        size = theme.titlebar_height or dpi(24),
+        position = 'top',
+    })
 
     local buttons = {
         awful.button({ }, 1, function()
-            c:activate { context = "titlebar", action = "mouse_move"  }
+            c:activate { context = 'titlebar', action = 'mouse_move'  }
         end),
         awful.button({ }, 3, function()
-            c:activate { context = "titlebar", action = "mouse_resize"}
+            c:activate { context = 'titlebar', action = 'mouse_resize'}
         end),
     }
 
-    awful.titlebar(c, {
-            size = theme.titlebar_height or dpi(24),
-        }).widget = {
+    titlebar:setup {
         {
             {
                 awful.titlebar.widget.stickybutton   (c),

@@ -86,7 +86,7 @@ local _M = function()
         data_str = data_str:gsub('##'..string.upper(k)..'##', v)
     end
 
-    local file = assert(io.open(paths.theme_file, "w+"))
+    local file = assert(io.open(paths.theme_file, 'w+'))
     file:write(data_str)
     file:close()
 end

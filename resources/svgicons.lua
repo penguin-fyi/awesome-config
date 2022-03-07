@@ -1,21 +1,4 @@
-local cairo = require('lgi').cairo
-local rsvg = require('lgi').Rsvg
-
 local _M = {}
-
-_M.render_icon = function(svg, color, replace, size)
-    if not svg then return end
-    color = color or nil
-    replace = replace or '#ffffff'
-    size = size or 16
-    local surface = cairo.ImageSurface(cairo.Format.ARGB32, size, size)
-    local context = cairo.Context(surface)
-    if color then
-        svg = string.gsub(svg, replace, color)
-    end
-    rsvg.Handle.new_from_data(svg):render_cairo(context)
-    return surface
-end
 
 _M.titlebar = {
     minimize = '<svg height="16" width="16"><path d="M4 7v3h8V7z" fill="#ffffff"/></svg>',

@@ -35,9 +35,9 @@ local _M = function()
         {
             '&Exit Desktop',
             function()
-                _G.session.cmd = apps.exit
-                _G.session.text = 'Exit Desktop'
-                _G.session.icon = icons.exit
+                _G.session_action.cmd = apps.exit
+                _G.session_action.text = 'Exit Desktop'
+                _G.session_action.icon = icons.exit
                 awesome.emit_signal('session::confirm:show')
             end,
             icons.exit,
@@ -45,9 +45,9 @@ local _M = function()
         {
             '&Reboot System',
             function()
-                _G.session.cmd = apps.reboot
-                _G.session.text = 'Reboot System'
-                _G.session.icon = icons.reboot
+                _G.session_action.cmd = apps.reboot
+                _G.session_action.text = 'Reboot System'
+                _G.session_action.icon = icons.reboot
                 awesome.emit_signal('session::confirm:show')
             end,
             icons.reboot
@@ -55,9 +55,9 @@ local _M = function()
         {
             '&Suspend System',
             function()
-                _G.session.cmd = apps.suspend
-                _G.session.text = 'Suspend System'
-                _G.session.icon = icons.suspend
+                _G.session_action.cmd = apps.suspend
+                _G.session_action.text = 'Suspend System'
+                _G.session_action.icon = icons.suspend
                 awesome.emit_signal('session::confirm:show')
             end,
             icons.suspend
@@ -65,9 +65,9 @@ local _M = function()
         {
             '&Power Off',
             function()
-                _G.session.cmd = apps.poweroff
-                _G.session.text = 'Power Off'
-                _G.session.icon = icons.poweroff
+                _G.session_action.cmd = apps.poweroff
+                _G.session_action.text = 'Power Off'
+                _G.session_action.icon = icons.poweroff
                 awesome.emit_signal('session::confirm:show')
             end,
             icons.poweroff

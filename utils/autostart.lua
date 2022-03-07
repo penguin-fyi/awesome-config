@@ -1,8 +1,11 @@
+-- Awesome
 local spawn = require('awful.spawn')
+
+-- Global
 local cfg_paths = _G.cfg.paths or nil
 
-local init = function(paths)
-    paths = cfg_paths.autostart_dirs or paths or { '$XDG_CONFIG_HOME/autostart/' }
+local init = function()
+    local paths = cfg_paths.autostart_dirs or { '$XDG_CONFIG_HOME/autostart/' }
 
     local path_str = ''
     if #paths then

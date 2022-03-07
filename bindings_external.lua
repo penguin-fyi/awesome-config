@@ -1,5 +1,8 @@
+-- Awesome
 local awful = require('awful')
 local spawn = awful.spawn
+
+-- Local
 local mod = _G.cfg.modkey
 
 spawn.easy_async_with_shell('command -v rofi', function(path)
@@ -14,14 +17,14 @@ spawn.easy_async_with_shell('command -v rofi', function(path)
     cmd.pass = 'rofi-pass'
 
     local keys = {
-        awful.key({ mod.super            }, "space", function () awful.spawn(cmd.drun) end,
-                  {description = "application search", group = "external"}),
-        awful.key({ mod.super, mod.alt   }, "r", function () awful.spawn(cmd.run) end,
-                  {description = "command search", group = "external"}),
-        awful.key({ mod.super, mod.alt   }, "Tab", function () awful.spawn(cmd.window) end,
-                  {description = "window search", group = "external"}),
-        awful.key({ mod.super, mod.alt   }, "p", function () awful.spawn(cmd.pass) end,
-                  {description = "password search", group = "external"}),
+        awful.key({ mod.super            }, 'space', function() awful.spawn(cmd.drun) end,
+                  {description = 'application search', group = 'external'}),
+        awful.key({ mod.super, mod.alt   }, 'r', function() awful.spawn(cmd.run) end,
+                  {description = 'command search', group = 'external'}),
+        awful.key({ mod.super, mod.alt   }, 'Tab', function() awful.spawn(cmd.window) end,
+                  {description = 'window search', group = 'external'}),
+        awful.key({ mod.super, mod.alt   }, 'p', function() awful.spawn(cmd.pass) end,
+                  {description = 'password search', group = 'external'}),
     }
 
     awful.keyboard.append_global_keybindings(keys)

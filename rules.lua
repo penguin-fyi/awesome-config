@@ -1,14 +1,11 @@
+-- Awesome
 local awful = require('awful')
 local theme = require('beautiful')
 local ruled = require('ruled')
 
-local cfg_vars = _G.cfg.vars or nil
-
-local vars = {}
-vars.client_opacity_exclude_class = cfg_vars.client_opacity_exclude_class or {}
-vars.client_opacity_exclude_instance = cfg_vars.client_opacity_exclude_instance or {}
-
+-- Client rules
 ruled.client.connect_signal('request::rules', function()
+    -- Match all
     ruled.client.append_rule {
         id         = 'global',
         rule       = { },
@@ -20,53 +17,25 @@ ruled.client.connect_signal('request::rules', function()
             callback  = awful.client.setslave,
         }
     }
-
-    ruled.client.append_rule {
-        id       = 'floating',
-        rule_any = {
-            instance = { 'copyq', 'pinentry' },
-            class    = {
-                'Arandr', 'Blueman-manager', 'Gpick', 'Kruler', 'Sxiv',
-                'Tor Browser', 'Wpa_gui', 'veromix', 'xtightvncviewer'
-            },
-            name    = {
-                'Event Tester',
-            },
-            role    = {
-                'AlarmWindow',
-                'ConfigManager',
-                'pop-up',
-            }
-        },
-        properties = { floating = true }
-    }
-
+    -- Titlebars
     ruled.client.append_rule {
         id         = 'titlebars',
         rule_any   = { type = { 'normal' } },
         properties = { titlebars_enabled = true }
     }
-
-    ruled.client.append_rule {
-        id       = 'dynamic_opacity',
-        rule_any = {
-            class = vars.client_opacity_exclude_class,
-            instance = vars.client_opacity_exclude_instance,
-        },
-        properties = { exclude_opacity = true }
-    }
 end)
 
-
+-- Notification rules
 ruled.notification.connect_signal('request::rules', function()
+    -- Match all
     ruled.notification.append_rule {
         rule       = { },
         properties = {
-            screen           = awful.screen.preferred,
-            opacity = 0.5,
+            screen              = awful.screen.preferred,
+            opacity             = theme.notification_opacity,
         }
     }
-
+    -- Critical
     ruled.notification.append_rule {
         rule       = { urgency = 'critical' },
         properties = {
@@ -76,14 +45,14 @@ ruled.notification.connect_signal('request::rules', function()
             implicit_timeout    = 30,
         }
     }
-
+    -- Normal
     ruled.notification.append_rule {
         rule       = { urgency = 'normal' },
         properties = {
             implicit_timeout    = 20
         }
     }
-
+    -- Low
     ruled.notification.append_rule {
         rule       = { urgency = 'low' },
         properties = {

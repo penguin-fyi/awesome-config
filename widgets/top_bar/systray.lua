@@ -1,6 +1,6 @@
 local awful = require('awful')
 local theme = require('beautiful')
-local dpi = require("beautiful.xresources").apply_dpi
+local dpi = require('beautiful.xresources').apply_dpi
 local gears = require('gears')
 local timer = gears.timer
 local wibox = require('wibox')
@@ -49,12 +49,12 @@ local _M = function()
         if vars.systray_autohide then
             local timeout = tonumber(vars.systray_autohide)
             timer.start_new(timeout, function()
-                toggle_widget:emit_signal("systray_toggle")
+                toggle_widget:emit_signal('systray_toggle')
             end)
         end
     end
 
-    toggle_widget:connect_signal("systray_toggle", function(self)
+    toggle_widget:connect_signal('systray_toggle', function(self)
         local icon = self:get_children_by_id('icon')[1]
         systray.visible = not systray.visible
         if systray.visible then
@@ -67,19 +67,19 @@ local _M = function()
 
     toggle_widget:buttons(gears.table.join(
         awful.button({}, 1, nil, function()
-            toggle_widget:emit_signal("systray_toggle")
+            toggle_widget:emit_signal('systray_toggle')
         end)
     ))
 
     awful.keyboard.append_global_keybindings({
         awful.key({ mod.super, mod.alt }, 's', function()
-            toggle_widget:emit_signal("systray_toggle")
+            toggle_widget:emit_signal('systray_toggle')
         end,
         {description = 'toggle systray', group = 'awesome'})
     })
 
     if vars.systray_autohide then
-        toggle_widget:emit_signal("systray_toggle")
+        toggle_widget:emit_signal('systray_toggle')
     end
 
     return awful.widget.only_on_screen(systray_widget, 'primary')

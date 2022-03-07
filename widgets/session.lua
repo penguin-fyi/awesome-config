@@ -1,21 +1,25 @@
+-- Awesome
 local awful = require('awful')
 local spawn = awful.spawn
 local theme = require('beautiful')
 local dpi = theme.xresources.apply_dpi
 local wibox = require('wibox')
 
+-- Custom
 local button = require('widgets.buttons').gtk
 local menu_util = require('utils.menus')
 
-local mod = _G.cfg.modkey
-
+-- Global
 local cfg_vars = _G.cfg.vars
+
+-- Local
+local mod = _G.cfg.modkey
 
 local vars = {}
 vars.timeout = cfg_vars.session_timeout or 10
 vars.timeout_run = cfg_vars.session_timeout_run or false
 
-_G.session = {
+_G.session_action = {
     cmd     = nil,
     text    = nil,
     icon    = nil,
@@ -90,7 +94,7 @@ local _M = function(s)
     }
 
     local on_confirm = function()
-        spawn(_G.session.cmd)
+        spawn(_G.session_action.cmd)
         awesome.emit_signal('session::confirm:hide')
     end
 
@@ -225,8 +229,8 @@ local _M = function(s)
     }
 
     awesome.connect_signal('session::confirm:show', function()
-        message:set_text(_G.session.text)
-        icon:set_image(_G.session.icon)
+        message:set_text(_G.session_action.text)
+        icon:set_image(_G.session_action.icon)
 
         s.session_backdrop.visible = true
         s.session_confirm.visible = false
@@ -243,7 +247,7 @@ local _M = function(s)
 
         screen_grabber:stop()
 
-        _G.session = {}
+        _G.session_action = {}
     end)
 
     awful.keyboard.append_global_keybindings({

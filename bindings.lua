@@ -1,13 +1,18 @@
+-- Awesome
 local awful = require('awful')
 local hotkeys_popup = require('awful.hotkeys_popup')
 require('awful.hotkeys_popup.keys')
 
+-- Custom
 local menu_util = require('utils.menus')
 local tag_util = require('utils.tags')
 
-local mod = _G.cfg.modkey or nil
+-- Global
 local cfg_vars = _G.cfg.vars or nil
 local cfg_apps = _G.cfg.apps or nil
+
+-- Local
+local mod = _G.cfg.modkey or nil
 
 local vars = {}
 vars.client_focus_raise = cfg_vars.client_focus_raise or false
@@ -22,7 +27,7 @@ awful.keyboard.append_global_keybindings({
         {description='show help', group='awesome'}),
     -- Show main menu
     awful.key({ mod.super }, 'w',
-        function ()
+        function()
             local pos = menu_util.set_corner('tl')
             _G.menus.main:show({coords=pos})
         end,
@@ -32,7 +37,7 @@ awful.keyboard.append_global_keybindings({
     awful.key({ mod.super, mod.ctrl }, 'r', awesome.restart,
               {description = 'reload awesome', group = 'awesome'}),
     -- Launch terminal
-    awful.key({ mod.super }, 'Return', function () awful.spawn(apps.terminal) end,
+    awful.key({ mod.super }, 'Return', function() awful.spawn(apps.terminal) end,
               {description = 'open a terminal', group = 'launcher'}),
 })
 
@@ -80,7 +85,7 @@ awful.keyboard.append_global_keybindings({
     ),
     -- Cycle focus previous
     awful.key({ mod.super }, 'Tab',
-        function ()
+        function()
             awful.client.focus.byidx(-1)
             if client.focus then
                 client.focus:raise()
@@ -90,7 +95,7 @@ awful.keyboard.append_global_keybindings({
     ),
     -- Cycle focus next
     awful.key({ mod.super, mod.shift }, 'Tab',
-        function ()
+        function()
             awful.client.focus.byidx( 1)
             if client.focus then
                 client.focus:raise()
@@ -100,7 +105,7 @@ awful.keyboard.append_global_keybindings({
     ),
     -- Focus (random) minimized client
     awful.key({ mod.super, mod.shift }, 'n',
-        function ()
+        function()
             local c = awful.client.restore()
             if c then
                 c:activate { raise = true, context = 'key.unminimize' }
@@ -156,7 +161,7 @@ awful.keyboard.append_global_keybindings({
         keygroup    = 'numrow',
         description = 'view tag',
         group       = 'tag',
-        on_press    = function (index)
+        on_press    = function(index)
             local screen = awful.screen.focused()
             local tag = screen.tags[index]
             if not tag then
@@ -174,7 +179,7 @@ awful.keyboard.append_global_keybindings({
         keygroup    = 'numrow',
         description = 'toggle tag',
         group       = 'tag',
-        on_press    = function (index)
+        on_press    = function(index)
             local screen = awful.screen.focused()
             local tag = screen.tags[index]
             if tag then
@@ -188,7 +193,7 @@ awful.keyboard.append_global_keybindings({
         keygroup    = 'numrow',
         description = 'move focused client to tag',
         group       = 'tag',
-        on_press    = function (index)
+        on_press    = function(index)
             if client.focus then
                 local tag = client.focus.screen.tags[index]
                 if tag then
@@ -203,7 +208,7 @@ awful.keyboard.append_global_keybindings({
         keygroup    = 'numrow',
         description = 'toggle focused client on tag',
         group       = 'tag',
-        on_press    = function (index)
+        on_press    = function(index)
             if client.focus then
                 local tag = client.focus.screen.tags[index]
                 if tag then
@@ -232,10 +237,10 @@ awful.keyboard.append_global_keybindings({
 -- Global: Layouts
 awful.keyboard.append_global_keybindings({
     -- Next layout
-    awful.key({ mod.super,           }, ']', function () awful.layout.inc( 1) end,
+    awful.key({ mod.super,           }, ']', function() awful.layout.inc( 1) end,
               {description = 'select next', group = 'layout'}),
     -- Previous layout
-    awful.key({ mod.super,           }, '[', function () awful.layout.inc(-1) end,
+    awful.key({ mod.super,           }, '[', function() awful.layout.inc(-1) end,
               {description = 'select previous', group = 'layout'}),
 })
 
@@ -284,7 +289,7 @@ client.connect_signal('request::default_keybindings', function()
         ),
         -- Toggle maximize
         awful.key({ mod.super, }, 'm',
-            function (c)
+            function(c)
                 c.maximized = not c.maximized
                 c:raise()
             end ,
@@ -292,7 +297,7 @@ client.connect_signal('request::default_keybindings', function()
         ),
         -- Toggle vertical maximize
         awful.key({ mod.super, mod.ctrl }, 'm',
-            function (c)
+            function(c)
                 c.maximized_vertical = not c.maximized_vertical
                 c:raise()
             end ,
@@ -300,7 +305,7 @@ client.connect_signal('request::default_keybindings', function()
         ),
         -- Toggle horizontal maximize
         awful.key({ mod.super, mod.shift }, 'm',
-            function (c)
+            function(c)
                 c.maximized_horizontal = not c.maximized_horizontal
                 c:raise()
             end ,
@@ -333,13 +338,13 @@ end)
 -- Client: Mouse bindings
 client.connect_signal('request::default_mousebindings', function()
     awful.mouse.append_client_mousebindings({
-        awful.button({ }, 1, function (c)
+        awful.button({ }, 1, function(c)
             c:activate { context = 'mouse_click' }
         end),
-        awful.button({ mod.super }, 1, function (c)
+        awful.button({ mod.super }, 1, function(c)
             c:activate { context = 'mouse_click', action = 'mouse_move'  }
         end),
-        awful.button({ mod.super }, 3, function (c)
+        awful.button({ mod.super }, 3, function(c)
             c:activate { context = 'mouse_click', action = 'mouse_resize'}
         end),
     })

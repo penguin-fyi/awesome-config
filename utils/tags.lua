@@ -1,9 +1,8 @@
 local awful = require('awful')
-local mod = _G.cfg.modkey
 
-local _tag = {}
+local _M = {}
 
-function _tag.add(layout)
+function _M.add(layout)
     local tags = awful.screen.focused().tags
     awful.prompt.run {
         prompt       = 'Add: ',
@@ -19,7 +18,7 @@ function _tag.add(layout)
     }
 end
 
-function _tag.rename()
+function _M.rename()
     local tag = awful.screen.focused().selected_tag
     awful.prompt.run {
         prompt       = 'Edit: ',
@@ -34,7 +33,7 @@ function _tag.rename()
     }
 end
 
-function _tag.move(dir)
+function _M.move(dir)
     local tag = awful.screen.focused().selected_tag
     if dir == 'left' then
         tag.index = tag.index-1
@@ -43,7 +42,7 @@ function _tag.move(dir)
     end
 end
 
-function _tag.delete()
+function _M.delete()
     local tag = awful.screen.focused().selected_tag
     if not tag then return end
     tag:delete()

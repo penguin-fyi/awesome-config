@@ -1,5 +1,5 @@
 local awful = require('awful')
-local theme = require("beautiful")
+local theme = require('beautiful')
 local dpi = theme.xresources.apply_dpi
 local wibox = require('wibox')
 local container = require('widgets.buttons').taglist
@@ -34,8 +34,8 @@ local _M = function(s)
                 color         = theme.button_border_color,
             },
             widget = wibox.container.place,
-            valign = "center",
-            halign = "center",
+            valign = 'center',
+            halign = 'center',
         },
         layout = wibox.layout.fixed.horizontal,
         spacing = dpi(1),

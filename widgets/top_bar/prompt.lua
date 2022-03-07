@@ -27,7 +27,7 @@ awful.keyboard.append_global_keybindings({
         {description = 'Run Command', group = 'launcher'}),
     -- Lua prompt
     awful.key({ mod.super }, 'x',
-        function ()
+        function()
             awful.prompt.run {
                 prompt       = 'Run Lua code: ',
                 textbox      = awful.screen.focused().prompt.widget,

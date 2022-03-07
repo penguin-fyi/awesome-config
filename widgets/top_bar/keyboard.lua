@@ -1,7 +1,10 @@
+-- Awesome
 local awful = require('awful')
 local theme = require('beautiful')
 local dpi = theme.xresources.apply_dpi
 local wibox = require('wibox')
+
+--Custom
 local container = require('widgets.buttons').wibar
 
 local _M = function()

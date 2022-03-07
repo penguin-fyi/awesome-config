@@ -1,3 +1,4 @@
+-- Awesome
 local awful = require('awful')
 local theme = require('beautiful')
 
@@ -19,14 +20,30 @@ function menu_util.set_corner(corner)
         if s == index then break end
     end
 
+    -- Top left
     if corner == 'tl' then
-        return { x = 0, y = 0 }
+        return {
+            x = 0,
+            y = 0,
+        }
+    -- Top right
     elseif corner == 'tr' then
-        return { x = width-total_width, y = 0 }
+        return {
+            x = width-total_width,
+            y = 0,
+        }
+    -- Bottom left
     elseif corner == 'bl' then
-        return { x = 0, y = height }
+        return {
+            x = 0,
+            y = height,
+        }
+    -- Bottom right
     elseif corner == 'br' then
-        return { x = width-total_width, y = height }
+        return {
+            x = width-total_width,
+            y = height,
+        }
     end
 end
 

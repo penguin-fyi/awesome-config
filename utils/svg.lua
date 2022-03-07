@@ -1,4 +1,7 @@
+-- Awesome
 local cairo = require('lgi').cairo
+
+-- External
 local rsvg = require('lgi').Rsvg
 
 local _M = {}

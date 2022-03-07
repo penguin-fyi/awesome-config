@@ -1,9 +1,32 @@
+-- Awesome
 local awful = require('awful')
 local theme = require('beautiful')
 local dpi = theme.xresources.apply_dpi
 local wibox = require('wibox')
 local naughty = require('naughty')
+
+-- Custom
+local cfg_paths = _G.cfg.paths or nil
 local container = require('widgets.buttons').gtk
+
+-- Local
+local paths = {}
+paths.icon_search_dirs = cfg_paths.icon_search_dirs or {
+    '/usr/share/icons/gnome/',
+    '/usr/share/pixmaps/',
+}
+
+naughty.config.defaults.ontop           = true
+naughty.config.defaults.icon_size       = theme.notification_icon_size
+naughty.config.defaults.timeout         = 10
+naughty.config.defaults.title           = 'System Information'
+naughty.config.defaults.border_width    = theme.border_width
+naughty.config.defaults.max_width       = theme.notification_width
+naughty.config.defaults.position        = theme.notification_position
+naughty.config.defaults.opacity         = theme.notification_opacity
+naughty.config.padding                  = theme.notification_padding
+naughty.config.icon_dirs                = paths.icon_search_dirs
+naughty.config.icon_formats             = { 'svg', 'png' }
 
 local _M = function(n)
 

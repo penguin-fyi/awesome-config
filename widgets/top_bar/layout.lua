@@ -11,10 +11,10 @@ local _M = function(s)
     s = s or screen.focused()
 
     local buttons = {
-        awful.button({ }, 1, function () awful.layout.inc( 1) end),
-        awful.button({ }, 3, function () awful.layout.inc(-1) end),
-        awful.button({ }, 4, function () awful.layout.inc(-1) end),
-        awful.button({ }, 5, function () awful.layout.inc( 1) end),
+        awful.button({ }, 1, function() awful.layout.inc( 1) end),
+        awful.button({ }, 3, function() awful.layout.inc(-1) end),
+        awful.button({ }, 4, function() awful.layout.inc(-1) end),
+        awful.button({ }, 5, function() awful.layout.inc( 1) end),
     }
 
     local w = wibox.widget {
