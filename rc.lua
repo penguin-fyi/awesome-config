@@ -8,7 +8,7 @@ _G.cfg = require('config')
 require('utils.errors')
 
 -- Load theme
-require('beautiful').init(require('theme'))
+require('beautiful').init(require('ngui'))
 
 -- Load menus
 _G.menus = {

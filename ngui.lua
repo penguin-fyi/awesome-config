@@ -13,13 +13,8 @@ local icons         = require('resources.svgicons')
 local render        = require('utils.svg').render_data
 local color_util    = require('utils.colors')
 
--- Local
+-- Load default theme
 local theme = dofile(themes_path..'default/theme.lua')
-
--- Misc
-theme.useless_gap                   = dpi(4)
-theme.opacity                       = 1.0
-theme.transparent                   = '#00000000'
 
 -- Load GTK variables
 theme.gtk = gtk.get_theme_variables()
@@ -60,12 +55,17 @@ theme.menubar_fg                    = theme.gtk.menubar_fg_color
 theme.menubar_bg                    = theme.gtk.menubar_bg_color
 
 -- Icon theme
-theme.icon_theme = 'Antsy'
+theme.icon_theme                    = 'Antsy'
 
 -- Fonts
 theme.font                          = theme.gtk.font_family..' '..theme.gtk.font_size
 theme.font_bold                     = theme.gtk.font_family..' Bold '..theme.gtk.font_size
 theme.font_italic                   = theme.gtk.font_family..' Italic '..theme.gtk.font_size
+
+-- Misc
+theme.useless_gap                   = dpi(4)
+theme.opacity                       = 1.0
+theme.transparent                   = '#00000000'
 
 -- Widgets
 local button_shape                  = function(cr, w, h)
@@ -111,10 +111,10 @@ theme.border_width                  = dpi(theme.gtk.button_border_width or 0)
 theme.border_radius                 = dpi(theme.gtk.button_border_radius or 0)
 
 -- Titlebar
-theme.titlebar_fg_normal            = theme.base_fg
+theme.titlebar_fg_normal            = theme.menubar_fg
 theme.titlebar_bg_normal            = theme.menubar_bg
 theme.titlebar_font_normal          = theme.font_bold
-theme.titlebar_fg_focus             = theme.fg_normal
+theme.titlebar_fg_focus             = theme.menubar_fg
 theme.titlebar_bg_focus             = theme.menubar_bg
 theme.titlebar_font_focus           = theme.font_bold
 theme.titlebar_fg_urgent            = theme.fg_success
@@ -123,68 +123,68 @@ theme.titlebar_font_urgent          = theme.font_bold
 theme.titlebar_height               = dpi(20)
 theme.titlebar_shape                = button_shape
 -- Ontop button
-theme.titlebar_ontop_button_focus_active = render(icons.titlebar.ontop_alt, theme.fg_normal)
+theme.titlebar_ontop_button_focus_active = render(icons.titlebar.ontop_alt, theme.wibar_fg)
 theme.titlebar_ontop_button_focus_active_hover = render(icons.titlebar.ontop_alt, theme.bg_warning)
 theme.titlebar_ontop_button_focus_active_press = render(icons.titlebar.ontop_alt, theme.bg_focus)
-theme.titlebar_ontop_button_focus_inactive = render(icons.titlebar.ontop, theme.fg_normal)
+theme.titlebar_ontop_button_focus_inactive = render(icons.titlebar.ontop, theme.wibar_fg)
 theme.titlebar_ontop_button_focus_inactive_hover = render(icons.titlebar.ontop, theme.bg_warning)
 theme.titlebar_ontop_button_focus_inactive_press = render(icons.titlebar.ontop, theme.bg_focus)
-theme.titlebar_ontop_button_normal_active = render(icons.titlebar.ontop_alt, theme.fg_normal)
+theme.titlebar_ontop_button_normal_active = render(icons.titlebar.ontop_alt, theme.wibar_fg)
 theme.titlebar_ontop_button_normal_active_hover = render(icons.titlebar.ontop_alt, theme.bg_warning)
 theme.titlebar_ontop_button_normal_active_press = render(icons.titlebar.ontop_alt, theme.bg_focus)
-theme.titlebar_ontop_button_normal_inactive = render(icons.titlebar.ontop, theme.fg_normal)
+theme.titlebar_ontop_button_normal_inactive = render(icons.titlebar.ontop, theme.wibar_fg)
 theme.titlebar_ontop_button_normal_inactive_hover = render(icons.titlebar.ontop, theme.bg_warning)
 theme.titlebar_ontop_button_normal_inactive_press = render(icons.titlebar.ontop, theme.bg_focus)
 -- Sticky button
-theme.titlebar_sticky_button_focus_active = render(icons.titlebar.sticky_alt, theme.fg_normal)
+theme.titlebar_sticky_button_focus_active = render(icons.titlebar.sticky_alt, theme.titlebar_fg_normal)
 theme.titlebar_sticky_button_focus_active_hover = render(icons.titlebar.sticky_alt, theme.bg_success)
 theme.titlebar_sticky_button_focus_active_press = render(icons.titlebar.sticky_alt, theme.bg_focus)
-theme.titlebar_sticky_button_focus_inactive = render(icons.titlebar.sticky, theme.fg_normal)
+theme.titlebar_sticky_button_focus_inactive = render(icons.titlebar.sticky, theme.titlebar_fg_normal)
 theme.titlebar_sticky_button_focus_inactive_hover = render(icons.titlebar.sticky, theme.bg_success)
 theme.titlebar_sticky_button_focus_inactive_press = render(icons.titlebar.sticky, theme.bg_focus)
-theme.titlebar_sticky_button_normal_active = render(icons.titlebar.sticky_alt, theme.fg_normal)
+theme.titlebar_sticky_button_normal_active = render(icons.titlebar.sticky_alt, theme.titlebar_fg_normal)
 theme.titlebar_sticky_button_normal_active_hover = render(icons.titlebar.sticky_alt, theme.bg_success)
 theme.titlebar_sticky_button_normal_active_press = render(icons.titlebar.sticky_alt, theme.bg_focus)
-theme.titlebar_sticky_button_normal_inactive = render(icons.titlebar.sticky, theme.fg_normal)
+theme.titlebar_sticky_button_normal_inactive = render(icons.titlebar.sticky, theme.titlebar_fg_normal)
 theme.titlebar_sticky_button_normal_inactive_hover = render(icons.titlebar.sticky, theme.bg_success)
 theme.titlebar_sticky_button_normal_inactive_press = render(icons.titlebar.sticky, theme.bg_focus)
 -- Minimize button
-theme.titlebar_minimize_button_normal = render(icons.titlebar.minimize, theme.fg_normal)
+theme.titlebar_minimize_button_normal = render(icons.titlebar.minimize, theme.titlebar_fg_normal)
 theme.titlebar_minimize_button_normal_hover = render(icons.titlebar.minimize, theme.bg_warning)
-theme.titlebar_minimize_button_focus = render(icons.titlebar.minimize, theme.fg_normal)
+theme.titlebar_minimize_button_focus = render(icons.titlebar.minimize, theme.titlebar_fg_normal)
 theme.titlebar_minimize_button_focus_hover = render(icons.titlebar.minimize, theme.bg_warning)
 theme.titlebar_minimize_button_focus_press = render(icons.titlebar.minimize, theme.bg_focus)
 -- Maximize button
-theme.titlebar_maximized_button_focus_active = render(icons.titlebar.maximize_alt, theme.fg_normal)
+theme.titlebar_maximized_button_focus_active = render(icons.titlebar.maximize_alt, theme.titlebar_fg_normal)
 theme.titlebar_maximized_button_focus_active_hover = render(icons.titlebar.maximize_alt, theme.bg_success)
 theme.titlebar_maximized_button_focus_active_press = render(icons.titlebar.maximize_alt, theme.bg_focus)
-theme.titlebar_maximized_button_focus_inactive = render(icons.titlebar.maximize, theme.fg_normal)
+theme.titlebar_maximized_button_focus_inactive = render(icons.titlebar.maximize, theme.titlebar_fg_normal)
 theme.titlebar_maximized_button_focus_inactive_hover = render(icons.titlebar.maximize, theme.bg_success)
 theme.titlebar_maximized_button_focus_inactive_press = render(icons.titlebar.maximize, theme.bg_focus)
-theme.titlebar_maximized_button_normal_active = render(icons.titlebar.maximize_alt, theme.fg_normal)
+theme.titlebar_maximized_button_normal_active = render(icons.titlebar.maximize_alt, theme.titlebar_fg_normal)
 theme.titlebar_maximized_button_normal_active_hover = render(icons.titlebar.maximize_alt, theme.bg_success)
 theme.titlebar_maximized_button_normal_active_press = render(icons.titlebar.maximize_alt, theme.bg_focus)
-theme.titlebar_maximized_button_normal_inactive = render(icons.titlebar.maximize, theme.fg_normal)
+theme.titlebar_maximized_button_normal_inactive = render(icons.titlebar.maximize, theme.titlebar_fg_normal)
 theme.titlebar_maximized_button_normal_inactive_hover = render(icons.titlebar.maximize, theme.bg_success)
 theme.titlebar_maximized_button_normal_inactive_press = render(icons.titlebar.maximize, theme.bg_focus)
 -- Close button
-theme.titlebar_close_button_normal = render(icons.titlebar.close, theme.fg_normal)
+theme.titlebar_close_button_normal = render(icons.titlebar.close, theme.titlebar_fg_normal)
 theme.titlebar_close_button_normal_hover = render(icons.titlebar.close_alt, theme.bg_error)
 theme.titlebar_close_button_focus = render(icons.titlebar.close, theme.bg_error)
 theme.titlebar_close_button_focus_hover = render(icons.titlebar.close_alt, theme.bg_error)
 theme.titlebar_close_button_focus_press = render(icons.titlebar.close_alt, theme.bg_focus)
 
 -- Launcher widget
-theme.menu_button_icon              = render(icons.wibars.main_menu, theme.button_fg, nil, 24)
+theme.menu_button_icon              = render(icons.wibars.main_menu, theme.wibar_fg, nil, 24)
 
 -- Taglist widget
 theme.taglist_fg_empty              = theme.header_border_color
 theme.taglist_bg_empty              = theme.transparent
 theme.taglist_fg_occupied           = theme.header_fg
 theme.taglist_bg_occupied           = theme.transparent
-theme.taglist_fg_focus              = theme.button_fg
+theme.taglist_fg_focus              = theme.header_fg
 theme.taglist_bg_focus              = theme.bg_focus
-theme.taglist_fg_urgent             = theme.button_fg
+theme.taglist_fg_urgent             = theme.header_fg
 theme.taglist_bg_urgent             = theme.bg_success
 theme.taglist_bg_container          = theme.transparent
 theme.taglist_shape                 = button_shape
@@ -192,29 +192,29 @@ theme.taglist_squares_sel           = nil
 theme.taglist_squares_unsel         = nil
 
 -- Layout widget
-theme.layout_cornerne               = render(icons.layouts.cornerne, theme.button_fg, nil, 24)
-theme.layout_cornernw               = render(icons.layouts.cornernw, theme.button_fg, nil, 24)
-theme.layout_cornerse               = render(icons.layouts.cornerse, theme.button_fg, nil, 24)
-theme.layout_cornersw               = render(icons.layouts.cornersw, theme.button_fg, nil, 24)
-theme.layout_dwindle                = render(icons.layouts.dwindle, theme.button_fg, nil, 24)
-theme.layout_fairh                  = render(icons.layouts.fairh, theme.button_fg, nil, 24)
-theme.layout_fairv                  = render(icons.layouts.fairv, theme.button_fg, nil, 24)
-theme.layout_floating               = render(icons.layouts.floating, theme.button_fg, nil, 24)
-theme.layout_fullscreen             = render(icons.layouts.fullscreen, theme.button_fg, nil, 24)
-theme.layout_magnifier              = render(icons.layouts.magnifier, theme.button_fg, nil, 24)
-theme.layout_max                    = render(icons.layouts.max, theme.button_fg, nil, 24)
-theme.layout_spiral                 = render(icons.layouts.spiral, theme.button_fg, nil, 24)
-theme.layout_tile                   = render(icons.layouts.tile, theme.button_fg, nil, 24)
-theme.layout_tilebottom             = render(icons.layouts.tilebottom, theme.button_fg, nil, 24)
-theme.layout_tileleft               = render(icons.layouts.tileleft, theme.button_fg, nil, 24)
-theme.layout_tiletop                = render(icons.layouts.tiletop, theme.button_fg, nil, 24)
+theme.layout_cornerne               = render(icons.layouts.cornerne, theme.wibar_fg, nil, 24)
+theme.layout_cornernw               = render(icons.layouts.cornernw, theme.wibar_fg, nil, 24)
+theme.layout_cornerse               = render(icons.layouts.cornerse, theme.wibar_fg, nil, 24)
+theme.layout_cornersw               = render(icons.layouts.cornersw, theme.wibar_fg, nil, 24)
+theme.layout_dwindle                = render(icons.layouts.dwindle, theme.wibar_fg, nil, 24)
+theme.layout_fairh                  = render(icons.layouts.fairh, theme.wibar_fg, nil, 24)
+theme.layout_fairv                  = render(icons.layouts.fairv, theme.wibar_fg, nil, 24)
+theme.layout_floating               = render(icons.layouts.floating, theme.wibar_fg, nil, 24)
+theme.layout_fullscreen             = render(icons.layouts.fullscreen, theme.wibar_fg, nil, 24)
+theme.layout_magnifier              = render(icons.layouts.magnifier, theme.wibar_fg, nil, 24)
+theme.layout_max                    = render(icons.layouts.max, theme.wibar_fg, nil, 24)
+theme.layout_spiral                 = render(icons.layouts.spiral, theme.wibar_fg, nil, 24)
+theme.layout_tile                   = render(icons.layouts.tile, theme.wibar_fg, nil, 24)
+theme.layout_tilebottom             = render(icons.layouts.tilebottom, theme.wibar_fg, nil, 24)
+theme.layout_tileleft               = render(icons.layouts.tileleft, theme.wibar_fg, nil, 24)
+theme.layout_tiletop                = render(icons.layouts.tiletop, theme.wibar_fg, nil, 24)
 
 -- Tasklist widget
 theme.tasklist_fg_normal            = theme.header_fg
 theme.tasklist_bg_normal            = theme.transparent
-theme.tasklist_fg_focus             = theme.base_fg
+theme.tasklist_fg_focus             = theme.header_fg
 theme.tasklist_bg_focus             = theme.bg_focus
-theme.tasklist_fg_urgent            = theme.base_fg
+theme.tasklist_fg_urgent            = theme.header_fg
 theme.tasklist_bg_urgent            = theme.bg_success
 theme.tasklist_fg_minimize          = theme.header_border_color
 theme.tasklist_bg_minimize          = theme.transparent
@@ -231,11 +231,11 @@ theme.tasklist_maximized_vertical   = ' '
 -- Systray widget
 theme.bg_systray                    = theme.wibar_bg
 theme.systray_icon_spacing          = dpi(2)
-theme.systray_visible_icon          = render(icons.wibars.systray_visible, theme.button_fg, nil, 24)
-theme.systray_hidden_icon           = render(icons.wibars.systray_hidden, theme.button_fg, nil, 24)
+theme.systray_visible_icon          = render(icons.wibars.systray_visible, theme.wibar_fg, nil, 24)
+theme.systray_hidden_icon           = render(icons.wibars.systray_hidden, theme.wibar_fg, nil, 24)
 
 -- Keyboard layout widget
-theme.keyboard_layout_icon          = render(icons.wibars.keyboard_layout, theme.button_fg, nil, 24)
+theme.keyboard_layout_icon          = render(icons.wibars.keyboard_layout, theme.wibar_fg, nil, 24)
 
 -- Clock widget
 theme.calendar_style                = {
@@ -260,7 +260,7 @@ theme.calendar_weekday_bg_color     = theme.button_bg
 theme.calendar_weekday_border_color = theme.button_bg
 
 -- Session widget
-theme.session_button_icon            = render(icons.wibars.session_menu, theme.button_fg, nil, 24)
+theme.session_button_icon            = render(icons.wibars.session_menu, theme.wibar_fg, nil, 24)
 theme.session_confirm_icon           = render(icons.session.confirm, theme.fg_normal, nil, 24)
 theme.session_cancel_icon            = render(icons.session.cancel, theme.fg_normal, nil, 24)
 
@@ -273,8 +273,8 @@ theme.menu_border_width             = theme.button_border_width
 theme.menu_border_color             = theme.base_bg
 theme.menu_width                    = dpi(160)
 theme.menu_height                   = dpi(24)
-theme.menu_submenu                  = render(icons.menus.submenu, theme.fg_normal, nil, 24)
-theme.menu_submenu_icon             = render(icons.menus.submenu, theme.fg_normal, nil, 24)
+theme.menu_submenu                  = render(icons.menus.submenu, theme.wibar_fg, nil, 24)
+theme.menu_submenu_icon             = render(icons.menus.submenu, theme.wibar_fg, nil, 24)
 
 -- Hotkeys popup
 theme.hotkeys_fg                    = theme.fg_normal

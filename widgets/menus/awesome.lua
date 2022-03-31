@@ -29,12 +29,12 @@ local _M = {
         end,
         icons.hotkeys
     },
-    { 'Read &Manaul', function() spawn(apps.manual) end, icons.manual },
+    { 'Read &Manual', function() spawn(apps.manual) end, icons.manual },
     { 'Edit &Config', function() spawn(apps.config) end, icons.config },
     { '&Restart Awesome', function() spawn(apps.restart) end, icons.restart },
     { '&Exit Desktop',
         function()
-            _G.session = { cmd = apps.exit, text = 'Exit Desktop', icon = icons.exit }
+            _G.session_action = { cmd = apps.exit, text = 'Exit Desktop', icon = icons.exit }
             awesome.emit_signal('session::confirm:show')
         end,
         icons.exit

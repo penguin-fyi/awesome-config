@@ -23,6 +23,7 @@ function buttons.gtk(contents)
 
     container:connect_signal('mouse::enter', function(w)
         local cur_wibox = mouse.current_wibox
+        if not cur_wibox then return end
         old_cursor, old_wibox = cur_wibox.cursor, cur_wibox
         cur_wibox.cursor = 'hand1'
         w:set_fg(theme.button_fg_hover)
@@ -73,6 +74,7 @@ function buttons.gtk_hover(contents)
 
     container:connect_signal('mouse::enter', function(w)
         local cur_wibox = mouse.current_wibox
+        if not cur_wibox then return end
         old_cursor, old_wibox = cur_wibox.cursor, cur_wibox
         cur_wibox.cursor = 'hand1'
         w:set_fg(theme.button_fg_hover)
@@ -123,6 +125,7 @@ function buttons.header(contents)
 
     container:connect_signal('mouse::enter', function(w)
         local cur_wibox = mouse.current_wibox
+        if not cur_wibox then return end
         old_cursor, old_wibox = cur_wibox.cursor, cur_wibox
         cur_wibox.cursor = 'hand1'
         w:set_fg(theme.header_fg_hover)
@@ -224,6 +227,7 @@ function buttons.menu(contents)
 
     container:connect_signal('mouse::enter', function(w)
         local cur_wibox = mouse.current_wibox
+        if not cur_wibox then return end
         old_cursor, old_wibox = cur_wibox.cursor, cur_wibox
         cur_wibox.cursor = 'hand1'
         w:set_fg(theme.header_fg_hover)
@@ -274,6 +278,7 @@ function buttons.tasklist(contents)
 
     container:connect_signal('mouse::enter', function(w)
         local cur_wibox = mouse.current_wibox
+        if not cur_wibox then return end
         old_cursor, old_wibox = cur_wibox.cursor, cur_wibox
         cur_wibox.cursor = 'hand1'
         w:set_shape_border_color(theme.button_border_color_hover)
@@ -319,6 +324,7 @@ function buttons.taglist(contents)
 
     container:connect_signal('mouse::enter', function(w)
         local cur_wibox = mouse.current_wibox
+        if not cur_wibox then return end
         old_cursor, old_wibox = cur_wibox.cursor, cur_wibox
         cur_wibox.cursor = 'hand1'
         w:set_shape_border_color(theme.button_border_color_hover)
