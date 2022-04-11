@@ -1,87 +1,74 @@
--- Awesome
 local awful = require('awful')
 local spawn = awful.spawn
 local theme = require('beautiful')
 local lookup_icon = require('menubar.utils').lookup_icon
 
--- Custom
-local cfg_apps = _G.cfg.apps or nil
+local click_to_hide = require('utils.click_to_hide').menu
 
--- Local
-local apps = {}
-apps.lock = cfg_apps.session_lock or 'light-locker-command -l'
-apps.exit = cfg_apps.session_exit or 'awesome-client \'awesome.quit()\''
-apps.reboot = cfg_apps.session_reboot or 'systemctl reboot'
-apps.suspend = cfg_apps.session_suspend or 'systemctl suspend'
-apps.poweroff = cfg_apps.session_poweroff or 'systemctl poweroff'
+local apps = require('config.apps')
 
-local icons = {}
-icons.lock = lookup_icon('xfce-system-lock') or theme.session_lock_icon
-icons.exit = lookup_icon('xfsm-logout') or theme.session_exit_icon
-icons.reboot = lookup_icon('xfsm-reboot') or theme.session_reboot_icon
-icons.suspend = lookup_icon('xfsm-suspend') or theme.session_suspend_icon
-icons.poweroff = lookup_icon('xfsm-shutdown') or theme.session_poweroff_icon
+theme.session_lock_icon = lookup_icon(theme.session_lock_icon)
+theme.session_exit_icon = lookup_icon(theme.session_exit_icon)
+theme.session_reboot_icon = lookup_icon(theme.session_reboot_icon)
+theme.session_suspend_icon = lookup_icon(theme.session_suspend_icon)
+theme.session_poweroff_icon = lookup_icon(theme.session_poweroff_icon)
 
-local _M = function()
+local session_menu = awful.menu({
+    {
+        '&Lock Desktop',
+        function() spawn(apps.session_lock) end,
+        theme.session_lock_icon
+    },
+    {
+        '&Exit Desktop',
+        function()
+            _G.session_action = {
+                cmd = apps.session_exit,
+                text = 'Exit Desktop',
+                icon = theme.session_exit_icon
+            }
+            awesome.emit_signal('session::confirm:show')
+        end,
+        theme.session_exit_icon,
+    },
+    {
+        '&Reboot System',
+        function()
+            _G.session_action = {
+                cmd = apps.session_reboot,
+                text = 'Reboot System',
+                icon = theme.session_reboot_icon
+            }
+            awesome.emit_signal('session::confirm:show')
+        end,
+        theme.session_reboot_icon
+    },
+    {
+        '&Suspend System',
+        function()
+            _G.session_action = {
+                cmd = apps.session_suspend,
+                text = 'Suspend System',
+                icon = theme.session_suspend_icon
+            }
+            awesome.emit_signal('session::confirm:show')
+        end,
+        theme.session_suspend_icon
+    },
+    {
+        '&Power Off',
+        function()
+            _G.session_action = {
+                cmd = apps.session_poweroff,
+                text = 'Power Off',
+                icon = theme.session_poweroff_icon
+            }
+            awesome.emit_signal('session::confirm:show')
+        end,
+        theme.session_poweroff_icon
+    },
+})
 
-    return awful.menu({
-        {
-            '&Lock Desktop',
-            function()
-                spawn(apps.lock)
-            end,
-            icons.lock
-        },
-        {
-            '&Exit Desktop',
-            function()
-                _G.session_action = {
-                    cmd = apps.exit,
-                    text = 'Exit Desktop',
-                    icon = icons.exit,
-                }
-                awesome.emit_signal('session::confirm:show')
-            end,
-            icons.exit,
-        },
-        {
-            '&Reboot System',
-            function()
-                _G.session_action = {
-                    cmd = apps.reboot,
-                    text = 'Reboot System',
-                    icon = icons.reboot,
-                }
-                awesome.emit_signal('session::confirm:show')
-            end,
-            icons.reboot
-        },
-        {
-            '&Suspend System',
-            function()
-                _G.session_action = {
-                    cmd = apps.suspend,
-                    text = 'Suspend System',
-                    icon = icons.suspend,
-                }
-                awesome.emit_signal('session::confirm:show')
-            end,
-            icons.suspend
-        },
-        {
-            '&Power Off',
-            function()
-                _G.session_action = {
-                    cmd = apps.poweroff,
-                    text = 'Power Off',
-                    icon = icons.poweroff,
-                }
-                awesome.emit_signal('session::confirm:show')
-            end,
-            icons.poweroff
-        },
-    })
+click_to_hide(session_menu)
 
-end
-
-return _M
+return session_menu

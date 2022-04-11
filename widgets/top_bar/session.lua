@@ -1,19 +1,19 @@
 local awful = require('awful')
 local theme = require('beautiful')
 local wibox = require('wibox')
-local container = require('widgets.buttons').menu
-local menu_util = require('utils.menus')
 
-local _M = function()
+local container = require('widgets.buttons').menu
+local menu_position = require('utils.common').menus.get_position
+
+local topbar_session = function()
 
     local buttons = {
         awful.button({ }, 1, nil, function()
-            local pos = menu_util.set_corner('tr')
-            _G.menus.session:toggle({coords=pos})
+            _G.menus.session:toggle({coords=menu_position('tr')})
         end),
     }
 
-    local menu_widget = wibox.widget {
+    local session_widget = wibox.widget {
         {
             widget = awful.widget.button {
                 image = theme.session_button_icon,
@@ -27,7 +27,7 @@ local _M = function()
         buttons = buttons,
     }
 
-    return menu_widget
+    return session_widget
 end
 
-return _M
+return topbar_session

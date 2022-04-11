@@ -1,22 +1,17 @@
--- Awesome
 local theme = require('beautiful')
 
--- Global
-local cfg_vars = _G.cfg.vars or nil
+local paths = require('config.paths')
 
--- Local
-local vars = {}
-vars.fg     = cfg_vars.rofi_fg      or theme.fg_normal
-vars.bg     = cfg_vars.rofi_bg      or theme.bg_normal
-vars.focus  = cfg_vars.rofi_focus   or theme.bg_focus
-vars.width  = cfg_vars.rofi_width   or theme.menu_width*2
-vars.radius = cfg_vars.rofi_radius  or theme.border_radius
-vars.font   = cfg_vars.rofi_font    or theme.font
+local theme_vars = {
+    fg     = theme.rofi_fg,
+    bg     = theme.rofi_bg,
+    focus  = theme.rofi_focus,
+    width  = theme.rofi_width,
+    radius = theme.rofi_radius,
+    font   = theme.rofi_font,
+}
 
-local paths = {}
-paths.theme_file = os.getenv('XDG_CONFIG_HOME')..'/rofi/themes/awesome.rasi'
-
-local data_str = [[
+local theme_template = [[
 * {
     fg: ##FG##;
     bg: ##BG##;
@@ -81,14 +76,19 @@ element-text selected {
 
 ]]
 
-local _M = function()
+local function write_theme(template, vars, output)
+    template = template or theme_template
+    vars = vars or theme_vars
+    output = output or paths.rofi_theme_file
+
+    -- sub ##KEY## for value
     for k, v in pairs(vars) do
-        data_str = data_str:gsub('##'..string.upper(k)..'##', v)
+        template = template:gsub('##'..string.upper(k)..'##', v)
     end
 
-    local file = assert(io.open(paths.theme_file, 'w+'))
-    file:write(data_str)
+    local file = assert(io.open(output, 'w+'))
+    file:write(template)
     file:close()
 end
 
-return _M
+return write_theme

@@ -1,7 +1,8 @@
 local theme = require('beautiful')
 local gears = require('gears')
 local wibox = require('wibox')
-local color_util = require('utils.colors')
+
+local colors = require('utils.common').colors
 
 local buttons = {}
 
@@ -232,7 +233,7 @@ function buttons.menu(contents)
         cur_wibox.cursor = 'hand1'
         w:set_fg(theme.header_fg_hover)
         w:set_bg(theme.header_bg_hover)
-        w:set_shape_border_color(color_util.mix(theme.bg_success, theme.base_fg, 0.8))
+        w:set_shape_border_color(colors.mix(theme.bg_success, theme.base_fg, 0.8))
     end)
 
     container:connect_signal('button::press', function(w)

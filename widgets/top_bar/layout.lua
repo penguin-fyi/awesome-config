@@ -4,10 +4,9 @@ local theme = require('beautiful')
 local dpi = theme.xresources.apply_dpi
 local wibox = require('wibox')
 
--- Custom
 local container = require('widgets.buttons').wibar
 
-local _M = function(s)
+local topbar_layout = function(s)
     s = s or screen.focused()
 
     local buttons = {
@@ -17,7 +16,7 @@ local _M = function(s)
         awful.button({ }, 5, function() awful.layout.inc( 1) end),
     }
 
-    local w = wibox.widget {
+    local layout_widget = wibox.widget {
         {
             awful.widget.layoutbox {
                 screen  = s,
@@ -29,7 +28,7 @@ local _M = function(s)
         widget = container,
     }
 
-    return w
+    return layout_widget
 end
 
-return _M
+return topbar_layout

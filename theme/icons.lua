@@ -1,6 +1,6 @@
-local _M = {}
+local icons = {}
 
-_M.titlebar = {
+icons.titlebar = {
     minimize = '<svg height="16" width="16"><path d="M4 7v3h8V7z" fill="#ffffff"/></svg>',
     maximize = '<svg height="16" width="16"><path d="M6.406 4h4.504c.6 0 1.087.491 1.09 1.09v4.504zm3.206 8H5.09c-.6 0-1.09-.491-1.09-1.09V6.388L9.612 12" fill="#ffffff" fill-rule="evenodd"/></svg>',
     maximize_alt = '<svg height="16" width="16"><path d="M 9.594,4 H 5.09 C 4.49,4 4.003,4.491 4,5.09 V 9.594 Z M 6.388,12 H 10.91 C 11.51,12 12,11.509 12,10.91 V 6.388 L 6.388,12" fill="#ffffff" fill-rule="evenodd" id="path2" /></svg>',
@@ -12,7 +12,7 @@ _M.titlebar = {
     ontop_alt = '<svg width="16" height="16"><path d="M8 5l-5 5h10L8 5z" fill="#ffffff"/></svg>',
 }
 
-_M.wibars = {
+icons.wibars = {
     main_menu = '<svg width="24" height="24"><path d="M5.25 7C5 7 5 7.25 5 7.25v1.5c0 .25.25.25.25.25h1.5C7 9 7 8.75 7 8.75v-1.5C7 7 6.75 7 6.75 7h-1.5zm4 0C9 7 9 7.25 9 7.25v1.5c0 .25.25.25.25.25h1.5c.25 0 .25-.25.25-.25v-1.5C11 7 10.75 7 10.75 7h-1.5zm4 0c-.25 0-.25.25-.25.25v1.5c0 .25.25.25.25.25h1.5c.25 0 .25-.25.25-.25v-1.5C15 7 14.75 7 14.75 7h-1.5zm4 0c-.25 0-.25.25-.25.25v1.5c0 .25.25.25.25.25h1.5c.25 0 .25-.25.25-.25v-1.5C19 7 18.75 7 18.75 7h-1.5zm-12 4c-.25 0-.25.25-.25.25v1.5c0 .25.25.25.25.25h1.5c.25 0 .25-.25.25-.25v-1.5C7 11 6.75 11 6.75 11h-1.5zm4 0c-.25 0-.25.25-.25.25v1.5c0 .25.25.25.25.25h1.5c.25 0 .25-.25.25-.25v-1.5c0-.25-.25-.25-.25-.25h-1.5zm4 0c-.25 0-.25.25-.25.25v1.5c0 .25.25.25.25.25h1.5c.25 0 .25-.25.25-.25v-1.5c0-.25-.25-.25-.25-.25h-1.5zm4 0c-.25 0-.25.25-.25.25v1.5c0 .25.25.25.25.25h1.5c.25 0 .25-.25.25-.25v-1.5c0-.25-.25-.25-.25-.25h-1.5zm-12 4c-.25 0-.25.25-.25.25v1.5c0 .25.25.25.25.25h1.5c.25 0 .25-.25.25-.25v-1.5C7 15 6.75 15 6.75 15h-1.5zm4 0c-.25 0-.25.25-.25.25v1.5c0 .25.25.25.25.25h1.5c.25 0 .25-.25.25-.25v-1.5c0-.25-.25-.25-.25-.25h-1.5zm4 0c-.25 0-.25.25-.25.25v1.5c0 .25.25.25.25.25h1.5c.25 0 .25-.25.25-.25v-1.5c0-.25-.25-.25-.25-.25h-1.5zm4 0c-.25 0-.25.25-.25.25v1.5c0 .25.25.25.25.25h1.5c.25 0 .25-.25.25-.25v-1.5c0-.25-.25-.25-.25-.25h-1.5z" fill="#ffffff"/></svg>',
     session_menu = '<svg width="24" height="24"><path d="M12 5a1 1 0 0 0-1 1v5.004a1 1 0 1 0 2 0V6a1 1 0 0 0-1-1zm3.037 1.988a1 1 0 0 0-.193.012 1 1 0 0 0-.437 1.813 3.98 3.98 0 0 1 .813 5.594c-1.33 1.779-3.847 2.112-5.625.781s-2.112-3.815-.781-5.594a3.86 3.86 0 0 1 .75-.75A1.003 1.003 0 1 0 8.344 7.25c-.429.332-.831.722-1.156 1.156a6.03 6.03 0 0 0 1.219 8.406 6.03 6.03 0 0 0 8.406-1.219 6.03 6.03 0 0 0-1.219-8.406 1 1 0 0 0-.557-.199z" fill="#ffffff"/></svg>',
     systray_visible = '<svg width="24" height="24"><path d="M8.9 4.8v14.4l7.2-7.2z" fill="#ffffff"/></svg>',
@@ -20,11 +20,11 @@ _M.wibars = {
     keyboard_layout = '<svg width="24" height="24"><path d="M6 6S4 6 4 8v8c0 2 2 2 2 2h11s2 0 2-2V8c0-2-2-2-2-2zm.25 2h1.5S8 8 8 8.25v1.5s0 .25-.25.25h-1.5S6 10 6 9.75v-1.5S6 8 6.25 8zm3 0h1.5s.25 0 .25.25v1.5s0 .25-.25.25h-1.5S9 10 9 9.75v-1.5S9 8 9.25 8zm3 0h1.5s.25 0 .25.25v1.5s0 .25-.25.25h-1.5S12 10 12 9.75v-1.5s0-.25.25-.25zm3 0h1.5s.25 0 .25.25v1.5s0 .25-.25.25h-1.5S15 10 15 9.75v-1.5s0-.25.25-.25zm-9 3h1.5s.25 0 .25.25v1.5s0 .25-.25.25h-1.5S6 13 6 12.75v-1.5s0-.25.25-.25zm3 0h1.5s.25 0 .25.25v1.5s0 .25-.25.25h-1.5S9 13 9 12.75v-1.5s0-.25.25-.25zm3 0h1.5s.25 0 .25.25v1.5s0 .25-.25.25h-1.5s-.25 0-.25-.25v-1.5s0-.25.25-.25zm3 0h1.5s.25 0 .25.25v1.5s0 .25-.25.25h-1.5s-.25 0-.25-.25v-1.5s0-.25.25-.25zm-7 3h6.5s.25 0 .25.25v1.5s0 .25-.25.25h-6.5S8 16 8 15.75v-1.5s0-.25.25-.25z" fill="#ffffff"/></svg>',
 }
 
-_M.menus = {
+icons.menus = {
     submenu = '<svg width="24" height="24"><path fill="#ffffff" d="M10 7v10l5-5-5-5z"/></svg>',
 }
 
-_M.layouts = {
+icons.layouts = {
     cornerne = '<svg width="24" height="24" fill="#ffffff" fill-rule="evenodd"><rect width="4.8" height="6.4" x="1.4" y="1.4" ry=".5"/><rect width="4.8" height="6.4" x="1.4" y="8.8" ry=".5"/><rect width="4.8" height="6.4" x="1.4" y="16.4" ry=".5"/><rect width="7" height="5" x="7.4" y="17.8" ry=".527"/><rect width="7" height="5" x="15.6" y="17.8" ry=".527"/><rect width="15.2" height="15.2" x="7.4" y="1.4" ry=".504"/></svg>',
     cornernw = '<svg width="24" height="24"><g transform="matrix(-1 0 0 1 24 0)" fill="#ffffff" fill-rule="evenodd"><rect width="4.8" height="6.4" x="1.4" y="1.4" ry=".5"/><rect width="4.8" height="6.4" x="1.4" y="8.8" ry=".5"/><rect width="4.8" height="6.4" x="1.4" y="16.4" ry=".5"/><rect width="7" height="5" x="7.4" y="17.8" ry=".527"/><rect width="7" height="5" x="15.6" y="17.8" ry=".527"/><rect width="15.2" height="15.2" x="7.4" y="1.4" ry=".504"/></g></svg>',
     cornerse = '<svg width="24" height="24"><g transform="matrix(1 0 0 -1 0 24.2)" fill="#ffffff" fill-rule="evenodd"><rect width="4.8" height="6.4" x="1.4" y="1.4" ry=".5"/><rect width="4.8" height="6.4" x="1.4" y="8.8" ry=".5"/><rect width="4.8" height="6.4" x="1.4" y="16.4" ry=".5"/><rect width="7" height="5" x="7.4" y="17.8" ry=".527"/><rect width="7" height="5" x="15.6" y="17.8" ry=".527"/><rect width="15.2" height="15.2" x="7.4" y="1.4" ry=".504"/></g></svg>',
@@ -43,9 +43,9 @@ _M.layouts = {
     tiletop = '<svg width="24" height="24"><g transform="matrix(0 -1 -1 0 24 24)" fill="#ffffff" fill-rule="evenodd"><rect width="6.2" height="21.2" x="1.4" y="1.4" ry=".505"/><rect width="6.2" height="6.2" x="8.9" y="1.4" ry=".509"/><rect width="6.2" height="6.2" x="16.4" y="1.4" ry=".509"/><rect width="6.2" height="6.2" x="8.9" y="8.9" ry=".509"/><rect width="6.2" height="6.2" x="16.4" y="8.9" ry=".509"/><rect width="6.2" height="6.2" x="8.9" y="16.4" ry=".509"/><rect width="6.2" height="6.2" x="16.4" y="16.4" ry=".509"/></g></svg>',
 }
 
-_M.session = {
+icons.session = {
     confirm = '<svg width="24" height="24"><path d="M20.249 7.2s1.447-1.447.322-2.572S18 4.951 18 4.951L9 15.45l-3-3s-1.447-1.447-2.572-.322.322 2.572.322 2.572L9 19.949z" fill="#ffffff"/></svg>',
     cancel = '<svg width="24" height="24" fill="#ffffff"><path d="M6 4a2 2 0 0 0-1.414 3.414l12 12c.374.376.884.586 1.414.586a2 2 0 0 0 2-2c0-.53-.21-1.04-.586-1.414l-12-12A2 2 0 0 0 6 4z"/><path d="M6 20a2 2 0 0 1-1.414-3.414l12-12C16.96 4.21 17.47 4 18 4a2 2 0 0 1 2 2c0 .53-.21 1.04-.586 1.414l-12 12C7.039 19.79 6.53 20 6 20z"/></svg>',
 }
 
-return _M
+return icons

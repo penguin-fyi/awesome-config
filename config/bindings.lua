@@ -1,26 +1,19 @@
--- Awesome
 local awful = require('awful')
 local hotkeys_popup = require('awful.hotkeys_popup')
 require('awful.hotkeys_popup.keys')
 
--- Custom
-local menu_util = require('utils.menus')
-local tag_util = require('utils.tags')
+local menu_position = require('utils.common').menus.get_position
+local tag_edit = require('utils.tag_editor')
 
--- Global
-local cfg_vars = _G.cfg.vars or nil
-local cfg_apps = _G.cfg.apps or nil
+local mod = require('config.modkeys')
+local vars = require('config.vars')
+local apps = require('config.apps')
 
--- Local
-local mod = _G.cfg.modkey or nil
+--- Mouse options
+awful.mouse.snap.edge_enabled = vars.mouse_snap_edge
+awful.mouse.snap.client_enabled = vars.mouse_snap_client
 
-local vars = {}
-vars.client_focus_raise = cfg_vars.client_focus_raise or false
-
-local apps = {}
-apps.terminal = cfg_apps.terminal or 'xterm'
-
--- Global: core
+---- Global: core
 awful.keyboard.append_global_keybindings({
     -- Show hotkeys popup
     awful.key({ mod.super }, 's', function() hotkeys_popup.show_help() end,
@@ -28,7 +21,7 @@ awful.keyboard.append_global_keybindings({
     -- Show main menu
     awful.key({ mod.super }, 'w',
         function()
-            local pos = menu_util.set_corner('tl')
+            local pos = menu_position('tl')
             _G.menus.main:show({coords=pos})
         end,
         {description = 'show main menu', group = 'awesome'}
@@ -41,7 +34,7 @@ awful.keyboard.append_global_keybindings({
               {description = 'open a terminal', group = 'launcher'}),
 })
 
--- Global: Focus clients
+---- Global: Focus clients
 awful.keyboard.append_global_keybindings({
     -- Focus client to left
     awful.key({ mod.super }, 'Left',
@@ -118,7 +111,7 @@ awful.keyboard.append_global_keybindings({
               {description = 'jump to urgent client', group = 'client'}),
 })
 
--- Global: Swap clients
+---- Global: Swap clients
 awful.keyboard.append_global_keybindings({
     -- Swap with client to left
     awful.key({ mod.super, mod.shift   }, 'Left', function() awful.client.swap.bydirection('left') end,
@@ -134,7 +127,7 @@ awful.keyboard.append_global_keybindings({
               {description = 'swap with client to right', group = 'client'}),
 })
 
--- Global: Focus screen
+---- Global: Focus screen
 awful.keyboard.append_global_keybindings({
     -- Focus screen to left
     awful.key({ mod.super, mod.ctrl }, 'Left', function() awful.screen.focus_bydirection('left') end,
@@ -150,7 +143,7 @@ awful.keyboard.append_global_keybindings({
               {description = 'focus screen to right', group = 'screen'}),
 })
 
--- Global: Tags
+---- Global: Tags
 awful.keyboard.append_global_keybindings({
     -- View last tag
     awful.key({ mod.super }, '`', awful.tag.history.restore,
@@ -217,24 +210,24 @@ awful.keyboard.append_global_keybindings({
             end
         end,
     },
-    -- Add new tag
-    awful.key({ mod.super, mod.ctrl  }, 'a', function() tag_util.add() end,
+    -- Add new tag (utils.tag_editor)
+    awful.key({ mod.super, mod.ctrl  }, 'a', function() tag_edit.add() end,
               {description = 'add new', group = 'tag'}),
-    -- Edit current tag
-    awful.key({ mod.super, mod.ctrl  }, 'e',  function() tag_util.rename() end,
+    -- Edit current tag (utils.tag_editor)
+    awful.key({ mod.super, mod.ctrl  }, 'e',  function() tag_edit.rename() end,
               {description = 'edit selected', group = 'tag'}),
-    -- Move tag left
-    awful.key({ mod.super, mod.ctrl }, '[', function() tag_util.move('left') end,
+    -- Move tag left (utils.tag_editor)
+    awful.key({ mod.super, mod.ctrl }, '[', function() tag_edit.move('left') end,
               {description = 'move left', group = 'tag'}),
-    -- Move tag right
-    awful.key({ mod.super, mod.ctrl }, ']', function() tag_util.move('right') end,
+    -- Move tag right (utils.tag_editor)
+    awful.key({ mod.super, mod.ctrl }, ']', function() tag_edit.move('right') end,
               {description = 'move right', group = 'tag'}),
-    -- Delete current tag
-    awful.key({ mod.super, mod.ctrl  }, 'd', function() tag_util.delete() end,
+    -- Delete current tag (utils.tag_editor)
+    awful.key({ mod.super, mod.ctrl  }, 'd', function() tag_edit.delete() end,
               {description = 'delete selected', group = 'tag'}),
 })
 
--- Global: Layouts
+--- Global: Layouts
 awful.keyboard.append_global_keybindings({
     -- Next layout
     awful.key({ mod.super,           }, ']', function() awful.layout.inc( 1) end,
@@ -244,13 +237,7 @@ awful.keyboard.append_global_keybindings({
               {description = 'select previous', group = 'layout'}),
 })
 
--- Global: Mouse bindings
-awful.mouse.append_global_mousebindings({
-    awful.button({ }, 1, function() menu_util.hide_all() end),
-    awful.button({ }, 3, function() menu_util.hide_all() end),
-})
-
--- Client
+--- Client
 client.connect_signal('request::default_keybindings', function()
     awful.keyboard.append_client_keybindings({
         -- Toggle fullscreen
@@ -335,7 +322,7 @@ client.connect_signal('request::default_keybindings', function()
     })
 end)
 
--- Client: Mouse bindings
+--- Client: Mouse bindings
 client.connect_signal('request::default_mousebindings', function()
     awful.mouse.append_client_mousebindings({
         awful.button({ }, 1, function(c)

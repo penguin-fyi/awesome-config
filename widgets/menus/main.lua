@@ -1,44 +1,35 @@
--- Awesome
 local awful = require('awful')
 local theme = require('beautiful')
 local lookup_icon = require('menubar.utils').lookup_icon
 
--- External
 local fd_check, menu = pcall(require, 'freedesktop.menu')
 
--- Custom
 local awesome_menu = require('widgets.menus.awesome')
+local click_to_hide = require('utils.click_to_hide').menu
 
--- Local
-local cfg_apps = _G.cfg.apps or nil
+local apps = require('config.apps')
 
-local apps = {}
-apps.terminal = cfg_apps.terminal or 'xterm'
-apps.files = cfg_apps.files or 'pcmanfm'
+theme.awesome_menu_icon     = lookup_icon(theme.awesome_menu_icon)
+theme.menu_files_icon       = lookup_icon(theme.menu_files_icon)
+theme.menu_terminal_icon    = lookup_icon(theme.menu_terminal_icon)
 
-local icons = {}
-icons.awesome = lookup_icon('preferences-desktop') or theme.awesome_menu_icon
-icons.files = lookup_icon('system-file-manager') or theme.menu_files_icon
-icons.terminal = lookup_icon('utilities-terminal') or theme.menu_terminal_icon
+local base_menu = {
+    { '&Awesome', awesome_menu, theme.awesome_menu_icon },
+    { 'Open &Terminal', apps.terminal, theme.menu_terminal_icon },
+    { 'Open &Files', apps.files, theme.menu_files_icon },
+}
 
-local _M = function()
+local main_menu = awful.menu({ items = base_menu })
 
-    local base = {
-        { '&Awesome', awesome_menu, icons.awesome },
-        { 'Open &Terminal', apps.terminal, icons.terminal },
-        { 'Open &Files', apps.files, icons.files },
-    }
-
-    if fd_check then
-        return menu.build({
-            before = base,
-            after = nil,
-            sub_menu = nil,
-            skip_items = nil,
-        })
-    else
-        return awful.menu({ items = base })
-    end
+if fd_check then
+    main_menu = menu.build({
+        before = base_menu,
+        after = nil,
+        sub_menu = nil,
+        skip_items = nil,
+    })
 end
 
-return _M
+click_to_hide(main_menu)
+
+return main_menu

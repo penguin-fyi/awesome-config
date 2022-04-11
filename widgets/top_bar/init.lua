@@ -5,7 +5,7 @@ local dpi = theme.xresources.apply_dpi
 local wibox = require('wibox')
 
 -- Wibar widget
-local _M = function(s)
+local top_wibar = function(s)
     s = s or screen.focused()
 
     return awful.wibar {
@@ -55,4 +55,4 @@ local _M = function(s)
     }
 end
 
-return _M
+return top_wibar

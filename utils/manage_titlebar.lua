@@ -1,10 +1,8 @@
--- Awesome
+-- Automatically show\hide titlebar depending on client\layout state
+-- https://github.com/Anfid/cosy/blob/master/util.lua
 local awful = require('awful')
 
-local _M = {}
-
--- Automatically show\hide titlebar depending on client\layout state
-function _M.manage_titlebar(c)
+local function manage_titlebar(c)
     local show = c.floating or awful.layout.get(c.screen) == awful.layout.suit.floating
     local geometry = c:geometry()
 
@@ -26,10 +24,4 @@ function _M.manage_titlebar(c)
     end
 end
 
--- Return true is client or layout is floating
-function _M.check_float(c)
-    return (c.floating or awful.layout.get(c.screen) == awful.layout.suit.floating)
-        and not (c.fullscreen or c.maximized or c.maximized_vertical or c.maximized_horizontal)
-end
-
-return _M
+return manage_titlebar

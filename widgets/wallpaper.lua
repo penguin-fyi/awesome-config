@@ -3,22 +3,16 @@ local awful = require('awful')
 local theme = require('beautiful')
 local wibox = require('wibox')
 
--- Local
-local vars = {}
-vars.text = theme.wallpaper_markup or awesome.hostname
-vars.font = theme.wallpaper_font or 'Monospace 64'
-vars.fg = theme.wallpaper_fg or '#000'
-vars.bg = theme.wallpaper_bg or '#333'
-vars.image = _G.cfg.paths.wallpaper or nil
+local paths = require('config.paths')
 
-local _M = function(s)
-    if vars.image then
+local function wallpaper(s)
+    if paths.wallpaper then
         -- Set image as background
         return awful.wallpaper {
             screen = s,
             widget = {
                 {
-                    image  = vars.image,
+                    image  = paths.wallpaper,
                     horizontal_fit_policy = 'fit',
                     vertical_fit_policy   = 'fit',
                     resize = true,
@@ -34,13 +28,13 @@ local _M = function(s)
         -- Set color and text as background
         return awful.wallpaper {
             screen = s,
-            fg = vars.fg,
-            bg = vars.bg,
+            fg = theme.wallpaper_fg,
+            bg = theme.wallpaper_bg,
             widget = {
                 {
                     {
-                        markup = vars.text,
-                        font = vars.font,
+                        markup = theme.wallpaper_markup,
+                        font = theme.wallpaper_font,
                         align = 'center',
                         valign = 'center',
                         widget = wibox.widget.textbox,
@@ -54,4 +48,4 @@ local _M = function(s)
     end
 end
 
-return _M
+return wallpaper

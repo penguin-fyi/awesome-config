@@ -1,17 +1,18 @@
--- Awesome
+--- XDG autostart
+-- https://wiki.archlinux.org/title/awesome#Autostart
 local spawn = require('awful.spawn')
 
--- Global
-local cfg_paths = _G.cfg.paths or nil
+local paths = require('config.paths')
 
-local init = function()
-    local paths = cfg_paths.autostart_dirs or { '$XDG_CONFIG_HOME/autostart/' }
+local function autostart(dirs)
+    dirs = dirs or paths.autostart_dirs
 
+    -- build search-paths
     local path_str = ''
-    if #paths then
-        for i, p in ipairs(paths) do
+    if #dirs then
+        for i, p in ipairs(dirs) do
             path_str = path_str..p
-            if i < #paths then
+            if i < #dirs then
                 path_str = path_str..':'
             end
         end
@@ -30,4 +31,4 @@ local init = function()
     end)
 end
 
-return init
+return autostart

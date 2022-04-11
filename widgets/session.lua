@@ -1,23 +1,14 @@
--- Awesome
 local awful = require('awful')
 local spawn = awful.spawn
 local theme = require('beautiful')
 local dpi = theme.xresources.apply_dpi
 local wibox = require('wibox')
 
--- Custom
 local button = require('widgets.buttons').gtk
-local menu_util = require('utils.menus')
+local menu_position = require('utils.common').menus.get_position
 
--- Global
-local cfg_vars = _G.cfg.vars
-
--- Local
-local mod = _G.cfg.modkey
-
-local vars = {}
-vars.timeout = cfg_vars.session_timeout or 10
-vars.timeout_run = cfg_vars.session_timeout_run or false
+local mod = require('config.modkeys')
+local vars = require('config.vars')
 
 _G.session_action = {
     cmd     = nil,
@@ -25,7 +16,7 @@ _G.session_action = {
     icon    = nil,
 }
 
-local _M = function(s)
+local function session_widget(s)
     local clock = wibox.widget {
         widget  = wibox.widget.textclock,
         font    = theme.font_bold,
@@ -48,7 +39,7 @@ local _M = function(s)
         valign          = 'center',
     }
 
-    local build_button = function(image, callback)
+    local function build_button(image, callback)
 
         local widget = wibox.widget {
             {
@@ -87,25 +78,25 @@ local _M = function(s)
 
     local footer = wibox.widget {
         widget  = wibox.widget.textbox,
-        markup  = 'Press <b>Enter to Continue</b> or <b>Escape to Cancel</b>',
+        markup  = 'Press <b>Enter</b> to <b>Continue</b> or <b>Escape</b> to <b>Cancel</b>',
         font    = theme.font,
         align   = 'center',
         valign  = 'center',
     }
 
-    local on_confirm = function()
+    local function on_confirm()
         spawn(_G.session_action.cmd)
         awesome.emit_signal('session::confirm:hide')
     end
 
-    local on_cancel = function()
+    local function on_cancel()
         awesome.emit_signal('session::confirm:hide')
     end
 
     local confirm_button = build_button(theme.session_confirm_icon, on_confirm)
     local cancel_button = build_button(theme.session_cancel_icon, on_cancel)
 
-    local create_dialog = function(screen)
+    local function create_dialog(screen)
 
         s.session_confirm = wibox {
             screen      = screen,
@@ -190,7 +181,7 @@ local _M = function(s)
         }
     end
 
-    local create_backdrop = function(screen)
+    local function create_backdrop(screen)
         s.session_backdrop = wibox {
             screen      = screen,
             type        = 'splash',
@@ -218,9 +209,9 @@ local _M = function(s)
                 on_cancel()
             end
         end,
-        timeout = vars.timeout or 10,
+        timeout = vars.session_timeout or 10,
         timeout_callback = function()
-            if vars.timeout_run then
+            if vars.session_timeout_run then
                 on_confirm()
             else
                 on_cancel()
@@ -252,14 +243,11 @@ local _M = function(s)
 
     awful.keyboard.append_global_keybindings({
         awful.key({ mod.super, mod.ctrl }, 'q',
-            function()
-                local pos = menu_util.set_corner('tr')
-                _G.menus.session:show({coords=pos})
-            end,
+            function() _G.menus.session:show({coords=menu_position('tr')}) end,
             {description = 'show session menu', group = 'awesome'}
         ),
     })
 
 end
 
-return _M
+return session_widget

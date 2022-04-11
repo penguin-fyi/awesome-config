@@ -4,12 +4,14 @@ local theme = require('beautiful')
 local dpi = theme.xresources.apply_dpi
 local wibox = require('wibox')
 
-awful.titlebar.enable_tooltip = false
-awful.titlebar.fallback_name = ''
+local vars = require('config.vars')
 
-local _M = function(c)
+awful.titlebar.enable_tooltip = vars.titlebar_enable_tooltip
+awful.titlebar.fallback_name = vars.titlebar_fallback_name
 
-    local titlebar = awful.titlebar(c, {
+local function titlebar_widget(c)
+
+    local widget = awful.titlebar(c, {
         size = theme.titlebar_height or dpi(24),
         position = 'top',
     })
@@ -23,7 +25,7 @@ local _M = function(c)
         end),
     }
 
-    titlebar:setup {
+    widget:setup {
         {
             {
                 awful.titlebar.widget.stickybutton   (c),
@@ -62,4 +64,4 @@ local _M = function(c)
     }
 end
 
-return _M
+return titlebar_widget

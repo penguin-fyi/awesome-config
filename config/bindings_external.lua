@@ -1,14 +1,12 @@
--- Awesome
 local awful = require('awful')
 local spawn = awful.spawn
 
--- Local
-local mod = _G.cfg.modkey
+local mod = require('config.modkeys')
 
 spawn.easy_async_with_shell('command -v rofi', function(path)
     if not path then return end
 
-    require('utils.rofi')()
+    require('utils.theme_rofi')()
 
     local cmd = { exe = 'rofi' }
     cmd.run = cmd.exe..' -show run'

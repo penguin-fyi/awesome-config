@@ -2,20 +2,17 @@ local awful = require('awful')
 local theme = require('beautiful')
 local dpi = theme.xresources.apply_dpi
 local wibox = require('wibox')
+
 local container = require('widgets.buttons').tasklist
 
-local vars = {}
-vars.button_width = theme.tasklist_button_width or dpi(200)
-vars.menu_width = theme.tasklist_menu_width or dpi(160)
-
-local _M = function(s)
+local topbar_tasklist = function(s)
     s = s or screen.focused()
 
     local buttons = {
         awful.button({ }, 1, function (c)
             c:activate { context = 'tasklist', action = 'toggle_minimization' }
         end),
-        awful.button({ }, 3, function() awful.menu.client_list { theme = { width = vars.menu_width } } end),
+        awful.button({ }, 3, function() awful.menu.client_list { theme = { width = theme.tasklist_menu_width } } end),
         awful.button({ }, 4, function() awful.client.focus.byidx(-1) end),
         awful.button({ }, 5, function() awful.client.focus.byidx( 1) end),
     }
@@ -63,7 +60,7 @@ local _M = function(s)
             layout = wibox.layout.align.vertical,
         },
         widget = container,
-        forced_width = vars.button_width,
+        forced_width = theme.tasklist_button_width,
     }
 
     return awful.widget.tasklist {
@@ -75,4 +72,4 @@ local _M = function(s)
     }
 end
 
-return _M
+return topbar_tasklist

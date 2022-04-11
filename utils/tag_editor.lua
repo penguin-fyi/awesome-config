@@ -1,8 +1,9 @@
+-- https://github.com/lcpz/lain/blob/master/util/init.lua
 local awful = require('awful')
 
-local _M = {}
+local tag_editor = {}
 
-function _M.add(layout)
+function tag_editor.add(layout)
     local tags = awful.screen.focused().tags
     awful.prompt.run {
         prompt       = 'Add: ',
@@ -18,7 +19,7 @@ function _M.add(layout)
     }
 end
 
-function _M.rename()
+function tag_editor.rename()
     local tag = awful.screen.focused().selected_tag
     awful.prompt.run {
         prompt       = 'Edit: ',
@@ -33,7 +34,7 @@ function _M.rename()
     }
 end
 
-function _M.move(dir)
+function tag_editor.move(dir)
     local tag = awful.screen.focused().selected_tag
     if dir == 'left' then
         tag.index = tag.index-1
@@ -42,10 +43,10 @@ function _M.move(dir)
     end
 end
 
-function _M.delete()
+function tag_editor.delete()
     local tag = awful.screen.focused().selected_tag
     if not tag then return end
     tag:delete()
 end
 
-return _M
+return tag_editor

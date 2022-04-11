@@ -4,18 +4,14 @@ local dpi = require('beautiful.xresources').apply_dpi
 local gears = require('gears')
 local timer = gears.timer
 local wibox = require('wibox')
+
 local container = require('widgets.buttons').wibar
+local mod = require('config.modkeys')
+local vars = require('config.vars')
 
-local mod = _G.cfg.modkey
+local topbar_systray = function()
 
-local cfg_vars = _G.cfg.vars or nil
-
-local vars = {}
-vars.systray_autohide = cfg_vars.topbar_systray_autohide or false
-
-local _M = function()
-
-    local systray = wibox.widget {
+    local systray_widget = wibox.widget {
         {
             widget = wibox.widget.systray
         },
@@ -38,16 +34,16 @@ local _M = function()
         widget = container,
     }
 
-    local systray_widget = wibox.widget {
+    local container_widget = wibox.widget {
         toggle_widget,
-        systray,
+        systray_widget,
         layout = wibox.layout.fixed.horizontal,
         spacing = dpi(2),
     }
 
     local create_hide_timer = function()
-        if vars.systray_autohide then
-            local timeout = tonumber(vars.systray_autohide)
+        if vars.topbar_systray_autohide then
+            local timeout = tonumber(vars.topbar_systray_autohide)
             timer.start_new(timeout, function()
                 toggle_widget:emit_signal('systray_toggle')
             end)
@@ -56,8 +52,8 @@ local _M = function()
 
     toggle_widget:connect_signal('systray_toggle', function(self)
         local icon = self:get_children_by_id('icon')[1]
-        systray.visible = not systray.visible
-        if systray.visible then
+        systray_widget.visible = not systray_widget.visible
+        if systray_widget.visible then
             icon:set_image(theme.systray_visible_icon)
             create_hide_timer()
         else
@@ -78,11 +74,11 @@ local _M = function()
         {description = 'toggle systray', group = 'awesome'})
     })
 
-    if vars.systray_autohide then
+    if vars.topbar_systray_autohide then
         toggle_widget:emit_signal('systray_toggle')
     end
 
-    return awful.widget.only_on_screen(systray_widget, 'primary')
+    return awful.widget.only_on_screen(container_widget, 'primary')
 end
 
-return _M
+return topbar_systray

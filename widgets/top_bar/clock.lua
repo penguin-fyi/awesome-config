@@ -1,21 +1,13 @@
--- Awesome
 local awful = require('awful')
 local theme = require('beautiful')
 local dpi = theme.xresources.apply_dpi
 local wibox = require('wibox')
 
--- Custom
 local container = require('widgets.buttons').wibar
 
--- Global
-local cfg_vars = _G.cfg.vars
+local vars = require('config.vars')
 
--- Local
-local vars = {}
-vars.calendar_enabled = cfg_vars.topbar_calendar_enabled or false
-vars.calendar_hover = cfg_vars.topbar_calendar_hover or false
-
-local _M = function()
+local topbar_clock = function()
 
     local textclock = wibox.widget.textclock(' %a %b %d, %H:%M ', 30)
 
@@ -34,7 +26,7 @@ local _M = function()
         widget = container,
     }
 
-    if vars.calendar_enabled then
+    if vars.topbar_calendar_enabled then
         local calendar = require('awful.widget.calendar_popup').month()
 
         function calendar.call_calendar(self, offset, position, _)
@@ -42,11 +34,11 @@ local _M = function()
             awful.widget.calendar_popup.call_calendar(self, offset, position, focus_screen)
         end
 
-        calendar:attach(widget, 'tr', { on_hover=vars.calendar_hover })
+        calendar:attach(widget, 'tr', { on_hover=vars.topbar_calendar_hover })
         calendar.opacity = theme.opacity
     end
 
     return widget
 end
 
-return _M
+return topbar_clock

@@ -2,11 +2,11 @@ local awful = require('awful')
 local theme = require('beautiful')
 local dpi = theme.xresources.apply_dpi
 local wibox = require('wibox')
+
 local container = require('widgets.buttons').taglist
+local mod = require('config.modkeys')
 
-local mod = _G.cfg.modkey
-
-local _M = function(s)
+local topbar_taglist = function(s)
     s = s or screen.focused()
 
     local buttons = {
@@ -88,4 +88,4 @@ local _M = function(s)
     return taglist_widget
 end
 
-return _M
+return topbar_taglist

@@ -1,4 +1,3 @@
--- Awesome
 local gtk           = require('beautiful.gtk')
 local assets        = require('beautiful.theme_assets')
 local dpi           = require('beautiful.xresources').apply_dpi
@@ -8,10 +7,9 @@ local themes_path   = gfs.get_themes_dir()
 local debug         = gears.debug
 local shape         = gears.shape
 
--- Custom
-local icons         = require('resources.svgicons')
-local render        = require('utils.svg').render_data
-local color_util    = require('utils.colors')
+local icons         = require('theme.icons')
+local render        = require('utils.common').svg.new_from_str
+local colors        = require('utils.common').colors
 
 -- Load default theme
 local theme = dofile(themes_path..'default/theme.lua')
@@ -81,10 +79,10 @@ theme.button_border_radius          = dpi(theme.gtk.button_border_radius or 0)
 theme.button_shape                  = button_shape
 theme.button_fg_hover               = theme.fg_normal
 theme.button_bg_hover               = theme.button_bg
-theme.button_border_color_hover     = color_util.mix(theme.bg_focus, theme.base_fg, 0.8)
+theme.button_border_color_hover     = colors.mix(theme.bg_focus, theme.base_fg, 0.8)
 theme.button_fg_pressed             = theme.fg_focus
 theme.button_bg_pressed             = theme.bg_focus
-theme.button_border_color_pressed   = color_util.mix(theme.bg_focus, theme.base_fg, 0.8)
+theme.button_border_color_pressed   = colors.mix(theme.bg_focus, theme.base_fg, 0.8)
 
 -- Header buttons
 theme.header_fg                     = theme.gtk.header_button_fg_color
@@ -92,10 +90,10 @@ theme.header_bg                     = theme.gtk.header_button_bg_color
 theme.header_border_color           = theme.gtk.header_button_border_color
 theme.header_fg_hover               = theme.header_fg
 theme.header_bg_hover               = theme.header_bg
-theme.header_border_color_hover     = color_util.mix(theme.bg_focus, theme.base_fg, 0.8)
+theme.header_border_color_hover     = colors.mix(theme.bg_focus, theme.base_fg, 0.8)
 theme.header_fg_pressed             = theme.fg_focus
 theme.header_bg_pressed             = theme.bg_focus
-theme.header_border_color_pressed   = color_util.mix(theme.bg_focus, theme.base_fg, 0.8)
+theme.header_border_color_pressed   = colors.mix(theme.bg_focus, theme.base_fg, 0.8)
 
 -- OSD (notifications)
 theme.osd_fg                        = theme.gtk.osd_fg_color
@@ -227,6 +225,8 @@ theme.tasklist_minimized            = ' '
 theme.tasklist_maximized            = ' '
 theme.tasklist_maximized_horizontal = ' '
 theme.tasklist_maximized_vertical   = ' '
+theme.tasklist_button_width         = dpi(200)
+theme.tasklist_menu_width           = dpi(160)
 
 -- Systray widget
 theme.bg_systray                    = theme.wibar_bg
@@ -270,7 +270,7 @@ theme.menu_button_text              = nil
 theme.menu_fg_normal                = theme.menubar_fg
 theme.menu_bg_normal                = theme.menubar_bg
 theme.menu_border_width             = theme.button_border_width
-theme.menu_border_color             = theme.base_bg
+theme.menu_border_color             = colors.mix(theme.menubar_fg, theme.menubar_bg, 0.15)
 theme.menu_width                    = dpi(160)
 theme.menu_height                   = dpi(24)
 theme.menu_submenu                  = render(icons.menus.submenu, theme.wibar_fg, nil, 24)
@@ -291,14 +291,14 @@ theme.hotkeys_group_margin          = dpi(2)
 
 -- Notifications
 theme.notification_position         = 'top_right'
-theme.notification_width            = dpi(240)
+theme.notification_width            = dpi(320)
 theme.notification_height           = dpi(30)
 theme.notification_icon_size        = dpi(48)
 theme.notification_font             = theme.font
-theme.notification_fg               = theme.osd_fg
-theme.notification_bg               = theme.osd_bg
-theme.notification_border_color     = theme.osd_border_color
-theme.notification_border_width     = theme.border_width
+theme.notification_fg               = theme.normal_fg
+theme.notification_bg               = theme.normal_bg
+theme.notification_border_color     = nil
+theme.notification_border_width     = dpi(0)
 theme.notification_shape            = button_shape
 theme.notification_opacity          = theme.opacity
 theme.notification_padding          = theme.useless_gap
@@ -321,10 +321,40 @@ theme.snap_border_width             = theme.border_width
 theme.snap_shape                    = button_shape
 
 -- Awesome icon
-theme.awesome_icon = assets.awesome_icon(theme.menu_height, theme.bg_focus, theme.fg_focus)
+theme.awesome_icon                  = assets.awesome_icon(theme.menu_height, theme.bg_focus, theme.fg_focus)
+
+-- Main menu
+theme.awesome_menu_icon             = 'preferences-desktop'
+theme.menu_files_icon               = 'system-file-manager'
+theme.menu_terminal_icon            = 'utilities-terminal'
+
+-- Awesome menu
+theme.awesome_about_icon            = 'help-info'
+theme.awesome_config_icon           = 'systemsettings'
+theme.awesome_manual_icon           = 'system-help'
+theme.awesome_hotkeys_icon          = 'key_bindings'
+theme.awesome_restart_icon          = 'system-restart'
+theme.awesome_exit_icon             = 'system-log-out'
+
+-- Session menu
+theme.session_lock_icon             = 'xfce-system-lock'
+theme.session_exit_icon             = 'xfsm-logout'
+theme.session_reboot_icon           = 'xfsm-reboot'
+theme.session_suspend_icon          = 'xfsm-suspend'
+theme.session_poweroff_icon         = 'xfsm-shutdown'
 
 -- Wallpaper
-theme.wallpaper_fg = theme.bg_normal
-theme.wallpaper_bg = color_util.mix(theme.bg_focus, theme.bg_normal, 0.35)
+theme.wallpaper_fg                  = theme.bg_normal
+theme.wallpaper_bg                  = colors.mix(theme.bg_focus, theme.bg_normal, 0.35)
+theme.wallpaper_markup              = awesome.hostname
+theme.wallpaper_font                = 'Monospace 64'
+
+-- Rofi
+theme.rofi_fg                       = theme.fg_normal
+theme.rofi_bg                       = theme.bg_normal
+theme.rofi_focus                    = theme.bg_focus
+theme.rofi_width                    = theme.menu_width*2
+theme.rofi_radius                   = theme.border_radius
+theme.rofi_font                     = theme.font
 
 return theme

@@ -1,18 +1,12 @@
--- Awesome
 local awful = require('awful')
 
--- Custom
-local mod = _G.cfg.modkey
-local cfg_vars = _G.cfg.vars or nil
-
--- Local
-local vars = {}
-vars.prompt_text = cfg_vars.topbar_prompt_text or 'Run: '
+local mod = require('config.modkeys')
+local vars = require('config.vars')
 
 -- Prompt widget
-local _M = function(s)
+local topbar_prompt = function(s)
     s = s or screen.focused()
-    s.prompt = awful.widget.prompt({prompt=vars.prompt_text})
+    s.prompt = awful.widget.prompt({prompt=vars.topbar_prompt_text})
 
     return s.prompt
 end
@@ -38,4 +32,4 @@ awful.keyboard.append_global_keybindings({
         {description = 'Eval Lua', group = 'awesome'}),
 })
 
-return _M
+return topbar_prompt
