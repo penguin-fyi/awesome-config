@@ -2,10 +2,9 @@ local theme = require('beautiful')
 local lookup_icon = require('menubar.utils').lookup_icon
 local naughty = require('naughty')
 
-local vars = require('config.vars')
 local paths = require('config.paths')
 
--- Notification settings
+-- Settings
 naughty.config.defaults.ontop           = true
 naughty.config.defaults.icon_size       = theme.notification_icon_size
 naughty.config.defaults.timeout         = 10
@@ -18,8 +17,6 @@ naughty.config.padding                  = theme.notification_padding
 naughty.config.icon_dirs                = paths.icon_search_dirs
 naughty.config.icon_formats             = { 'svg', 'png' }
 
-
---- Notifications
 -- Application icon requested
 naughty.connect_signal('request::icon', function(n, context, hints)
     n.icon = lookup_icon('help-info') or nil
@@ -32,7 +29,7 @@ naughty.connect_signal('request::icon', function(n, context, hints)
     end
 end)
 
--- Notification action icon requested
+-- Action icon requested
 naughty.connect_signal('request::action_icon', function(a, context, hints)
     a.icon = theme.awesome_icon or nil
     if context ~= 'action_icon' then return end
