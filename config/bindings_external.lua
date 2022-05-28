@@ -1,7 +1,16 @@
 local awful = require('awful')
 local spawn = awful.spawn
+local join = require('gears.table').join
 
-local mod = require('config.modkeys')
+local default_modkeys = {
+    super = 'Mod4',
+    ctrl = 'Control',
+    shift = 'Shift',
+    alt = 'Mod1',
+}
+local user_mod = require('config.modkeys')
+local mod = join(default_modkeys, user_mod)
+
 
 spawn.easy_async_with_shell('command -v rofi', function(path)
     if not path then return end

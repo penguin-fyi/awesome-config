@@ -1,10 +1,16 @@
 local awful = require('awful')
 local theme = require('beautiful')
 local dpi = theme.xresources.apply_dpi
+local join = require('gears.table').join
 local wibox = require('wibox')
 
 local container = require('widgets.buttons').taglist
-local mod = require('config.modkeys')
+
+local default_modkeys = {
+    super = 'Mod4',
+}
+local user_mod = require('config.modkeys')
+local mod = join(default_modkeys, user_mod)
 
 local topbar_taglist = function(s)
     s = s or screen.focused()

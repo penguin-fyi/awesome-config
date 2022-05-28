@@ -1,6 +1,11 @@
 local theme = require('beautiful')
+local join = require('gears.table').join
 
-local paths = require('config.paths')
+local default_paths = {
+    rofi_theme_file = os.getenv('XDG_CONFIG_HOME')..'/rofi/themes/awesome.rasi'
+}
+local user_paths = require('config.paths')
+local paths = join(default_paths, user_paths)
 
 local theme_vars = {
     fg     = theme.rofi_fg,

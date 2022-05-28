@@ -1,7 +1,7 @@
-local apps = require('config.defaults').apps
+local apps = {} --require('config.defaults').apps
 
 apps.terminal = 'kitty'
-apps.editor = 'xed'
+apps.editor = 'xdg-open'
 apps.files = 'pcmanfm'
 
 return apps

@@ -1,4 +1,4 @@
-local modkeys = require('config.defaults').modkeys
+local modkeys = {}
 
 --modkeys.super    = 'Mod4'
 --modkeys.ctrl     = 'Control'

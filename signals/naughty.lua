@@ -1,8 +1,16 @@
 local theme = require('beautiful')
-local lookup_icon = require('menubar.utils').lookup_icon
+local join = require('gears.table').join
+local lookup_icon = require('utils.icon_finder').lookup
 local naughty = require('naughty')
 
-local paths = require('config.paths')
+local default_paths = {
+        icon_search_dirs = {
+        '/usr/share/icons/gnome/',
+        '/usr/share/pixmaps/',
+    }
+}
+local user_paths = require('config.paths')
+local paths = join(default_paths, user_paths)
 
 -- Settings
 naughty.config.defaults.ontop           = true

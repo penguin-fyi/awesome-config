@@ -2,13 +2,25 @@ local awful = require('awful')
 local spawn = awful.spawn
 local theme = require('beautiful')
 local dpi = theme.xresources.apply_dpi
+local join = require('gears.table').join
 local wibox = require('wibox')
 
 local button = require('widgets.buttons').gtk
 local menu_position = require('utils.common').menus.get_position
 
-local mod = require('config.modkeys')
-local vars = require('config.vars')
+local default_modkeys = {
+    super = 'Mod4',
+    ctrl = 'Control',
+}
+local user_mod = require('config.modkeys')
+local mod = join(default_modkeys, user_mod)
+
+local default_vars = {
+    session_timeout = 10,
+    session_timeout_run = false,
+}
+local user_vars = require('config.vars')
+local vars = join(default_vars, user_vars)
 
 _G.session_action = {
     cmd     = nil,

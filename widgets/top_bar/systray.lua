@@ -2,12 +2,24 @@ local awful = require('awful')
 local theme = require('beautiful')
 local dpi = require('beautiful.xresources').apply_dpi
 local gears = require('gears')
+local join = require('gears.table').join
 local timer = gears.timer
 local wibox = require('wibox')
 
 local container = require('widgets.buttons').wibar
-local mod = require('config.modkeys')
-local vars = require('config.vars')
+
+local default_modkeys = {
+    super = 'Mod4',
+    alt = 'Mod1',
+}
+local user_mod = require('config.modkeys')
+local mod = join(default_modkeys, user_mod)
+
+local default_vars = {
+    topbar_systray_autohide = false,
+}
+local user_vars = require('config.vars')
+local vars = join(default_vars, user_vars)
 
 local topbar_systray = function()
 

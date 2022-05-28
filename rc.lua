@@ -1,7 +1,7 @@
 -- awesome_mode: api-level=4:screen=on
 
--- Load LuaRocks
-pcall(require, 'luarocks.loader')
+-- Load Xsettings
+_G.xsettings = require 'utils.xsettings'
 
 -- Startup errors
 require('utils.error_handling')

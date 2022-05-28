@@ -1,7 +1,17 @@
 local awful = require('awful')
+local join = require('gears.table').join
 
-local mod = require('config.modkeys')
-local vars = require('config.vars')
+local default_modkeys = {
+    super = 'Mod4',
+}
+local user_mod = require('config.modkeys')
+local mod = join(default_modkeys, user_mod)
+
+local default_vars = {
+    topbar_prompt_text = 'Run > '
+}
+local user_vars = require('config.vars')
+local vars = join(default_vars, user_vars)
 
 -- Prompt widget
 local topbar_prompt = function(s)
@@ -23,7 +33,7 @@ awful.keyboard.append_global_keybindings({
     awful.key({ mod.super }, 'x',
         function()
             awful.prompt.run {
-                prompt       = 'Run Lua code: ',
+                prompt       = 'Eval > ',
                 textbox      = awful.screen.focused().prompt.widget,
                 exe_callback = awful.util.eval,
                 history_path = awful.util.get_cache_dir() .. '/history_eval'

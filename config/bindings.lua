@@ -1,13 +1,32 @@
 local awful = require('awful')
 local hotkeys_popup = require('awful.hotkeys_popup')
 require('awful.hotkeys_popup.keys')
+local join = require('gears.table').join
 
 local menu_position = require('utils.common').menus.get_position
 local tag_edit = require('utils.tag_editor')
 
-local mod = require('config.modkeys')
-local vars = require('config.vars')
-local apps = require('config.apps')
+local default_modkeys = {
+    super = 'Mod4',
+    ctrl = 'Control',
+    shift = 'Shift',
+    alt = 'Mod1',
+}
+local user_mod = require('config.modkeys')
+local mod = join(default_modkeys, user_mod)
+
+local default_vars = {
+    mouse_snap_edge = true,
+    mouse_snap_client = true,
+}
+local user_vars = require('config.vars')
+local vars = join(default_vars, user_vars)
+
+local default_apps = {
+    terminal = 'xterm',
+}
+local user_apps = require('config.apps')
+local apps = join(default_apps, user_apps)
 
 --- Mouse options
 awful.mouse.snap.edge_enabled = vars.mouse_snap_edge

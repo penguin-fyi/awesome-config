@@ -53,7 +53,7 @@ theme.menubar_fg                    = theme.gtk.menubar_fg_color
 theme.menubar_bg                    = theme.gtk.menubar_bg_color
 
 -- Icon theme
-theme.icon_theme                    = 'Antsy'
+theme.icon_theme                    = _G.xsettings['Net/IconThemeName']
 
 -- Fonts
 theme.font                          = theme.gtk.font_family..' '..theme.gtk.font_size
@@ -107,6 +107,9 @@ theme.border_color_active           = theme.gtk.wm_border_focused_color
 theme.border_color_marked           = theme.gtk.warning_color
 theme.border_width                  = dpi(theme.gtk.button_border_width or 0)
 theme.border_radius                 = dpi(theme.gtk.button_border_radius or 0)
+
+-- Wibar
+theme.wibar_height                  = dpi(24)
 
 -- Titlebar
 theme.titlebar_fg_normal            = theme.menubar_fg
@@ -260,9 +263,9 @@ theme.calendar_weekday_bg_color     = theme.button_bg
 theme.calendar_weekday_border_color = theme.button_bg
 
 -- Session widget
-theme.session_button_icon            = render(icons.wibars.session_menu, theme.wibar_fg, nil, 24)
-theme.session_confirm_icon           = render(icons.session.confirm, theme.fg_normal, nil, 24)
-theme.session_cancel_icon            = render(icons.session.cancel, theme.fg_normal, nil, 24)
+theme.session_button_icon           = render(icons.wibars.session_menu, theme.wibar_fg, nil, 24)
+theme.session_confirm_icon          = render(icons.session.confirm, theme.fg_normal, nil, 24)
+theme.session_cancel_icon           = render(icons.session.cancel, theme.fg_normal, nil, 24)
 
 -- Menus
 theme.menu_button_width             = dpi(32)
@@ -321,13 +324,13 @@ theme.snap_bg                       = theme.base_bg
 theme.snap_border_width             = theme.border_width
 theme.snap_shape                    = button_shape
 
+theme.default_icon                  = 'preferences-activities'
+
 -- Awesome icon
 theme.awesome_icon                  = assets.awesome_icon(theme.menu_height, theme.bg_focus, theme.fg_focus)
 
 -- Main menu
 theme.awesome_menu_icon             = 'preferences-desktop'
-theme.menu_files_icon               = 'system-file-manager'
-theme.menu_terminal_icon            = 'utilities-terminal'
 
 -- Awesome menu
 theme.awesome_about_icon            = 'help-info'
@@ -345,10 +348,11 @@ theme.session_suspend_icon          = 'xfsm-suspend'
 theme.session_poweroff_icon         = 'xfsm-shutdown'
 
 -- Wallpaper
-theme.wallpaper_fg                  = theme.bg_normal
-theme.wallpaper_bg                  = colors.mix(theme.bg_focus, theme.bg_normal, 0.35)
-theme.wallpaper_markup              = awesome.hostname
-theme.wallpaper_font                = 'Monospace 64'
+theme.wallpaper                     = nil
+--theme.wallpaper_fg                  = theme.fg_focus
+theme.wallpaper_bg                  = colors.mix(theme.bg_focus, theme.fg_focus, 0.5)
+--theme.wallpaper_markup              = awesome.hostname
+--theme.wallpaper_font                = 'Monospace 64'
 
 -- Rofi
 theme.rofi_fg                       = theme.fg_normal

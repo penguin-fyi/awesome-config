@@ -1,11 +1,17 @@
 local awful = require('awful')
 local theme = require('beautiful')
 local dpi = theme.xresources.apply_dpi
+local join = require('gears.table').join
 local wibox = require('wibox')
 
 local container = require('widgets.buttons').wibar
 
-local vars = require('config.vars')
+local default_vars = {
+    topbar_calendar_enabled = false,
+    topbar_calendar_hover = false,
+}
+local user_vars = require('config.vars')
+local vars = join(default_vars, user_vars)
 
 local topbar_clock = function()
 
@@ -21,9 +27,9 @@ local topbar_clock = function()
                 top     = dpi(2),
                 bottom  = dpi(2),
             },
-            layout = wibox.layout.align.vertical,
+            widget = container,
         },
-        widget = container,
+        widget = wibox.container.place,
     }
 
     if vars.topbar_calendar_enabled then

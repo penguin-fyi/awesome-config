@@ -1,11 +1,20 @@
 local awful = require('awful')
 local spawn = awful.spawn
 local theme = require('beautiful')
-local lookup_icon = require('menubar.utils').lookup_icon
+local join = require('gears.table').join
+local lookup_icon = require('utils.icon_finder').lookup
 
 local click_to_hide = require('utils.click_to_hide').menu
 
-local apps = require('config.apps')
+local default_apps = {
+    lock = 'light-locker-command -l',
+    exit = 'awesome-client \'awesome.quit()\'',
+    reboot = 'systemctl reboot',
+    suspend = 'systemctl suspend',
+    poweroff = 'systemctl poweroff',
+}
+local user_apps = require('config.apps')
+local apps = join(default_apps, user_apps)
 
 theme.session_lock_icon = lookup_icon(theme.session_lock_icon)
 theme.session_exit_icon = lookup_icon(theme.session_exit_icon)
@@ -16,14 +25,14 @@ theme.session_poweroff_icon = lookup_icon(theme.session_poweroff_icon)
 local session_menu = awful.menu({
     {
         '&Lock Desktop',
-        function() spawn(apps.session_lock) end,
+        function() spawn(apps.lock) end,
         theme.session_lock_icon
     },
     {
         '&Exit Desktop',
         function()
             _G.session_action = {
-                cmd = apps.session_exit,
+                cmd = apps.exit,
                 text = 'Exit Desktop',
                 icon = theme.session_exit_icon
             }
@@ -35,7 +44,7 @@ local session_menu = awful.menu({
         '&Reboot System',
         function()
             _G.session_action = {
-                cmd = apps.session_reboot,
+                cmd = apps.reboot,
                 text = 'Reboot System',
                 icon = theme.session_reboot_icon
             }
@@ -47,7 +56,7 @@ local session_menu = awful.menu({
         '&Suspend System',
         function()
             _G.session_action = {
-                cmd = apps.session_suspend,
+                cmd = apps.suspend,
                 text = 'Suspend System',
                 icon = theme.session_suspend_icon
             }
@@ -59,7 +68,7 @@ local session_menu = awful.menu({
         '&Power Off',
         function()
             _G.session_action = {
-                cmd = apps.session_poweroff,
+                cmd = apps.poweroff,
                 text = 'Power Off',
                 icon = theme.session_poweroff_icon
             }

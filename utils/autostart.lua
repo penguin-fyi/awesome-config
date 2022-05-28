@@ -1,8 +1,16 @@
 --- XDG autostart
 -- https://wiki.archlinux.org/title/awesome#Autostart
+local join = require('gears.table').join
 local spawn = require('awful.spawn')
 
-local paths = require('config.paths')
+local default_paths = {
+    autostart_dirs = {
+        '/etc/xdg/autostart/',
+        '$XDG_CONFIG_HOME/autostart/',
+    }
+}
+local user_paths = require('config.paths')
+local paths = join(default_paths, user_paths)
 
 local function autostart(dirs)
     dirs = dirs or paths.autostart_dirs

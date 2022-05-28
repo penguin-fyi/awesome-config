@@ -6,12 +6,12 @@ local wibox = require('wibox')
 
 -- Wibar widget
 local top_wibar = function(s)
-    s = s or screen.focused()
+    --s = s or screen.focused()
 
-    return awful.wibar {
+    local wibar = awful.wibar {
         screen       = s,
         position     = 'top',
-        height       = dpi(24),
+        height       = theme.wibar_height,
         border_width = theme.border_width,
         border_color = theme.wibar_bg,
         opacity      = theme.opacity,
@@ -53,6 +53,8 @@ local top_wibar = function(s)
             margins = dpi(2),
         }
     }
+
+    return wibar
 end
 
 return top_wibar

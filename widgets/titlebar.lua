@@ -1,16 +1,33 @@
--- Awesome
 local awful = require('awful')
 local theme = require('beautiful')
 local dpi = theme.xresources.apply_dpi
+local join = require('gears.table').join
 local wibox = require('wibox')
 
-local vars = require('config.vars')
+local default_vars = {
+    titlebar_enable_tooltip = false,
+    titlebar_fallback_name = '',
 
+}
+local user_vars = require('config.vars')
+local vars = join(default_vars, user_vars)
+
+-- Common options
 awful.titlebar.enable_tooltip = vars.titlebar_enable_tooltip
 awful.titlebar.fallback_name = vars.titlebar_fallback_name
 
 local function titlebar(c)
 
+    -- Define widgets
+    local top = awful.titlebar(c, {
+        size = theme.titlebar_height or dpi(28),
+        position = 'top',
+    })
+    local left = awful.titlebar(c, {size = dpi(2), position = 'left'})
+    local right = awful.titlebar(c, {size = dpi(2), position = 'right'})
+    local bottom = awful.titlebar(c, {size = dpi(2), position = 'bottom'})
+
+    -- Mouse buttons
     local buttons = {
         awful.button({ }, 1, function()
             c:activate {context='titlebar', action='mouse_move'}
@@ -20,15 +37,11 @@ local function titlebar(c)
         end),
     }
 
-    local top = awful.titlebar(c, {
-        size = theme.titlebar_height or dpi(28),
-        position = 'top',
-    })
-
+    -- Setup widgets
     top:setup {
         {
             widget = wibox.container.background,
-            forced_height = 2,
+            forced_height = dpi(2),
         },
         {
             {
@@ -78,7 +91,6 @@ local function titlebar(c)
         layout = wibox.layout.fixed.vertical,
     }
 
-    local left = awful.titlebar(c, {size = 2, position = 'left'})
     left:setup {
         {
             widget = wibox.container.background,
@@ -87,7 +99,6 @@ local function titlebar(c)
         layout = wibox.layout.flex.horizontal,
     }
 
-    local right = awful.titlebar(c, {size = 2, position = 'right'})
     right:setup {
         {
             widget = wibox.container.background,
@@ -96,7 +107,6 @@ local function titlebar(c)
         layout = wibox.layout.flex.horizontal,
     }
 
-    local bottom = awful.titlebar(c, {size = 2, position = 'bottom'})
     bottom:setup {
         {
             widget = wibox.container.background,
