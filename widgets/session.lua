@@ -1,265 +1,186 @@
-local awful = require('awful')
-local spawn = awful.spawn
-local theme = require('beautiful')
-local dpi = theme.xresources.apply_dpi
-local join = require('gears.table').join
-local wibox = require('wibox')
+local awful     = require 'awful'
+local spawn     = awful.spawn
+local theme     = require 'beautiful'
+local dpi       = theme.xresources.apply_dpi
+local wibox     = require 'wibox'
 
-local button = require('widgets.buttons').gtk
-local menu_position = require('utils.common').menus.get_position
+local button    = require 'widgets.buttons'.gtk
 
-local default_modkeys = {
-    super = 'Mod4',
-    ctrl = 'Control',
-}
-local user_mod = require('config.modkeys')
-local mod = join(default_modkeys, user_mod)
+local defaults = {}
+defaults.timeout = 10
+defaults.timeout_run = false
+defaults.enable_backdrop = false
 
-local default_vars = {
-    session_timeout = 10,
-    session_timeout_run = false,
-}
-local user_vars = require('config.vars')
-local vars = join(default_vars, user_vars)
+local function session(s, args)
+    args = args or {}
 
-_G.session_action = {
-    cmd     = nil,
-    text    = nil,
-    icon    = nil,
-}
+    local confirm_icon      = args.confirm_icon or theme.session_confirm_icon
+    local cancel_icon       = args.cancel_icon or theme.session_cancel_icon
 
-local function session_widget(s)
-    local clock = wibox.widget {
-        widget  = wibox.widget.textclock,
-        font    = theme.font_bold,
-        align   = 'center',
-        valign  = 'center',
-    }
+    local timeout           = args.timeout or defaults.timeout
+    local timeout_run       = args.timeout_run or defaults.timeout_run
 
-    local icon = wibox.widget {
-        widget          = wibox.widget.imagebox,
-        image           = theme.awesome_icon,
-        resize          = true,
-        forced_height   = dpi(128),
-    }
-
-    local message = wibox.widget {
-        widget          = wibox.widget.textbox,
-        markup          = '',
-        font            = theme.font_bold,
-        align           = 'center',
-        valign          = 'center',
-    }
+    s.session = { widgets = {}, action = {} }
 
     local function build_button(image, callback)
 
         local widget = wibox.widget {
-            {
                 {
                     {
                         widget  = wibox.widget.imagebox,
                         image   = image,
+                        resize  = true,
+                        forced_height = dpi(24),
                     },
-                    widget      = wibox.container.margin,
-                    margins     = dpi(16),
+                    widget = wibox.container.margin,
+                    margins = 10,
                 },
-                widget          = button,
-                shape           = theme.button_shape,
-                border_color    = theme.base_bg,
-                border_width    = dpi(1),
-                forced_width    = dpi(64),
-                forced_height   = dpi(64),
-            },
-            widget  = wibox.container.margin,
-            left    = dpi(16),
-            right   = dpi(16),
+                widget = button,
         }
 
-        local container = wibox.widget {
-            widget,
-            nil,
-            layout      = wibox.layout.fixed.vertical,
-        }
-
-        container:connect_signal('button::release', function()
+        widget:connect_signal('button::release', function()
             callback()
         end)
 
-        return container
+        return widget
     end
 
-    local footer = wibox.widget {
-        widget  = wibox.widget.textbox,
-        markup  = 'Press <b>Enter</b> to <b>Continue</b> or <b>Escape</b> to <b>Cancel</b>',
-        font    = theme.font,
-        align   = 'center',
-        valign  = 'center',
-    }
-
-    local function on_confirm()
-        spawn(_G.session_action.cmd)
+    local function confirm_callback()
+        spawn(s.session.action.cmd)
         awesome.emit_signal('session::confirm:hide')
     end
 
-    local function on_cancel()
+    local function cancel_callback()
         awesome.emit_signal('session::confirm:hide')
     end
 
-    local confirm_button = build_button(theme.session_confirm_icon, on_confirm)
-    local cancel_button = build_button(theme.session_cancel_icon, on_cancel)
+    local function create_dialog(screen, style)
+        style = style or {}
 
-    local function create_dialog(screen)
+        local fg            = style.session_fg or theme.fg_normal
+        local bg            = style.session_bg or theme.bg_normal
+        local border_width  = style.session_border_width or theme.border_width
+        local border_color  = style.session_border_color or theme.border_color_active
+        local width         = style.session_width or dpi(240)
+        local height        = style.session_height or dpi(200)
+        local icon_size     = style.session_icon_size or dpi(64)
+        local font          = style.session_font or theme.font_bold
 
-        s.session_confirm = wibox {
+        s.session.widgets.confirm = wibox {
+            screen          = screen,
+            visible         = false,
+            ontop           = true,
+            fg              = fg,
+            bg              = bg,
+            width           = width,
+            height          = height,
+            border_width    = border_width,
+            border_color    = border_color,
+        }
+
+        s.session.widgets.confirm:setup {
+            {
+                {
+                    {
+                        id              = 'icon',
+                        widget          = wibox.widget.imagebox,
+                        image           = theme.awesome_icon,
+                        forced_height   = icon_size,
+                        resize          = true,
+                    },
+                    widget = wibox.container.place,
+                },
+                {
+                    {
+                        id              = 'message',
+                        widget          = wibox.widget.textbox,
+                        markup          = '',
+                        font            = font,
+                    },
+                    widget = wibox.container.place,
+                },
+                {
+                    {
+                        build_button(confirm_icon, confirm_callback),
+                        build_button(cancel_icon, cancel_callback),
+                        layout = wibox.layout.flex.horizontal,
+                        spacing = dpi(10),
+                    },
+                    widget = wibox.container.place,
+                },
+                layout = wibox.layout.fixed.vertical,
+                spacing = dpi(20),
+            },
+            widget = wibox.container.place,
+        }
+
+        awful.placement.centered(s.session.widgets.confirm)
+    end
+
+    local function create_backdrop(screen, style)
+        style = style or {}
+
+        local fg    = style.session_backdrop_fg or theme.osd_fg
+        local bg    = style.session_backdrop_bg or theme.osd_bg
+
+        s.session.widgets.backdrop = wibox {
             screen      = screen,
             type        = 'splash',
             visible     = false,
             ontop       = true,
-            fg          = theme.osd_fg,
-            bg          = theme.osd_bg,
-            height      = s.geometry.height,
+            fg          = fg,
+            bg          = bg,
             width       = s.geometry.width,
-            x           = s.geometry.x,
-            y           = s.geometry.y,
-        }
-
-        s.session_confirm:setup {
-            {
-                layout = wibox.layout.align.horizontal,
-                expand = 'none',
-                nil,
-                {
-                    widget = wibox.container.margin,
-                    top = dpi(10),
-                    clock,
-                },
-                nil,
-            },
-            {
-                layout = wibox.layout.align.vertical,
-                {
-                    nil,
-                    {
-                        nil,
-                        icon,
-                        nil,
-                        layout = wibox.layout.align.horizontal,
-                        expand = 'none',
-                    },
-                    nil,
-                    layout = wibox.layout.align.vertical,
-                    expand = 'none',
-                },
-                {
-                    nil,
-                    {
-                        message,
-                        widget      = wibox.container.margin,
-                        margins     = dpi(24),
-                    },
-                    nil,
-                    layout  = wibox.layout.align.horizontal,
-                    expand  = 'none',
-                },
-                {
-                    nil,
-                    {
-                        {
-                            confirm_button,
-                            cancel_button,
-                            layout  = wibox.layout.fixed.horizontal,
-                        },
-                        widget  = wibox.container.margin,
-                        margins = dpi(24),
-                    },
-                    nil,
-                    layout  = wibox.layout.align.horizontal,
-                    expand  = 'none',
-                }
-            },
-            {
-                nil,
-                {
-                    footer,
-                    widget  = wibox.container.margin,
-                    bottom  = dpi(10),
-                },
-                nil,
-                layout  = wibox.layout.align.horizontal,
-                expand  = 'none',
-            },
-            layout  = wibox.layout.align.vertical,
-            expand  = 'none',
-        }
-    end
-
-    local function create_backdrop(screen)
-        s.session_backdrop = wibox {
-            screen      = screen,
-            type        = 'splash',
-            visible     = false,
-            ontop       = true,
-            fg          = theme.osd_fg,
-            bg          = theme.osd_bg,
             height      = s.geometry.height,
-            width       = s.geometry.width,
             x           = s.geometry.x,
             y           = s.geometry.y,
         }
     end
 
-    create_dialog(s)
-    create_backdrop(s)
+    create_dialog(s, args)
+    create_backdrop(s, args)
 
-    local screen_grabber = awful.keygrabber {
+    local keygrabber = awful.keygrabber {
         auto_start = true,
         stop_event = 'release',
         keypressed_callback = function(_, _, key, _)
             if key == 'Return' then
-                on_confirm()
+                confirm_callback()
             elseif key == 'Escape' then
-                on_cancel()
+                cancel_callback()
             end
         end,
-        timeout = vars.session_timeout or 10,
+        timeout = timeout or 10,
         timeout_callback = function()
-            if vars.session_timeout_run then
-                on_confirm()
+            if timeout_run then
+                confirm_callback()
             else
-                on_cancel()
+                cancel_callback()
             end
         end,
     }
 
     awesome.connect_signal('session::confirm:show', function()
-        message:set_text(_G.session_action.text)
-        icon:set_image(_G.session_action.icon)
+        local icon = s.session.action.icon
+        local message = tostring(s.session.action.message)
+        s.session.widgets.confirm:get_children_by_id('icon')[1]:set_image(icon)
+        s.session.widgets.confirm:get_children_by_id('message')[1]:set_markup(message)
 
-        s.session_backdrop.visible = true
-        s.session_confirm.visible = false
+        s.session.widgets.backdrop.visible = true
+        s.session.widgets.confirm.visible = false
 
-        awful.screen.focused().session_confirm.visible = true
-        awful.screen.focused().session_backdrop.visible = false
+        awful.screen.focused().session.widgets.backdrop.visible = true
+        awful.screen.focused().session.widgets.confirm.visible = true
 
-        screen_grabber:start()
+        keygrabber:start()
     end)
 
     awesome.connect_signal('session::confirm:hide', function()
-        s.session_backdrop.visible = false
-        s.session_confirm.visible = false
+        s.session.widgets.backdrop.visible = false
+        s.session.widgets.confirm.visible = false
 
-        screen_grabber:stop()
-
-        _G.session_action = {}
+        keygrabber:stop()
     end)
-
-    awful.keyboard.append_global_keybindings({
-        awful.key({ mod.super, mod.ctrl }, 'q',
-            function() _G.menus.session:show({coords=menu_position('tr')}) end,
-            {description = 'show session menu', group = 'awesome'}
-        ),
-    })
-
 end
 
-return session_widget
+return session

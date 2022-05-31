@@ -1,4 +1,4 @@
-local apps = {} --require('config.defaults').apps
+local apps = {}
 
 apps.terminal = 'kitty'
 apps.editor = 'xdg-open'

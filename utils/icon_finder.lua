@@ -24,6 +24,18 @@ local all_icon_sizes = {
     '16x16'
 }
 
+local icon_lookup_categories = {
+    'actions',
+    'apps',
+    'categories',
+    'devices',
+    'emblems',
+    'emotes',
+    'mimetypes',
+    'places',
+    'status',
+}
+
 local supported_icon_exts = { png = 1, xpm = 2, svg = 3 }
 
 local icon_lookup_path = nil
@@ -78,18 +90,12 @@ local function get_icon_lookup_path()
     local app_in_theme_paths = {}
     for _, icon_theme_directory in ipairs(icon_theme_paths) do
         for _, size in ipairs(all_icon_sizes) do
-            table.insert(app_in_theme_paths,
-                         glib.build_filenamev({ icon_theme_directory,
-                                                size, 'apps' }))
-            table.insert(app_in_theme_paths,
-                         glib.build_filenamev({ icon_theme_directory,
-                                                size, 'categories' }))
-            table.insert(app_in_theme_paths,
-                         glib.build_filenamev({ icon_theme_directory,
-                                                size, 'devices' }))
-            table.insert(app_in_theme_paths,
-                         glib.build_filenamev({ icon_theme_directory,
-                                                size, 'places' }))
+
+            for _, category in ipairs(icon_lookup_categories) do
+                table.insert(app_in_theme_paths,
+                             glib.build_filenamev({ icon_theme_directory,
+                                                    size, category }))
+            end
         end
     end
     add_if_readable(icon_lookup_path, app_in_theme_paths)
@@ -129,6 +135,7 @@ function icon_finder.lookup_uncached(icon)
 end
 
 local icon_cache = {}
+
 function icon_finder.lookup(icon)
     if not icon_cache[icon] and icon_cache[icon] ~= false then
         icon_cache[icon] = icon_finder.lookup_uncached(icon)

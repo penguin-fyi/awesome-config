@@ -1,34 +1,29 @@
-local awful = require('awful')
-local theme = require('beautiful')
+local awful = require 'awful'
+local theme = require 'beautiful'
 local dpi = theme.xresources.apply_dpi
-local join = require('gears.table').join
-local wibox = require('wibox')
+local wibox = require 'wibox'
 
-local default_vars = {
-    titlebar_enable_tooltip = false,
-    titlebar_fallback_name = '',
-
+local defaults = {
+    height = 20,
+    enable_tooltip = false,
+    fallback_name = '',
 }
-local user_vars = require('config.vars')
-local vars = join(default_vars, user_vars)
 
--- Common options
-awful.titlebar.enable_tooltip = vars.titlebar_enable_tooltip
-awful.titlebar.fallback_name = vars.titlebar_fallback_name
+local function titlebar(c, args)
+    args = args or {}
+    local height = args.height or defaults.height
+    local enable_tooltip = args.enable_tooltip or defaults.enable_tooltip
+    local fallback_name = args.fallback_name or defaults.fallback_name
 
-local function titlebar(c)
+    awful.titlebar.enable_tooltip = enable_tooltip
+    awful.titlebar.fallback_name = fallback_name
 
-    -- Define widgets
-    local top = awful.titlebar(c, {
-        size = theme.titlebar_height or dpi(28),
-        position = 'top',
-    })
+    local top = awful.titlebar(c, {size = dpi(height), position = 'top'})
     local left = awful.titlebar(c, {size = dpi(2), position = 'left'})
     local right = awful.titlebar(c, {size = dpi(2), position = 'right'})
     local bottom = awful.titlebar(c, {size = dpi(2), position = 'bottom'})
 
-    -- Mouse buttons
-    local buttons = {
+    local mouse_buttons = {
         awful.button({ }, 1, function()
             c:activate {context='titlebar', action='mouse_move'}
         end),
@@ -37,17 +32,17 @@ local function titlebar(c)
         end),
     }
 
-    -- Setup widgets
     top:setup {
         {
+            id = 'titlebar_top',
             widget = wibox.container.background,
             forced_height = dpi(2),
         },
         {
             {
                 {
-                    awful.titlebar.widget.stickybutton   (c),
-                    awful.titlebar.widget.ontopbutton    (c),
+                    awful.titlebar.widget.stickybutton(c),
+                    awful.titlebar.widget.ontopbutton(c),
                     layout  = wibox.layout.fixed.horizontal,
                     spacing = dpi(2),
                 },
@@ -56,30 +51,23 @@ local function titlebar(c)
             },
             {
                 {
-                    nil,
                     {
-                        {
-                            awful.titlebar.widget.iconwidget(c),
-                            widget = wibox.container.margin,
-                            margins = dpi(1),
-                        },
+                        awful.titlebar.widget.iconwidget(c),
                         awful.titlebar.widget.titlewidget(c),
                         layout  = wibox.layout.fixed.horizontal,
                         spacing = dpi(4),
                     },
-                    nil,
-                    layout  = wibox.layout.align.horizontal,
-                    expand = 'outside',
-                    buttons = buttons,
+                    widget = wibox.container.place,
+                    buttons = mouse_buttons,
                 },
                 widget = wibox.container.margin,
                 margins = dpi(1),
             },
             {
                 {
-                    awful.titlebar.widget.minimizebutton (c),
+                    awful.titlebar.widget.minimizebutton(c),
                     awful.titlebar.widget.maximizedbutton(c),
-                    awful.titlebar.widget.closebutton    (c),
+                    awful.titlebar.widget.closebutton(c),
                     layout = wibox.layout.fixed.horizontal,
                     spacing = dpi(2),
                 },
@@ -93,24 +81,27 @@ local function titlebar(c)
 
     left:setup {
         {
+            id = 'titlebar_left',
             widget = wibox.container.background,
-            buttons = buttons,
+            buttons = mouse_buttons,
         },
         layout = wibox.layout.flex.horizontal,
     }
 
     right:setup {
         {
+            id = 'titlebar_right',
             widget = wibox.container.background,
-            buttons = buttons,
+            buttons = mouse_buttons,
         },
         layout = wibox.layout.flex.horizontal,
     }
 
     bottom:setup {
         {
+            id = 'titlebar_bottom',
             widget = wibox.container.background,
-            buttons = buttons,
+            buttons = mouse_buttons,
         },
         layout = wibox.layout.flex.vertical,
     }

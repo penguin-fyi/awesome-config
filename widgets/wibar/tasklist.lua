@@ -1,3 +1,4 @@
+-- Tasklist
 local awful = require('awful')
 local theme = require('beautiful')
 local dpi = theme.xresources.apply_dpi
@@ -5,14 +6,20 @@ local wibox = require('wibox')
 
 local container = require('widgets.buttons').tasklist
 
-local topbar_tasklist = function(s)
-    s = s or screen.focused()
+local defaults = {}
+defaults.task_width = 200
+defaults.menu_width = 160
 
-    local buttons = {
+local function tasklist(s, args)
+    args = args or {}
+    local task_width = args.task_width or theme.tasklist_button_width or defaults.task_width
+    local menu_width = args.menu_width or theme.tasklist_menu_width or defaults.menu_width
+
+    local mouse_buttons = {
         awful.button({ }, 1, function (c)
             c:activate { context = 'tasklist', action = 'toggle_minimization' }
         end),
-        awful.button({ }, 3, function() awful.menu.client_list { theme = { width = theme.tasklist_menu_width } } end),
+        awful.button({ }, 3, function() awful.menu.client_list { theme = { width = menu_width } } end),
         awful.button({ }, 4, function() awful.client.focus.byidx(-1) end),
         awful.button({ }, 5, function() awful.client.focus.byidx( 1) end),
     }
@@ -60,16 +67,21 @@ local topbar_tasklist = function(s)
             layout = wibox.layout.align.vertical,
         },
         widget = container,
-        forced_width = theme.tasklist_button_width,
+        forced_width = dpi(task_width),
     }
 
-    return awful.widget.tasklist {
-        screen  = s,
-        filter  = awful.widget.tasklist.filter.currenttags,
-        layout  = layout,
-        buttons = buttons,
-        widget_template = template,
+    local widget = wibox.widget {
+        awful.widget.tasklist {
+            screen  = s,
+            filter  = awful.widget.tasklist.filter.currenttags,
+            layout  = layout,
+            buttons = mouse_buttons,
+            widget_template = template,
+        },
+        widget = wibox.container.place,
     }
+
+    return widget
 end
 
-return topbar_tasklist
+return tasklist

@@ -30,16 +30,28 @@ vars.tag_default_layouts = {
 vars.screen_tags_auto = 4
 
 --vars.client_focus_sloppy = false
-vars.client_focus_sloppy = true
---vars.client_focus_raise = false
+--vars.client_focus_raise = true
+
+--vars.titlebar_height = 20
+--vars.titlebar_enable_tooltip = false
+--vars.titlebar_fallback_name = ''
 
 --vars.session_timeout = 10
 --vars.session_timeout_run = false
 
---vars.topbar_calendar_enabled = false
-vars.topbar_calendar_enabled = true
---vars.topbar_calendar_hover = false
---vars.topbar_prompt_text = 'Run: '
---vars.topbar_systray_autohide = false
+--vars.wibar_clock_format = ' %a %b %d, %H:%M '
+--vars.wibar_clock_interval = 30
+--vars.wibar_calendar_enabled = false
+--vars.wibar_calendar_hover = false
+--vars.wibar_calendar_position = 'tr'
+--vars.wibar_prompt_text = 'Run: '
+--vars.wibar_launcher_position = 'tl'
+--vars.wibar_session_icon = nil
+--vars.wibar_session_width = 24
+--vars.wibar_session_position = 'tr'
+vars.wibar_calendar_enabled = true
+
+--vars.mouse_snap_edge = true
+--vars.mouse_snap_client = true
 
 return vars

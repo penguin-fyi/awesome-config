@@ -50,9 +50,9 @@ local awesome_menu = {
     {
         '&Exit Desktop',
         function()
-            _G.session_action = {
+            awful.screen.focused().session.action = {
                 cmd = apps.exit,
-                text = 'Exit Desktop',
+                message = 'Exit Desktop',
                 icon = theme.awesome_exit_icon
             }
             awesome.emit_signal('session::confirm:show')

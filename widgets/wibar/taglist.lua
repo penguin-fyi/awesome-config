@@ -1,21 +1,17 @@
+-- Taglist
 local awful = require('awful')
 local theme = require('beautiful')
 local dpi = theme.xresources.apply_dpi
-local join = require('gears.table').join
 local wibox = require('wibox')
 
 local container = require('widgets.buttons').taglist
 
-local default_modkeys = {
-    super = 'Mod4',
-}
-local user_mod = require('config.modkeys')
-local mod = join(default_modkeys, user_mod)
+local mod = require 'config.modkeys'
 
-local topbar_taglist = function(s)
-    s = s or screen.focused()
+local function taglist(s, args)
+    args = args or {}
 
-    local buttons = {
+    local mouse_buttons = {
         awful.button({ }, 1, function(t) t:view_only() end),
         awful.button({ mod.super }, 1, function(t)
             if client.focus then
@@ -80,18 +76,21 @@ local topbar_taglist = function(s)
         layout = wibox.layout.align.vertical,
     }
 
-    local taglist_widget = wibox.widget {
-        awful.widget.taglist {
-            screen  = s,
-            filter  = awful.widget.taglist.filter.all,
-            layout = layout,
-            buttons = buttons,
-            widget_template = template,
+    local widget = wibox.widget {
+        {
+            awful.widget.taglist {
+                screen  = s,
+                filter  = awful.widget.taglist.filter.all,
+                layout = layout,
+                buttons = mouse_buttons,
+                widget_template = template,
+            },
+            widget = container,
         },
-        widget = container,
+        widget = wibox.container.place,
     }
 
-    return taglist_widget
+    return widget
 end
 
-return topbar_taglist
+return taglist

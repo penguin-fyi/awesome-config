@@ -31,9 +31,9 @@ local session_menu = awful.menu({
     {
         '&Exit Desktop',
         function()
-            _G.session_action = {
+            awful.screen.focused().session.action = {
                 cmd = apps.exit,
-                text = 'Exit Desktop',
+                message = 'Exit Desktop',
                 icon = theme.session_exit_icon
             }
             awesome.emit_signal('session::confirm:show')
@@ -43,9 +43,9 @@ local session_menu = awful.menu({
     {
         '&Reboot System',
         function()
-            _G.session_action = {
+            awful.screen.focused().session.action = {
                 cmd = apps.reboot,
-                text = 'Reboot System',
+                message = 'Reboot System',
                 icon = theme.session_reboot_icon
             }
             awesome.emit_signal('session::confirm:show')
@@ -55,9 +55,9 @@ local session_menu = awful.menu({
     {
         '&Suspend System',
         function()
-            _G.session_action = {
+            awful.screen.focused().session.action = {
                 cmd = apps.suspend,
-                text = 'Suspend System',
+                message = 'Suspend System',
                 icon = theme.session_suspend_icon
             }
             awesome.emit_signal('session::confirm:show')
@@ -67,9 +67,9 @@ local session_menu = awful.menu({
     {
         '&Power Off',
         function()
-            _G.session_action = {
+            awful.screen.focused().session.action = {
                 cmd = apps.poweroff,
-                text = 'Power Off',
+                message = 'Power Off',
                 icon = theme.session_poweroff_icon
             }
             awesome.emit_signal('session::confirm:show')

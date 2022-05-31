@@ -14,7 +14,9 @@ paths.icon_search_dirs = {
 }
 
 --paths.wallpaper = nil
+
 --paths.rofi_theme_file = os.getenv('XDG_CONFIG_HOME')..'/rofi/themes/awesome.rasi'
+
 --paths.xsd_conf = os.getenv('HOME')..'/.xsettingsd.conf'
 paths.xsd_conf = os.getenv('HOME')..'/.config/xsettingsd/xsettingsd.conf'
 
