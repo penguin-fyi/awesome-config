@@ -24,7 +24,17 @@ local all_icon_sizes = {
     '16x16'
 }
 
-local icon_lookup_categories = { 'apps', 'categories', 'devices', 'places' }
+local icon_lookup_categories = {
+    'actions',
+    'apps',
+    'categories',
+    'devices',
+    'emblems',
+    'emotes',
+    'mimetypes',
+    'places',
+    'status',
+}
 
 local supported_icon_exts = { png = 1, xpm = 2, svg = 3 }
 
@@ -125,6 +135,7 @@ function icon_finder.lookup_uncached(icon)
 end
 
 local icon_cache = {}
+
 function icon_finder.lookup(icon)
     if not icon_cache[icon] and icon_cache[icon] ~= false then
         icon_cache[icon] = icon_finder.lookup_uncached(icon)
