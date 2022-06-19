@@ -49,9 +49,11 @@ end)
 -- Wallpaper
 screen.connect_signal('request::wallpaper', function(s)
     if theme.wallpaper then
-        require('widgets.wallpapers').simple(s)
+        require('widgets.wallpaper').simple(s)
+    elseif theme.wallpaper_markup then
+        require('widgets.wallpaper').color_with_text(s)
     else
-        require('widgets.wallpapers').color(s)
+        require('widgets.wallpaper').color_with_icon(s)
     end
 end)
 

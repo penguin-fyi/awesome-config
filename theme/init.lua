@@ -349,10 +349,15 @@ theme.session_poweroff_icon         = 'xfsm-shutdown'
 
 -- Wallpaper
 theme.wallpaper                     = nil
---theme.wallpaper_fg                  = theme.fg_focus
+--theme.wallpaper                     = '/usr/share/backgrounds/archlinux/landscape.jpg'
+theme.wallpaper_fg                  = theme.fg_focus
 theme.wallpaper_bg                  = colors.mix(theme.bg_focus, theme.fg_focus, 0.5)
 --theme.wallpaper_markup              = awesome.hostname
 --theme.wallpaper_font                = 'Monospace 64'
+--theme.wallpaper_icon                = nil
+--theme.wallpaper_icon_size           = dpi(128)
+--theme.wallpaper_placement           = 'centered'
+--theme.wallpaper_margin              = dpi(20)
 
 -- Rofi
 theme.rofi_fg                       = theme.fg_normal
