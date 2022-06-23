@@ -41,9 +41,39 @@ screen.connect_signal('request::desktop_decoration', function(s)
     end
     awful.tag(vars.screen_tags_list, s, awful.layout.layouts[1])
 
-    -- Add widgets
+    -- Add wibar
     require('widgets.top_bar')(s)
+
+    -- Add session dialogs
     require('widgets.session')(s)
+
+    -- Add desktop icons
+    require('widgets.desktop')({
+        screen = s,
+        open_with = require('config.apps').files,
+        icons = {
+            [1] = {
+                label = 'Computer',
+                icon  = 'computer',
+                onclick = 'computer://'
+            },
+            [2] = {
+                label = 'Network',
+                icon  = 'folder-network',
+                onclick = 'network:///',
+            },
+            [3] = {
+                label = 'Home',
+                icon  = 'user-home',
+                onclick = os.getenv('HOME')
+            },
+            [4] = {
+                label = 'Trash',
+                icon  = 'user-trash',
+                onclick = 'trash://'
+            }
+        },
+    })
 end)
 
 -- Wallpaper
