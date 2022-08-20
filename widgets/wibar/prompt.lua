@@ -2,18 +2,16 @@
 local awful = require 'awful'
 local wibox = require 'wibox'
 
-local defaults = {}
-defaults.text = 'Run > '
-
 local prompt = function(s, args)
-    args = args or {}
-    local text = args.prompt_text or defaults.text
 
-    s.prompt = awful.widget.prompt({prompt=text})
+    args = args or {}
+    args.prompt_text = args.prompt_text or 'Run > '
+
+    s.prompt = awful.widget.prompt({prompt=args.prompt_text})
 
     local widget = wibox.widget {
-        s.prompt,
         widget = wibox.container.place,
+        s.prompt,
     }
 
     return widget

@@ -11,19 +11,13 @@ local tag_edit = require 'utils.tag_editor'
 
 local mod = require 'config.modkeys'
 
-local defaults = {
-    terminal = 'xterm',
-    focus_raise = true,
-    snap_edge = true,
-    snap_client = true,
-}
-
 local function init(args)
+
     args = args or {}
-    local terminal = args.terminal or defaults.terminal
-    local focus_raise = args.focus_raise or defaults.focus_raise
-    local snap_edge = args.snap_edge or defaults.snap_edge
-    local snap_client = args.snap_client or defaults.snap_client
+    args.terminal = args.terminal or 'xterm'
+    if args.focus_raise == nil then args.focus_raise = true end
+    if args.snap_edge == nil then args.snap_edge = true end
+    if args.snap_client == nil then args.snap_client = true end
 
     local global_keys = {
         ---- Global: core
@@ -50,7 +44,7 @@ local function init(args)
         -- Launch terminal
         key({ mod.super }, 'Return',
             function()
-                spawn(terminal)
+                spawn(args.terminal)
             end,
             {description = 'open a terminal', group = 'launcher'}),
 
@@ -85,7 +79,7 @@ local function init(args)
         key({ mod.super }, 'Left',
             function()
                 awful.client.focus.bydirection('left')
-                if client.focus and focus_raise then
+                if client.focus and args.focus_raise then
                     client.focus:raise()
                 end
             end,
@@ -95,7 +89,7 @@ local function init(args)
         key({ mod.super }, 'Down',
             function()
                 awful.client.focus.bydirection('down')
-                if client.focus and focus_raise then
+                if client.focus and args.focus_raise then
                     client.focus:raise()
                 end
             end,
@@ -105,7 +99,7 @@ local function init(args)
         key({ mod.super }, 'Up',
             function()
                 awful.client.focus.bydirection('up')
-                if client.focus and focus_raise then
+                if client.focus and args.focus_raise then
                     client.focus:raise()
                 end
             end,
@@ -115,7 +109,7 @@ local function init(args)
         key({ mod.super }, 'Right',
             function()
                 awful.client.focus.bydirection('right')
-                if client.focus and focus_raise then
+                if client.focus and args.focus_raise then
                     client.focus:raise()
                 end
             end,
@@ -453,8 +447,8 @@ local function init(args)
 
     client.connect_signal('request::default_mousebindings', function()
         --- Mouse options
-        mouse.snap.edge_enabled = snap_edge
-        mouse.snap.client_enabled = snap_client
+        mouse.snap.edge_enabled   = args.snap_edge
+        mouse.snap.client_enabled = args.snap_client
 
         mouse.append_client_mousebindings(client_buttons)
     end)

@@ -4,6 +4,7 @@ local keyboard  = awful.keyboard
 local spawn     = awful.spawn
 
 local mod       = require 'config.modkeys'
+local get_theme = require 'utils.theme_rofi'
 
 local function init()
 
@@ -11,7 +12,7 @@ local function init()
     spawn.easy_async_with_shell('command -v rofi', function(path)
         if not path then return end
 
-        require('utils.theme_rofi')()
+        get_theme()
 
         local cmd = { exe = 'rofi' }
         cmd.run = cmd.exe..' -show run'

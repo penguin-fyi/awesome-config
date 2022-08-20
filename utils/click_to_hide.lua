@@ -1,7 +1,7 @@
 -- Hide popup (or menu) on any click outside
 -- https://bitbucket.org/grumph/home_config/src/master/.config/awesome/helpers/click_to_hide.lua
-local awful = require('awful')
-local wibox = require('wibox')
+local awful = require 'awful'
+local wibox = require 'wibox'
 
 local click_to_hide = {}
 

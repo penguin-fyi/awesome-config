@@ -1,10 +1,9 @@
 -- Taken from libs/menubar/utils
-
-local theme = require('beautiful')
-local gfs = require('gears.filesystem')
-local lgi = require('lgi')
-local glib = lgi.GLib
-local unpack = table.unpack
+local beautiful = require 'beautiful'
+local gfs       = require 'gears.filesystem'
+local lgi       = require 'lgi'
+local glib      = lgi.GLib
+local unpack    = table.unpack
 
 local icon_finder = {}
 
@@ -72,7 +71,7 @@ local function get_icon_lookup_path()
 
     icon_lookup_path = {}
     local theme_priority = { 'hicolor' }
-    if theme.icon_theme then table.insert(theme_priority, 1, theme.icon_theme) end
+    if beautiful.icon_theme then table.insert(theme_priority, 1, beautiful.icon_theme) end
 
     local paths = add_with_dir({}, glib.get_home_dir(), '.icons')
     add_with_dir(paths, {

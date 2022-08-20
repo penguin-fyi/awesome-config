@@ -1,63 +1,67 @@
-local awful = require('awful')
-local hotkeys_popup = require('awful.hotkeys_popup')
-local spawn = awful.spawn
-local theme = require('beautiful')
-local join = require('gears.table').join
-local lookup_icon = require('utils.icon_finder').lookup
+local awful     = require 'awful'
+local hotkeys   = require 'awful.hotkeys_popup'
+local beautiful = require 'beautiful'
+local spawn     = awful.spawn
 
-local default_apps = {
-    config = 'xdg-open '..awesome.conffile,
-    manual = 'xterm -e man awesome',
-    restart = 'awesome-client \'awesome.restart()\'',
-    exit = 'awesome-client \'awesome.quit()\'',
-}
-local user_apps = require('config.apps')
-local apps = join(default_apps, user_apps)
+local about_dlg = require 'widgets.about'
+local find_icon = require 'utils.icon_finder'.lookup
 
-theme.awesome_about_icon = lookup_icon(theme.awesome_about_icon)
-theme.awesome_config_icon = lookup_icon(theme.awesome_config_icon)
-theme.awesome_manual_icon = lookup_icon(theme.awesome_manual_icon)
-theme.awesome_hotkeys_icon = lookup_icon(theme.awesome_hotkeys_icon)
-theme.awesome_restart_icon = lookup_icon(theme.awesome_restart_icon)
-theme.awesome_exit_icon = lookup_icon(theme.awesome_exit_icon)
+local cfg = require 'config'
+
+local awesome_about_icon   = find_icon(beautiful.awesome_about_icon)
+local awesome_config_icon  = find_icon(beautiful.awesome_config_icon)
+local awesome_manual_icon  = find_icon(beautiful.awesome_manual_icon)
+local awesome_hotkeys_icon = find_icon(beautiful.awesome_hotkeys_icon)
+local awesome_restart_icon = find_icon(beautiful.awesome_restart_icon)
+local awesome_exit_icon    = find_icon(beautiful.awesome_exit_icon)
 
 local awesome_menu = {
     {
         '&About Awesome',
-        function() require('widgets.about')() end,
-        theme.awesome_about_icon
+        function()
+            about_dlg()
+        end,
+        awesome_about_icon
     },
     {
         '&Show Hotkeys',
-        function() hotkeys_popup.show_help(nil, awful.screen.focused()) end,
-        theme.awesome_hotkeys_icon
+        function()
+            hotkeys.show_help(nil, awful.screen.focused())
+        end,
+        awesome_hotkeys_icon
     },
     {
         'Read &Manual',
-        function() spawn(apps.manual) end,
-        theme.awesome_manual_icon
+        function()
+            spawn(cfg.apps.manual)
+        end,
+        awesome_manual_icon
     },
     {
         'Edit &Config',
-        function() spawn(apps.config) end,
-        theme.awesome_config_icon
+        function()
+            spawn(cfg.apps.config)
+        end,
+        awesome_config_icon
     },
     {
         '&Restart Awesome',
-        function() spawn(apps.restart) end,
-        theme.awesome_restart_icon
+        function()
+            spawn(cfg.apps.restart)
+        end,
+        awesome_restart_icon
     },
     {
         '&Exit Desktop',
         function()
             awful.screen.focused().session.action = {
-                cmd = apps.exit,
+                cmd = cfg.apps.exit,
                 message = 'Exit Desktop',
-                icon = theme.awesome_exit_icon
+                icon = awesome_exit_icon
             }
             awesome.emit_signal('session::confirm:show')
         end,
-        theme.awesome_exit_icon
+        awesome_exit_icon
     },
 }
 

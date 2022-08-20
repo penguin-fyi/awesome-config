@@ -1,8 +1,12 @@
--- Automatically show\hide titlebar depending on client\layout state
--- https://github.com/Anfid/cosy/blob/master/util.lua
-local awful = require('awful')
+local awful     = require 'awful'
+local beautiful = require 'beautiful'
 
-local function manage_titlebar(c)
+local function manage_titlebar(c, args)
+
+    args = args or {}
+    args.width  = args.width  or beautiful.titlebar_width
+    args.height = args.height or beautiful.titlebar_height
+
     local show = c.floating or awful.layout.get(c.screen) == awful.layout.suit.floating
     local geometry = c:geometry()
 
@@ -14,9 +18,9 @@ local function manage_titlebar(c)
         if c.titlebar == nil then
             c:emit_signal('request::titlebars', 'rules', {})
         end
-        awful.titlebar.show(c)
+        awful.titlebar(c, { size = args.height, position = 'top' })
     else
-        awful.titlebar.hide(c)
+        awful.titlebar(c, { size = args.width, position = 'top' })
     end
 
     if not awesome.startup then

@@ -1,8 +1,8 @@
 -- awesome-freedesktop menu
 -- https://github.com/lcpz/awesome-freedesktop/blob/master/menu.lua
-local gio        = require("lgi").Gio
-local awful_menu = require("awful.menu")
-local menu_gen   = require("menubar.menu_gen")
+local gio        = require 'lgi'.Gio
+local awful_menu = require 'awful.menu'
+local menu_gen   = require 'menubar.menu_gen'
 
 local fd_menu = {}
 

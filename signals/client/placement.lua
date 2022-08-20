@@ -1,13 +1,14 @@
 -- Client placement
+local awful     = require 'awful'
+local beautiful = require 'beautiful'
 
-local awful = require('awful')
-
-local defaults = {}
-defaults.margins = 4
+local dpi = beautiful.xresources.apply_dpi
 
 local function client_placement(args)
+
     args = args or {}
-    local margins = args.margins or defaults.margins
+    args.margins = args.margins or dpi(4)
+    if args.workarea == nil then args.workarea = true end
 
     client.connect_signal('request::manage', function(c)
         -- Default client placement
@@ -15,8 +16,8 @@ local function client_placement(args)
            not c.size_hints.program_position
         then
             awful.placement.no_overlap(c, {
-                honor_workarea = true,
-                margins = margins,
+                honor_workarea = args.workarea,
+                margins = dpi(args.margins),
             })
             awful.placement.no_offscreen(c)
         end

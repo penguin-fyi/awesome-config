@@ -1,5 +1,5 @@
-local awful = require('awful')
-local ruled = require('ruled')
+local awful = require 'awful'
+local ruled = require 'ruled'
 
 ruled.client.connect_signal('request::rules', function()
     -- Match all
@@ -17,7 +17,7 @@ ruled.client.connect_signal('request::rules', function()
     -- Titlebars
     ruled.client.append_rule {
         id         = 'titlebars',
-        rule_any   = { type = { 'normal' } },
-        properties = { titlebars_enabled = true }
+        rule_any   = { type = { 'normal', 'dialog' } },
+        properties = { titlebars_enabled = true },
     }
 end)

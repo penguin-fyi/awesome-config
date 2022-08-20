@@ -1,7 +1,7 @@
-local awful = require('awful')
-local theme = require('beautiful')
-local cairo = require('lgi').cairo
-local rsvg = require('lgi').Rsvg
+local awful = require 'awful'
+local theme = require 'beautiful'
+local cairo = require 'lgi'.cairo
+local rsvg  = require 'lgi'.Rsvg
 
 local menu_utils = {}
 

@@ -1,12 +1,14 @@
 -- Layout indicator
-local awful = require 'awful'
-local theme = require 'beautiful'
-local dpi = theme.xresources.apply_dpi
-local wibox = require 'wibox'
+local awful     = require 'awful'
+local beautiful = require 'beautiful'
+local wibox     = require 'wibox'
 
-local container = require('widgets.buttons').wibar
+local dpi = beautiful.xresources.apply_dpi
+
+local container = require 'widgets.buttons'.wibar
 
 local function layout(s, args)
+
     args = args or {}
 
     local mouse_buttons = {
@@ -17,7 +19,9 @@ local function layout(s, args)
     }
 
     local widget = wibox.widget {
+        widget = wibox.container.place,
         {
+            widget = container,
             {
                 awful.widget.layoutbox {
                     screen  = s,
@@ -25,10 +29,8 @@ local function layout(s, args)
                 },
                 widget = wibox.container.margin,
                 margins = dpi(2),
-            },
-            widget = container,
-        },
-        widget = wibox.container.place,
+            }
+        }
     }
 
     return widget

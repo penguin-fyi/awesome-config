@@ -1,20 +1,6 @@
-local theme = require('beautiful')
-local join = require('gears.table').join
+local beautiful = require 'beautiful'
 
-local default_paths = {
-    rofi_theme_file = os.getenv('XDG_CONFIG_HOME')..'/rofi/themes/awesome.rasi'
-}
-local user_paths = require('config.paths')
-local paths = join(default_paths, user_paths)
-
-local theme_vars = {
-    fg     = theme.rofi_fg,
-    bg     = theme.rofi_bg,
-    focus  = theme.rofi_focus,
-    width  = theme.rofi_width,
-    radius = theme.rofi_radius,
-    font   = theme.rofi_font,
-}
+local theme_path = os.getenv('XDG_CONFIG_HOME')..'/rofi/themes/awesome.rasi'
 
 local theme_template = [[
 * {
@@ -81,19 +67,28 @@ element-text selected {
 
 ]]
 
-local function write_theme(template, vars, output)
-    template = template or theme_template
-    vars = vars or theme_vars
-    output = output or paths.rofi_theme_file
+local function theme_rofi(args, style)
+
+    args = args or {}
+    args.path     = args.path     or theme_path
+    args.template = args.template or theme_template
+
+    style = style or {}
+    style.fg     = style.fg     or beautiful.rofi_fg
+    style.bg     = style.bg     or beautiful.rofi_bg
+    style.focus  = style.focus  or beautiful.rofi_focus
+    style.width  = style.width  or beautiful.rofi_width
+    style.radius = style.radius or beautiful.rofi_radius
+    style.font   = style.font   or beautiful.rofi_font
 
     -- sub ##KEY## for value
-    for k, v in pairs(vars) do
-        template = template:gsub('##'..string.upper(k)..'##', v)
+    for k, v in pairs(style) do
+        args.template = args.template:gsub('##'..string.upper(k)..'##', v)
     end
 
-    local file = assert(io.open(output, 'w+'))
-    file:write(template)
+    local file = assert(io.open(args.path, 'w+'))
+    file:write(args.template)
     file:close()
 end
 
-return write_theme
+return theme_rofi

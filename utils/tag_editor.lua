@@ -1,5 +1,5 @@
 -- https://github.com/lcpz/lain/blob/master/util/init.lua
-local awful = require('awful')
+local awful = require 'awful'
 
 local tag_editor = {}
 

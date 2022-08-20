@@ -1,41 +1,43 @@
 local awful     = require 'awful'
-local theme     = require 'beautiful'
-local dpi       = theme.xresources.apply_dpi
+local beautiful = require 'beautiful'
 local gears     = require 'gears'
 local wibox     = require 'wibox'
+
+local dpi = beautiful.xresources.apply_dpi
 
 local container = require 'widgets.buttons'.wibar
 
 local function systray(args)
+
     args = args or {}
-    local visible_icon = args.systray_visible_icon or theme.systray_visible_icon
-    local hidden_icon = args.systray_hidden_icon or theme.systray_hidden_icon
+    args.systray_visible_icon = args.systray_visible_icon or beautiful.systray_visible_icon
+    args.systray_hidden_icon  = args.systray_hidden_icon  or beautiful.systray_hidden_icon
 
     local widget = wibox.widget {
-        {
-            {
-                {
-                    {
-                        id = 'icon',
-                        widget = wibox.widget.imagebox,
-                        image = visible_icon,
-                        resize = true,
-                    },
-                    widget = wibox.container.place,
-                },
-                id = 'button',
-                widget = container,
-            },
-            {
-                wibox.widget.systray,
-                id = 'tray',
-                widget = wibox.container.margin,
-                left = dpi(2),
-            },
-            layout = wibox.layout.fixed.horizontal,
-            spacing = dpi(2),
-        },
         widget = wibox.container.place,
+        {
+            layout  = wibox.layout.fixed.horizontal,
+            spacing = dpi(2),
+            {
+                widget = container,
+                id     = 'button',
+                {
+                    widget = wibox.container.place,
+                    {
+                        widget = wibox.widget.imagebox,
+                        id     = 'icon',
+                        image  = args.systray_visible_icon,
+                        resize = true,
+                    }
+                }
+            },
+            {
+                widget = wibox.container.margin,
+                id     = 'tray',
+                left   = dpi(2),
+                wibox.widget.systray,
+            }
+        }
     }
 
     local button = widget:get_children_by_id('button')[1]
@@ -52,9 +54,9 @@ local function systray(args)
     awesome.connect_signal('systray_toggle', function()
         tray.visible = not tray.visible
         if tray.visible then
-            icon:set_image(visible_icon)
+            icon:set_image(args.systray_visible_icon)
         else
-            icon:set_image(hidden_icon)
+            icon:set_image(args.systray_hidden_icon)
         end
     end)
 

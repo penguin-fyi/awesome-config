@@ -1,38 +1,36 @@
 -- Wibar
-local awful = require('awful')
-local theme = require('beautiful')
-local dpi = theme.xresources.apply_dpi
-local wibox = require('wibox')
+local awful     = require 'awful'
+local beautiful = require 'beautiful'
+local wibox     = require 'wibox'
 
-local defaults = {}
-defaults.position = 'top'
-defaults.height = 24
+local dpi = beautiful.xresources.apply_dpi
 
 local function wibar(s, args)
+
     args = args or {}
-    local position = args.position or defaults.position
-    local height = args.height or defaults.height
+    args.height   = args.height   or dpi(24)
+    args.position = args.position or 'top'
 
     -- Import widgets
-    local launcher = require 'widgets.wibar.launcher' (args)
-    local taglist = require 'widgets.wibar.taglist' (s, args)
-    local layout = require 'widgets.wibar.layout' (s, args)
-    local prompt = require 'widgets.wibar.prompt' (s, args)
+    local launcher  = require 'widgets.wibar.launcher' (args)
+    local taglist   = require 'widgets.wibar.taglist' (s, args)
+    local layout    = require 'widgets.wibar.layout' (s, args)
+    local prompt    = require 'widgets.wibar.prompt' (s, args)
 
-    local tasklist = require 'widgets.wibar.tasklist' (s, args)
+    local tasklist  = require 'widgets.wibar.tasklist' (s, args)
 
-    --local keyboard = require 'widgets.wibar.keyboard' (args)
-    local systray = require 'widgets.wibar.systray' (s, args)
-    local clock = require 'widgets.wibar.clock' (args)
-    local session = require 'widgets.wibar.session' (args)
+    --local keyboard  = require 'widgets.wibar.keyboard' (args)
+    local systray   = require 'widgets.wibar.systray' (s, args)
+    local clock     = require 'widgets.wibar.clock' (args)
+    local session   = require 'widgets.wibar.session' (args)
 
     local widget = awful.wibar {
         screen       = s,
-        position     = position,
-        height       = height,
-        border_width = theme.border_width,
-        border_color = theme.wibar_bg,
-        opacity      = theme.opacity,
+        position     = args.position,
+        height       = args.height,
+        border_width = beautiful.border_width,
+        border_color = beautiful.wibar_bg,
+        opacity      = beautiful.opacity,
         widget   = {
             {
                 { -- Left side

@@ -1,68 +1,71 @@
-local awful = require('awful')
-local theme = require('beautiful')
-local dpi = theme.xresources.apply_dpi
-local wibox = require('wibox')
-local naughty = require('naughty')
+local awful     = require 'awful'
+local beautiful = require 'beautiful'
+local naughty   = require 'naughty'
+local wibox     = require 'wibox'
 
-local container = require('widgets.buttons').gtk
+local dpi = beautiful.xresources.apply_dpi
+
+local container = require 'widgets.buttons'.gtk
 
 local function notif_widget(n)
 
     local icon = wibox.widget {
+        widget          = naughty.widget.icon,
         notification    = n,
         resize_strategy = 'center',
-        widget          = naughty.widget.icon,
     }
 
     local title = wibox.widget {
+        widget          = naughty.widget.title,
         notification    = n,
         text            = n.title,
-        font            = theme.font_bold,
-        forced_height   = theme.titlebar_height,
+        font            = beautiful.font_bold,
+        forced_height   = beautiful.titlebar_height,
         ellipsize       = 'end',
-        widget          = naughty.widget.title,
     }
 
     local message = wibox.widget {
+        widget          = naughty.widget.message,
         notification    = n,
         text            = n.text,
         valign          = 'top',
         align           = 'left',
         ellipsize       = 'end',
-        widget          = naughty.widget.message,
     }
 
     local actions_template = {
+        widget = container,
         {
+            layout = wibox.layout.fixed.horizontal,
             {
-                id          = 'icon_role',
                 widget      = wibox.widget.imagebox,
+                id          = 'icon_role',
             },
             {
+                widget      = wibox.widget.textbox,
                 id          = 'text_role',
                 ellipsize   = 'end',
-                widget      = wibox.widget.textbox,
-            },
-            layout = wibox.layout.fixed.horizontal,
-        },
-        widget = container,
+            }
+        }
     }
 
     local actions = wibox.widget {
+        widget  = naughty.list.actions,
         notification    = n,
         base_layout     = wibox.widget {
             layout      = wibox.layout.fixed.vertical,
             spacing     = dpi(4),
         },
-        widget_template = actions_template,
         style   = {
             underline_normal    = false,
             underline_selected  = true,
         },
-        widget  = naughty.list.actions,
+        widget_template = actions_template,
     }
 
     local popup_template = {
+        layout = wibox.layout.fixed.horizontal,
+        fill_space = true,
         {
             {
                 {
@@ -74,51 +77,49 @@ local function notif_widget(n)
                 fill_space  = false,
             },
             widget = wibox.container.background,
-            bg = theme.notification_header_color,
+            bg = beautiful.notification_header_color,
         },
         {
+            widget = naughty.container.background,
             {
+                widget  = wibox.container.margin,
+                margins = dpi(8),
                 {
+                    layout  = wibox.layout.fixed.vertical,
+                    spacing = dpi(6),
                     {
-                        title,
-                        {
-                            message,
-                            widget = wibox.container.constraint,
-                            height = theme.notification_width / 2,
-                            strategy = 'max',
-                        },
                         layout = wibox.layout.fixed.vertical,
-                        spacing = 8,
+                        spacing = dpi(8),
                         spacing_widget = wibox.widget {
-                            color       = theme.notification_header_color,
+                            color       = beautiful.notification_header_color,
                             span_ratio  = 0.9,
                             widget      = wibox.widget.separator,
+                        },
+                        title,
+                        {
+                            widget = wibox.container.constraint,
+                            height = beautiful.notification_width/2,
+                            strategy = 'max',
+                            message,
                         },
                     },
                     {
                         widget = actions,
-                    },
-                    layout = wibox.layout.fixed.vertical,
-                    spacing = dpi(6),
-                },
-                widget = wibox.container.margin,
-                margins = dpi(8),
-            },
-            widget = naughty.container.background,
-        },
-        layout = wibox.layout.fixed.horizontal,
-        fill_space = true,
+                    }
+                }
+            }
+        }
     }
 
     naughty.layout.box {
         notification    = n,
         type            = 'notification',
-        minimum_width   = theme.notification_width / 2,
-        maximum_width   = theme.notification_width,
-        maximum_height  = theme.notification_width,
+        minimum_width   = beautiful.notification_width/2,
+        maximum_width   = beautiful.notification_width,
+        maximum_height  = beautiful.notification_width,
         placement       = function(w) awful.placement.top_right(w, {
                               honor_workarea = true,
-                              margins = theme.useless_gap*2})
+                              margins = beautiful.useless_gap*2})
                           end,
         widget_template = popup_template,
     }

@@ -1,19 +1,16 @@
 local awful = require 'awful'
 require 'awful.autofocus'
 
-local defaults = {}
-defaults.sloppy = false
-defaults.raise = true
-
 local function client_focus(args)
+
     args = args or {}
-    local sloppy = args.sloppy or defaults.sloppy
-    local raise = args.raise or defaults.raise
+    if args.sloppy == nil then args.sloppy = false end
+    if args.raise == nil then args.raise = true end
 
     -- Enable sloppy focus
-    if sloppy then
+    if args.sloppy then
         client.connect_signal('mouse::enter', function(c)
-            c:activate { context = 'mouse_enter', raise = raise }
+            c:activate { context = 'mouse_enter', raise = args.raise }
         end)
     end
 

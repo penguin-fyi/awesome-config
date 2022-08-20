@@ -2,6 +2,7 @@
 
 -- Load modules
 local beautiful         = require 'beautiful'
+local menubar           = require 'menubar'
 
 local cfg               = require 'config'
 local bindings          = require 'config.bindings'
@@ -25,12 +26,17 @@ local tag_layouts       = require 'signals.tag.layouts'
 
 local xdg_autostart     = require 'utils.autostart'
 local error_handling    = require 'utils.error_handling'
+local init_xsettings    = require 'utils.xsettings'
+
+menubar.utils.terminal = cfg.apps.terminal
 
 -- Startup errors
 error_handling()
 
 -- Import XSETTINGS before theme
-_G.xsettings            = require 'utils.xsettings'
+init_xsettings({
+    path                = cfg.paths.xsd_conf
+})
 
 -- Load theme
 local theme             = require 'themes.ngui.theme'
@@ -42,25 +48,20 @@ tag_layouts({
 })
 
 screen_tags({
+    tags_list           = cfg.vars.screen_tags_list,
     tags_auto           = cfg.vars.screen_tags_auto,
 })
-screen_wibar({
-    calendar_enabled    = cfg.vars.wibar_calendar_enabled,
-})
+screen_wibar()
 screen_desktop({
     open_with           = cfg.apps.files,
 })
-screen_wallpaper()
 screen_session()
+screen_wallpaper()
 
-client_titlebars({
-    tooltips            = cfg.vars.titlebar_enable_tooltip,
-})
+client_titlebars()
 client_placement()
 client_focus()
-client_icon({
-    default_icon        = cfg.vars.client_default_icon,
-})
+client_icon()
 
 naughty_display()
 naughty_icons({
@@ -76,7 +77,6 @@ _G.menus = {
 -- Load key and mouse bindings
 bindings({
     terminal            = cfg.apps.terminal,
-    focus_raise         = cfg.vars.client_focus_raise,
 })
 bindings_external()
 
@@ -85,5 +85,5 @@ require 'rules'
 
 -- XDG autostart
 xdg_autostart({
-    dirs                = cfg.paths.autostart_dirs
+    dirs                = cfg.paths.autostart_dirs,
 })

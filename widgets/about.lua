@@ -1,40 +1,44 @@
-local awful = require('awful')
-local theme = require('beautiful')
-local wibox = require('wibox')
+local awful     = require 'awful'
+local beautiful = require 'beautiful'
+local wibox     = require 'wibox'
 
-local function about_popup()
+local dpi = beautiful.xresources.apply_dpi
 
-    local icon_fg       = theme.bg_focus
-    local icon_bg       = theme.wibar_bg
-    local icon_size     = 48
+local function about_popup(args)
+
+    args = args or {}
+    args.icon_fg   = args.icon_fg   or beautiful.bg_focus
+    args.icon_bg   = args.icon_bg   or beautiful.wibar_bg
+    args.icon_size = args.icon_size or dpi(48)
 
     awful.spawn.easy_async('awesome -v', function(stdout, _, _, _)
         local ver_info = stdout:gsub('\n[^\n]*$', '')
         awful.popup {
+            screen                  = awful.screen.focused(),
             type                    = 'splash',
             visible                 = true,
             ontop                   = true,
             hide_on_right_click     = true,
             placement               = awful.placement.centered,
-            shape                   = theme.button_shape,
+            shape                   = beautiful.button_shape,
             widget = {
                 {
                     {
                         {
-                            image         = theme.theme_assets.awesome_icon(
-                                                icon_size, icon_fg, icon_bg
+                            image         = beautiful.theme_assets.awesome_icon(
+                                                args.icon_size, args.icon_fg, args.icon_bg
                                             ),
-                            forced_height = icon_size,
-                            forced_width  = icon_size,
-                            clip_shape    = theme.button_shape,
+                            forced_height = dpi(args.icon_size),
+                            forced_width  = dpi(args.icon_size),
+                            clip_shape    = beautiful.button_shape,
                             resize        = true,
                             widget        = wibox.widget.imagebox
                         },
                         widget = wibox.container.margin,
-                        margins = 8,
+                        margins = dpi(8),
                     },
                     widget = wibox.container.background,
-                    bg = icon_bg,
+                    bg = args.icon_bg,
                 },
                 {
                     {
@@ -42,7 +46,7 @@ local function about_popup()
                         widget = wibox.widget.textbox,
                     },
                     widget = wibox.container.margin,
-                    margins = 8,
+                    margins = dpi(8),
                 },
                 layout = wibox.layout.fixed.horizontal,
             },

@@ -1,22 +1,23 @@
-local theme = require('beautiful')
-local naughty = require('naughty')
-local lookup_icon = require('utils.icon_finder').lookup
+local theme   = require 'beautiful'
+local naughty = require 'naughty'
 
-local defaults = {}
-defaults.icon_formats = {'svg', 'png'}
-defaults.icon_dirs = {
+local lookup_icon = require 'utils.icon_finder'.lookup
+
+local default_icon_formats = {'svg', 'png'}
+local default_icon_dirs = {
     '/usr/share/icons/gnome/',
     '/usr/share/pixmaps/',
 }
 
 local function notification_icons(args)
+
     args = args or {}
-    local icon_formats = args.icon_formats or defaults.icon_formats
-    local icon_dirs = args.icon_dirs or defaults.icon_dirs
+    args.icon_formats = args.icon_formats or default_icon_formats
+    args.icon_dirs    = args.icon_dirs    or default_icon_dirs
 
     -- Notification icons
-    naughty.config.icon_formats = icon_formats
-    naughty.config.icon_dirs = icon_dirs
+    naughty.config.icon_formats = args.icon_formats
+    naughty.config.icon_dirs    = args.icon_dirs
 
     -- Application icon requested
     naughty.connect_signal('request::icon', function(n, context, hints)

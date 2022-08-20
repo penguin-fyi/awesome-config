@@ -1,8 +1,8 @@
-local theme = require('beautiful')
-local gears = require('gears')
-local wibox = require('wibox')
+local beautiful = require 'beautiful'
+local gears     = require 'gears'
+local wibox     = require 'wibox'
 
-local colors = require('utils.common').colors
+local colors = require 'utils.common'.colors
 
 local buttons = {}
 
@@ -11,12 +11,12 @@ function buttons.gtk(contents)
     local container = wibox.widget {
         contents,
         widget = wibox.container.background,
-        fg = theme.button_fg,
-        bg = theme.button_bg,
-        border_color = theme.button_border_color,
-        border_width = theme.button_border_width,
+        fg = beautiful.button_fg,
+        bg = beautiful.button_bg,
+        border_color = beautiful.button_border_color,
+        border_width = beautiful.button_border_width,
         shape = function(cr, w, h)
-            gears.shape.rounded_rect(cr, w, h, theme.border_radius)
+            gears.shape.rounded_rect(cr, w, h, beautiful.border_radius)
         end,
     }
 
@@ -27,21 +27,21 @@ function buttons.gtk(contents)
         if not cur_wibox then return end
         old_cursor, old_wibox = cur_wibox.cursor, cur_wibox
         cur_wibox.cursor = 'hand1'
-        w:set_fg(theme.button_fg_hover)
-        w:set_bg(theme.button_bg_hover)
-        w:set_shape_border_color(theme.button_border_color_hover)
+        w:set_fg(beautiful.button_fg_hover)
+        w:set_bg(beautiful.button_bg_hover)
+        w:set_shape_border_color(beautiful.button_border_color_hover)
     end)
 
     container:connect_signal('button::press', function(w)
-        w:set_fg(theme.button_fg_pressed)
-        w:set_bg(theme.button_bg_pressed)
-        w:set_shape_border_color(theme.button_border_color_pressed)
+        w:set_fg(beautiful.button_fg_pressed)
+        w:set_bg(beautiful.button_bg_pressed)
+        w:set_shape_border_color(beautiful.button_border_color_pressed)
     end)
 
     container:connect_signal('button::release', function(w)
-        w:set_fg(theme.button_fg)
-        w:set_bg(theme.button_bg)
-        w:set_shape_border_color(theme.button_border_color)
+        w:set_fg(beautiful.button_fg)
+        w:set_bg(beautiful.button_bg)
+        w:set_shape_border_color(beautiful.button_border_color)
     end)
 
     container:connect_signal('mouse::leave', function(w)
@@ -49,9 +49,9 @@ function buttons.gtk(contents)
             old_wibox.cursor = old_cursor
             old_wibox = nil
         end
-        w:set_fg(theme.button_fg)
-        w:set_bg(theme.button_bg)
-        w:set_shape_border_color(theme.button_border_color)
+        w:set_fg(beautiful.button_fg)
+        w:set_bg(beautiful.button_bg)
+        w:set_shape_border_color(beautiful.button_border_color)
     end)
 
     return container
@@ -62,12 +62,12 @@ function buttons.gtk_hover(contents)
     local container = wibox.widget {
         contents,
         widget = wibox.container.background,
-        fg = theme.button_fg,
-        bg = theme.transparent,
-        border_color = theme.transparent,
-        border_width = theme.button_border_width,
+        fg = beautiful.button_fg,
+        bg = beautiful.transparent,
+        border_color = beautiful.transparent,
+        border_width = beautiful.button_border_width,
         shape = function(cr, w, h)
-            gears.shape.rounded_rect(cr, w, h, theme.border_radius)
+            gears.shape.rounded_rect(cr, w, h, beautiful.border_radius)
         end,
     }
 
@@ -78,21 +78,21 @@ function buttons.gtk_hover(contents)
         if not cur_wibox then return end
         old_cursor, old_wibox = cur_wibox.cursor, cur_wibox
         cur_wibox.cursor = 'hand1'
-        w:set_fg(theme.button_fg_hover)
-        w:set_bg(theme.button_bg_hover)
-        w:set_shape_border_color(theme.button_border_color_hover)
+        w:set_fg(beautiful.button_fg_hover)
+        w:set_bg(beautiful.button_bg_hover)
+        w:set_shape_border_color(beautiful.button_border_color_hover)
     end)
 
     container:connect_signal('button::press', function(w)
-        w:set_fg(theme.button_fg_pressed)
-        w:set_bg(theme.button_bg_pressed)
-        w:set_shape_border_color(theme.button_border_color_pressed)
+        w:set_fg(beautiful.button_fg_pressed)
+        w:set_bg(beautiful.button_bg_pressed)
+        w:set_shape_border_color(beautiful.button_border_color_pressed)
     end)
 
     container:connect_signal('button::release', function(w)
-        w:set_fg(theme.button_fg)
-        w:set_bg(theme.button_bg)
-        w:set_shape_border_color(theme.button_border_color)
+        w:set_fg(beautiful.button_fg)
+        w:set_bg(beautiful.button_bg)
+        w:set_shape_border_color(beautiful.button_border_color)
     end)
 
     container:connect_signal('mouse::leave', function(w)
@@ -100,9 +100,9 @@ function buttons.gtk_hover(contents)
             old_wibox.cursor = old_cursor
             old_wibox = nil
         end
-        w:set_fg(theme.button_fg)
-        w:set_bg(theme.transparent)
-        w:set_shape_border_color(theme.transparent)
+        w:set_fg(beautiful.button_fg)
+        w:set_bg(beautiful.transparent)
+        w:set_shape_border_color(beautiful.transparent)
     end)
 
     return container
@@ -113,12 +113,12 @@ function buttons.header(contents)
     local container = wibox.widget {
         contents,
         widget = wibox.container.background,
-        fg = theme.header_fg,
-        bg = theme.header_bg,
-        border_color = theme.header_border_color,
-        border_width = theme.button_border_width,
+        fg = beautiful.header_fg,
+        bg = beautiful.header_bg,
+        border_color = beautiful.header_border_color,
+        border_width = beautiful.button_border_width,
         shape = function(cr, w, h)
-            gears.shape.rounded_rect(cr, w, h, theme.border_radius)
+            gears.shape.rounded_rect(cr, w, h, beautiful.border_radius)
         end,
     }
 
@@ -129,21 +129,21 @@ function buttons.header(contents)
         if not cur_wibox then return end
         old_cursor, old_wibox = cur_wibox.cursor, cur_wibox
         cur_wibox.cursor = 'hand1'
-        w:set_fg(theme.header_fg_hover)
-        w:set_bg(theme.header_bg_hover)
-        w:set_shape_border_color(theme.header_border_color_hover)
+        w:set_fg(beautiful.header_fg_hover)
+        w:set_bg(beautiful.header_bg_hover)
+        w:set_shape_border_color(beautiful.header_border_color_hover)
     end)
 
     container:connect_signal('button::press', function(w)
-        w:set_fg(theme.header_fg_pressed)
-        w:set_bg(theme.header_bg_pressed)
-        w:set_shape_border_color(theme.header_border_color_pressed)
+        w:set_fg(beautiful.header_fg_pressed)
+        w:set_bg(beautiful.header_bg_pressed)
+        w:set_shape_border_color(beautiful.header_border_color_pressed)
     end)
 
     container:connect_signal('button::release', function(w)
-        w:set_fg(theme.header_fg)
-        w:set_bg(theme.header_bg)
-        w:set_shape_border_color(theme.header_border_color)
+        w:set_fg(beautiful.header_fg)
+        w:set_bg(beautiful.header_bg)
+        w:set_shape_border_color(beautiful.header_border_color)
     end)
 
 
@@ -152,9 +152,9 @@ function buttons.header(contents)
             old_wibox.cursor = old_cursor
             old_wibox = nil
         end
-        w:set_fg(theme.header_fg)
-        w:set_bg(theme.header_bg)
-        w:set_shape_border_color(theme.header_border_color)
+        w:set_fg(beautiful.header_fg)
+        w:set_bg(beautiful.header_bg)
+        w:set_shape_border_color(beautiful.header_border_color)
     end)
     return container
 end
@@ -164,12 +164,12 @@ function buttons.wibar(contents)
     local container = wibox.widget {
         contents,
         widget = wibox.container.background,
-        fg = theme.header_fg,
-        bg = theme.transparent,
-        border_color = theme.transparent,
-        border_width = theme.button_border_width,
+        fg = beautiful.header_fg,
+        bg = beautiful.transparent,
+        border_color = beautiful.transparent,
+        border_width = beautiful.button_border_width,
         shape = function(cr, w, h)
-            gears.shape.rounded_rect(cr, w, h, theme.border_radius)
+            gears.shape.rounded_rect(cr, w, h, beautiful.border_radius)
         end,
     }
 
@@ -180,21 +180,21 @@ function buttons.wibar(contents)
         if not cur_wibox then return end
         old_cursor, old_wibox = cur_wibox.cursor, cur_wibox
         cur_wibox.cursor = 'hand1'
-        w:set_fg(theme.header_fg_hover)
-        w:set_bg(theme.header_bg_hover)
-        w:set_shape_border_color(theme.header_border_color_hover)
+        w:set_fg(beautiful.header_fg_hover)
+        w:set_bg(beautiful.header_bg_hover)
+        w:set_shape_border_color(beautiful.header_border_color_hover)
     end)
 
     container:connect_signal('button::press', function(w)
-        w:set_fg(theme.header_fg_pressed)
-        w:set_bg(theme.header_bg_pressed)
-        w:set_shape_border_color(theme.header_border_color_pressed)
+        w:set_fg(beautiful.header_fg_pressed)
+        w:set_bg(beautiful.header_bg_pressed)
+        w:set_shape_border_color(beautiful.header_border_color_pressed)
     end)
 
     container:connect_signal('button::release', function(w)
-        w:set_fg(theme.header_fg)
-        w:set_bg(theme.transparent)
-        w:set_shape_border_color(theme.transparent)
+        w:set_fg(beautiful.header_fg)
+        w:set_bg(beautiful.transparent)
+        w:set_shape_border_color(beautiful.transparent)
     end)
 
     container:connect_signal('mouse::leave', function(w)
@@ -202,9 +202,9 @@ function buttons.wibar(contents)
             old_wibox.cursor = old_cursor
             old_wibox = nil
         end
-        w:set_fg(theme.header_fg)
-        w:set_bg(theme.transparent)
-        w:set_shape_border_color(theme.transparent)
+        w:set_fg(beautiful.header_fg)
+        w:set_bg(beautiful.transparent)
+        w:set_shape_border_color(beautiful.transparent)
     end)
 
     return container
@@ -215,12 +215,12 @@ function buttons.menu(contents)
     local container = wibox.widget {
         contents,
         widget = wibox.container.background,
-        fg = theme.header_fg,
-        bg = theme.transparent,
-        border_color = theme.transparent,
-        border_width = theme.button_border_width,
+        fg = beautiful.header_fg,
+        bg = beautiful.transparent,
+        border_color = beautiful.transparent,
+        border_width = beautiful.button_border_width,
         shape = function(cr, w, h)
-            gears.shape.rounded_rect(cr, w, h, theme.border_radius)
+            gears.shape.rounded_rect(cr, w, h, beautiful.border_radius)
         end,
     }
 
@@ -231,21 +231,21 @@ function buttons.menu(contents)
         if not cur_wibox then return end
         old_cursor, old_wibox = cur_wibox.cursor, cur_wibox
         cur_wibox.cursor = 'hand1'
-        w:set_fg(theme.header_fg_hover)
-        w:set_bg(theme.header_bg_hover)
-        w:set_shape_border_color(colors.mix(theme.bg_success, theme.base_fg, 0.8))
+        w:set_fg(beautiful.header_fg_hover)
+        w:set_bg(beautiful.header_bg_hover)
+        w:set_shape_border_color(colors.mix(beautiful.bg_success, beautiful.base_fg, 0.8))
     end)
 
     container:connect_signal('button::press', function(w)
-        w:set_fg(theme.header_fg_pressed)
-        w:set_bg(theme.header_bg_pressed)
-        w:set_shape_border_color(theme.header_border_color_pressed)
+        w:set_fg(beautiful.header_fg_pressed)
+        w:set_bg(beautiful.header_bg_pressed)
+        w:set_shape_border_color(beautiful.header_border_color_pressed)
     end)
 
     container:connect_signal('button::release', function(w)
-        w:set_fg(theme.header_fg)
-        w:set_bg(theme.transparent)
-        w:set_shape_border_color(theme.transparent)
+        w:set_fg(beautiful.header_fg)
+        w:set_bg(beautiful.transparent)
+        w:set_shape_border_color(beautiful.transparent)
     end)
 
     container:connect_signal('mouse::leave', function(w)
@@ -253,9 +253,9 @@ function buttons.menu(contents)
             old_wibox.cursor = old_cursor
             old_wibox = nil
         end
-        w:set_fg(theme.header_fg)
-        w:set_bg(theme.transparent)
-        w:set_shape_border_color(theme.transparent)
+        w:set_fg(beautiful.header_fg)
+        w:set_bg(beautiful.transparent)
+        w:set_shape_border_color(beautiful.transparent)
     end)
 
     return container
@@ -266,12 +266,12 @@ function buttons.tasklist(contents)
     local container = wibox.widget {
         contents,
         widget = wibox.container.background,
-        fg = theme.header_fg,
-        bg = theme.header_bg,
-        border_color = theme.header_border_color,
-        border_width = theme.button_border_width,
+        fg = beautiful.header_fg,
+        bg = beautiful.header_bg,
+        border_color = beautiful.header_border_color,
+        border_width = beautiful.button_border_width,
         shape = function(cr, w, h)
-            gears.shape.rounded_rect(cr, w, h, theme.border_radius)
+            gears.shape.rounded_rect(cr, w, h, beautiful.border_radius)
         end,
     }
 
@@ -282,19 +282,19 @@ function buttons.tasklist(contents)
         if not cur_wibox then return end
         old_cursor, old_wibox = cur_wibox.cursor, cur_wibox
         cur_wibox.cursor = 'hand1'
-        w:set_shape_border_color(theme.button_border_color_hover)
+        w:set_shape_border_color(beautiful.button_border_color_hover)
     end)
 
     container:connect_signal('button::press', function(w)
-        w:set_fg(theme.header_fg_pressed)
-        w:set_bg(theme.header_bg_pressed)
-        w:set_shape_border_color(theme.header_border_color_pressed)
+        w:set_fg(beautiful.header_fg_pressed)
+        w:set_bg(beautiful.header_bg_pressed)
+        w:set_shape_border_color(beautiful.header_border_color_pressed)
     end)
 
     container:connect_signal('button::release', function(w)
-        w:set_fg(theme.header_fg)
-        w:set_bg(theme.header_bg)
-        w:set_shape_border_color(theme.header_border_color)
+        w:set_fg(beautiful.header_fg)
+        w:set_bg(beautiful.header_bg)
+        w:set_shape_border_color(beautiful.header_border_color)
     end)
 
     container:connect_signal('mouse::leave', function(w)
@@ -302,9 +302,9 @@ function buttons.tasklist(contents)
             old_wibox.cursor = old_cursor
             old_wibox = nil
         end
-        w:set_fg(theme.header_fg)
-        w:set_bg(theme.header_bg)
-        w:set_shape_border_color(theme.header_border_color)
+        w:set_fg(beautiful.header_fg)
+        w:set_bg(beautiful.header_bg)
+        w:set_shape_border_color(beautiful.header_border_color)
     end)
 
     return container
@@ -315,10 +315,10 @@ function buttons.taglist(contents)
     local container = wibox.widget {
         contents,
         widget = wibox.container.background,
-        bg = theme.header_bg,
-        border_color = theme.header_border_color,
-        border_width = theme.button_border_width,
-        shape = theme.taglist_shape,
+        bg = beautiful.header_bg,
+        border_color = beautiful.header_border_color,
+        border_width = beautiful.button_border_width,
+        shape = beautiful.taglist_shape,
     }
 
     local old_cursor, old_wibox
@@ -328,7 +328,7 @@ function buttons.taglist(contents)
         if not cur_wibox then return end
         old_cursor, old_wibox = cur_wibox.cursor, cur_wibox
         cur_wibox.cursor = 'hand1'
-        w:set_shape_border_color(theme.button_border_color_hover)
+        w:set_shape_border_color(beautiful.button_border_color_hover)
     end)
 
     container:connect_signal('mouse::leave', function(w)
@@ -336,7 +336,7 @@ function buttons.taglist(contents)
             old_wibox.cursor = old_cursor
             old_wibox = nil
         end
-        w:set_shape_border_color(theme.button_border_color)
+        w:set_shape_border_color(beautiful.button_border_color)
     end)
 
     return container

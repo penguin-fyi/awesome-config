@@ -1,10 +1,4 @@
-local join = require('gears.table').join
-
-local default_paths = {
-    xsd_conf = os.getenv('HOME')..'/.xsettingsd.conf'
-}
-local user_paths = require('config.paths')
-local paths = join(default_paths, user_paths)
+local default_conf = os.getenv('HOME')..'/.xsettingsd.conf'
 
 local valid_keys = {
     'Net/DoubleClickTime',
@@ -70,4 +64,11 @@ local function parse_conf(file)
     return l_arr
 end
 
-return parse_conf(paths.xsd_conf)
+local function init_xsettings(args)
+    args = args or {}
+
+    local path = args.path or default_conf
+    _G.xsettings = parse_conf(path)
+end
+
+return init_xsettings

@@ -1,4 +1,4 @@
-local naughty = require('naughty')
+local naughty = require 'naughty'
 
 local function error_handling()
     naughty.connect_signal('request::display_error', function(message, startup)

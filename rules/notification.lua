@@ -1,6 +1,6 @@
-local awful = require('awful')
-local theme = require('beautiful')
-local ruled = require('ruled')
+local awful = require 'awful'
+local theme = require 'beautiful'
+local ruled = require 'ruled'
 
 ruled.notification.connect_signal('request::rules', function()
     -- Match all

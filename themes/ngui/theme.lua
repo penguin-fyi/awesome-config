@@ -1,18 +1,19 @@
-local gtk           = require('beautiful.gtk')
-local assets        = require('beautiful.theme_assets')
-local dpi           = require('beautiful.xresources').apply_dpi
-local gears         = require('gears')
-local gfs           = gears.filesystem
-local themes_path   = gfs.get_themes_dir()
-local debug         = gears.debug
-local shape         = gears.shape
+local beautiful = require 'beautiful'
+local gears     = require 'gears'
 
-local icons         = require('themes.ngui.icons')
-local render        = require('utils.common').svg.new_from_str
-local colors        = require('utils.common').colors
+local gtk       = beautiful.gtk
+local assets    = beautiful.theme_assets
+local dpi       = beautiful.xresources.apply_dpi
+local debug     = gears.debug
+local theme_dir = gears.filesystem.get_themes_dir()
+local shape     = gears.shape
+
+local icons     = require 'themes.ngui.icons'
+local render    = require 'utils.common'.svg.new_from_str
+local colors    = require 'utils.common'.colors
 
 -- Load default theme
-local theme = dofile(themes_path..'default/theme.lua')
+local theme = dofile(theme_dir..'default/theme.lua')
 
 -- Load GTK variables
 theme.gtk = gtk.get_theme_variables()
@@ -121,8 +122,9 @@ theme.titlebar_font_focus           = theme.font_bold
 theme.titlebar_fg_urgent            = theme.fg_success
 theme.titlebar_bg_urgent            = theme.menubar_bg
 theme.titlebar_font_urgent          = theme.font_bold
+theme.titlebar_width                = dpi(2)
 theme.titlebar_height               = dpi(20)
-theme.titlebar_shape                = button_shape
+theme.titlebar_radius               = dpi(3)
 -- Ontop button
 theme.titlebar_ontop_button_focus_active                = render(icons.titlebar.ontop_alt, theme.wibar_fg)
 theme.titlebar_ontop_button_focus_active_hover          = render(icons.titlebar.ontop_alt, theme.bg_warning)
@@ -176,7 +178,7 @@ theme.titlebar_close_button_focus_hover                 = render(icons.titlebar.
 theme.titlebar_close_button_focus_press                 = render(icons.titlebar.close_alt, theme.bg_focus)
 
 -- Launcher widget
-theme.menu_button_icon              = render(icons.wibars.main_menu, theme.wibar_fg, nil, 24)
+theme.menu_button_icon              = render(icons.wibars.main_menu, theme.wibar_fg, nil, dpi(24))
 
 -- Taglist widget
 theme.taglist_fg_empty              = theme.header_border_color
@@ -193,22 +195,22 @@ theme.taglist_squares_sel           = nil
 theme.taglist_squares_unsel         = nil
 
 -- Layout widget
-theme.layout_cornerne               = render(icons.layouts.cornerne, theme.wibar_fg, nil, 24)
-theme.layout_cornernw               = render(icons.layouts.cornernw, theme.wibar_fg, nil, 24)
-theme.layout_cornerse               = render(icons.layouts.cornerse, theme.wibar_fg, nil, 24)
-theme.layout_cornersw               = render(icons.layouts.cornersw, theme.wibar_fg, nil, 24)
-theme.layout_dwindle                = render(icons.layouts.dwindle, theme.wibar_fg, nil, 24)
-theme.layout_fairh                  = render(icons.layouts.fairh, theme.wibar_fg, nil, 24)
-theme.layout_fairv                  = render(icons.layouts.fairv, theme.wibar_fg, nil, 24)
-theme.layout_floating               = render(icons.layouts.floating, theme.wibar_fg, nil, 24)
-theme.layout_fullscreen             = render(icons.layouts.fullscreen, theme.wibar_fg, nil, 24)
-theme.layout_magnifier              = render(icons.layouts.magnifier, theme.wibar_fg, nil, 24)
-theme.layout_max                    = render(icons.layouts.max, theme.wibar_fg, nil, 24)
-theme.layout_spiral                 = render(icons.layouts.spiral, theme.wibar_fg, nil, 24)
-theme.layout_tile                   = render(icons.layouts.tile, theme.wibar_fg, nil, 24)
-theme.layout_tilebottom             = render(icons.layouts.tilebottom, theme.wibar_fg, nil, 24)
-theme.layout_tileleft               = render(icons.layouts.tileleft, theme.wibar_fg, nil, 24)
-theme.layout_tiletop                = render(icons.layouts.tiletop, theme.wibar_fg, nil, 24)
+theme.layout_cornerne               = render(icons.layouts.cornerne, theme.wibar_fg, nil, dpi(24))
+theme.layout_cornernw               = render(icons.layouts.cornernw, theme.wibar_fg, nil, dpi(24))
+theme.layout_cornerse               = render(icons.layouts.cornerse, theme.wibar_fg, nil, dpi(24))
+theme.layout_cornersw               = render(icons.layouts.cornersw, theme.wibar_fg, nil, dpi(24))
+theme.layout_dwindle                = render(icons.layouts.dwindle, theme.wibar_fg, nil, dpi(24))
+theme.layout_fairh                  = render(icons.layouts.fairh, theme.wibar_fg, nil, dpi(24))
+theme.layout_fairv                  = render(icons.layouts.fairv, theme.wibar_fg, nil, dpi(24))
+theme.layout_floating               = render(icons.layouts.floating, theme.wibar_fg, nil, dpi(24))
+theme.layout_fullscreen             = render(icons.layouts.fullscreen, theme.wibar_fg, nil, dpi(24))
+theme.layout_magnifier              = render(icons.layouts.magnifier, theme.wibar_fg, nil, dpi(24))
+theme.layout_max                    = render(icons.layouts.max, theme.wibar_fg, nil, dpi(24))
+theme.layout_spiral                 = render(icons.layouts.spiral, theme.wibar_fg, nil, dpi(24))
+theme.layout_tile                   = render(icons.layouts.tile, theme.wibar_fg, nil, dpi(24))
+theme.layout_tilebottom             = render(icons.layouts.tilebottom, theme.wibar_fg, nil, dpi(24))
+theme.layout_tileleft               = render(icons.layouts.tileleft, theme.wibar_fg, nil, dpi(24))
+theme.layout_tiletop                = render(icons.layouts.tiletop, theme.wibar_fg, nil, dpi(24))
 
 -- Tasklist widget
 theme.tasklist_fg_normal            = theme.header_fg
@@ -234,11 +236,11 @@ theme.tasklist_menu_width           = dpi(160)
 -- Systray widget
 theme.bg_systray                    = theme.wibar_bg
 theme.systray_icon_spacing          = dpi(2)
-theme.systray_visible_icon          = render(icons.wibars.systray_visible, theme.menubar_fg, nil, 24)
-theme.systray_hidden_icon           = render(icons.wibars.systray_hidden, theme.menubar_fg, nil, 24)
+theme.systray_visible_icon          = render(icons.wibars.systray_visible, theme.menubar_fg, nil, dpi(24))
+theme.systray_hidden_icon           = render(icons.wibars.systray_hidden, theme.menubar_fg, nil, dpi(24))
 
 -- Keyboard layout widget
-theme.keyboard_layout_icon          = render(icons.wibars.keyboard_layout, theme.wibar_fg, nil, 24)
+theme.keyboard_layout_icon          = render(icons.wibars.keyboard_layout, theme.wibar_fg, nil, dpi(24))
 
 -- Clock widget
 theme.calendar_style                = {
@@ -265,10 +267,10 @@ theme.calendar_start_sunday         = true
 theme.calendar_long_weekdays        = true
 
 -- Session widget
-theme.session_button_icon           = render(icons.wibars.session_menu, theme.wibar_fg, nil, 24)
+theme.session_button_icon           = render(icons.wibars.session_menu, theme.wibar_fg, nil, dpi(24))
 theme.session_button_width          = theme.menu_height
-theme.session_confirm_icon          = render(icons.session.confirm, theme.fg_normal, nil, 24)
-theme.session_cancel_icon           = render(icons.session.cancel, theme.fg_normal, nil, 24)
+theme.session_confirm_icon          = render(icons.session.confirm, theme.fg_normal, nil, dpi(24))
+theme.session_cancel_icon           = render(icons.session.cancel, theme.fg_normal, nil, dpi(24))
 
 -- Menus
 theme.menu_button_width             = dpi(32)
@@ -279,8 +281,8 @@ theme.menu_border_width             = theme.button_border_width
 theme.menu_border_color             = colors.mix(theme.menubar_fg, theme.menubar_bg, 0.15)
 theme.menu_width                    = dpi(160)
 theme.menu_height                   = dpi(24)
-theme.menu_submenu                  = render(icons.menus.submenu, theme.wibar_fg, nil, 24)
-theme.menu_submenu_icon             = render(icons.menus.submenu, theme.wibar_fg, nil, 24)
+theme.menu_submenu                  = render(icons.menus.submenu, theme.wibar_fg, nil, dpi(24))
+theme.menu_submenu_icon             = render(icons.menus.submenu, theme.wibar_fg, nil, dpi(24))
 
 -- Hotkeys popup
 theme.hotkeys_fg                    = theme.fg_normal
@@ -349,16 +351,11 @@ theme.session_poweroff_icon         = 'xfsm-shutdown'
 theme.session_reboot_icon           = 'xfsm-reboot'
 theme.session_suspend_icon          = 'xfsm-suspend'
 
--- Wallpaper
-theme.wallpaper                     = nil
-theme.wallpaper_fg                  = theme.fg_focus
-theme.wallpaper_bg                  = colors.mix(theme.bg_focus, theme.fg_focus, 0.5)
-
 -- Rofi
 theme.rofi_fg                       = theme.fg_normal
 theme.rofi_bg                       = theme.bg_normal
 theme.rofi_focus                    = theme.bg_focus
-theme.rofi_width                    = theme.menu_width * dpi(2)
+theme.rofi_width                    = theme.menu_width*dpi(2)
 theme.rofi_radius                   = theme.border_radius
 theme.rofi_font                     = theme.font
 

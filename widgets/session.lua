@@ -1,41 +1,38 @@
 local awful     = require 'awful'
 local spawn     = awful.spawn
-local theme     = require 'beautiful'
-local dpi       = theme.xresources.apply_dpi
+local beautiful = require 'beautiful'
 local wibox     = require 'wibox'
+
+local dpi       = beautiful.xresources.apply_dpi
 
 local button    = require 'widgets.buttons'.gtk
 
-local defaults = {}
-defaults.timeout = 10
-defaults.timeout_run = false
-defaults.enable_backdrop = false
-
 local function session(s, args)
+
     args = args or {}
+    args.timeout = args.timeout     or 10
+    if args.timeout_run == nil then args.timeout_run = false end
+    if args.backdrop == nil then args.backdrop = true end
 
-    local confirm_icon      = args.confirm_icon or theme.session_confirm_icon
-    local cancel_icon       = args.cancel_icon or theme.session_cancel_icon
-
-    local timeout           = args.timeout or defaults.timeout
-    local timeout_run       = args.timeout_run or defaults.timeout_run
+    args.confirm_icon = args.confirm_icon or beautiful.session_confirm_icon
+    args.cancel_icon  = args.cancel_icon  or beautiful.session_cancel_icon
 
     s.session = { widgets = {}, action = {} }
 
     local function build_button(image, callback)
 
         local widget = wibox.widget {
+                widget = button,
                 {
+                    widget = wibox.container.margin,
+                    margins = dpi(10),
                     {
                         widget  = wibox.widget.imagebox,
                         image   = image,
                         resize  = true,
                         forced_height = dpi(24),
-                    },
-                    widget = wibox.container.margin,
-                    margins = 10,
-                },
-                widget = button,
+                    }
+                }
         }
 
         widget:connect_signal('button::release', function()
@@ -55,27 +52,27 @@ local function session(s, args)
     end
 
     local function create_dialog(screen, style)
-        style = style or {}
 
-        local fg            = style.session_fg or theme.fg_normal
-        local bg            = style.session_bg or theme.bg_normal
-        local border_width  = style.session_border_width or theme.border_width
-        local border_color  = style.session_border_color or theme.border_color_active
-        local width         = style.session_width or dpi(240)
-        local height        = style.session_height or dpi(200)
-        local icon_size     = style.session_icon_size or dpi(64)
-        local font          = style.session_font or theme.font_bold
+        style = style or {}
+        style.fg            = style.fg or beautiful.fg_normal
+        style.bg            = style.bg or beautiful.bg_normal
+        style.border_width  = style.border_width or beautiful.border_width
+        style.border_color  = style.border_color or beautiful.border_color_active
+        style.width         = style.width or dpi(240)
+        style.height        = style.height or dpi(200)
+        style.icon_size     = style.icon_size or dpi(64)
+        style.font          = style.font or beautiful.font_bold
 
         s.session.widgets.confirm = wibox {
             screen          = screen,
             visible         = false,
             ontop           = true,
-            fg              = fg,
-            bg              = bg,
-            width           = width,
-            height          = height,
-            border_width    = border_width,
-            border_color    = border_color,
+            fg              = style.fg,
+            bg              = style.bg,
+            width           = style.width,
+            height          = style.height,
+            border_width    = style.border_width,
+            border_color    = style.border_color,
         }
 
         s.session.widgets.confirm:setup {
@@ -84,8 +81,8 @@ local function session(s, args)
                     {
                         id              = 'icon',
                         widget          = wibox.widget.imagebox,
-                        image           = theme.awesome_icon,
-                        forced_height   = icon_size,
+                        image           = beautiful.awesome_icon,
+                        forced_height   = style.icon_size,
                         resize          = true,
                     },
                     widget = wibox.container.place,
@@ -95,14 +92,14 @@ local function session(s, args)
                         id              = 'message',
                         widget          = wibox.widget.textbox,
                         markup          = '',
-                        font            = font,
+                        font            = style.font,
                     },
                     widget = wibox.container.place,
                 },
                 {
                     {
-                        build_button(confirm_icon, confirm_callback),
-                        build_button(cancel_icon, cancel_callback),
+                        build_button(args.confirm_icon, confirm_callback),
+                        build_button(args.cancel_icon, cancel_callback),
                         layout = wibox.layout.flex.horizontal,
                         spacing = dpi(10),
                     },
@@ -118,18 +115,18 @@ local function session(s, args)
     end
 
     local function create_backdrop(screen, style)
-        style = style or {}
 
-        local fg    = style.session_backdrop_fg or theme.osd_fg
-        local bg    = style.session_backdrop_bg or theme.osd_bg
+        style = style or {}
+        style.backdrop_fg = style.backdrop_fg or beautiful.osd_fg
+        style.backdrop_bg = style.backdrop_bg or beautiful.osd_bg
 
         s.session.widgets.backdrop = wibox {
             screen      = screen,
             type        = 'splash',
             visible     = false,
             ontop       = true,
-            fg          = fg,
-            bg          = bg,
+            fg          = style.backdrop_fg,
+            bg          = style.backdrop_bg,
             width       = s.geometry.width,
             height      = s.geometry.height,
             x           = s.geometry.x,
@@ -138,7 +135,9 @@ local function session(s, args)
     end
 
     create_dialog(s, args)
-    create_backdrop(s, args)
+    if args.backdrop then
+        create_backdrop(s, args)
+    end
 
     local keygrabber = awful.keygrabber {
         auto_start = true,
@@ -150,9 +149,9 @@ local function session(s, args)
                 cancel_callback()
             end
         end,
-        timeout = timeout or 10,
+        timeout = args.timeout or 10,
         timeout_callback = function()
-            if timeout_run then
+            if args.timeout_run then
                 confirm_callback()
             else
                 cancel_callback()
