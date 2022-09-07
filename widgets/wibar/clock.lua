@@ -18,20 +18,25 @@ local function clock(args)
 
     local textclock = wibox.widget.textclock(args.clock_format, args.clock_interval)
 
+    local tooltip = awful.tooltip {
+        text = 'Toggle calendar',
+        align = 'bottom',
+        delay_show = 1,
+    }
+
     local widget = wibox.widget {
         {
             {
                 textclock,
-                widget = wibox.container.margin,
-                left   = dpi(4),
-                right  = dpi(4),
-                top    = dpi(2),
-                bottom = dpi(2),
+                widget  = wibox.container.margin,
+                margins = dpi(2),
             },
             widget = container,
         },
         widget = wibox.container.place,
     }
+
+    tooltip:add_to_object(widget)
 
     if args.cal_enable then
         local calendar = require 'awful.widget.calendar_popup'.month()

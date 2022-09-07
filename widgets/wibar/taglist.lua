@@ -12,6 +12,7 @@ local mod = require 'config.modkeys'
 local function taglist(s, args)
 
     args = args or {}
+    if args.taglist_tooltip == nil then args.taglist_tooltip = false end
 
     local mouse_buttons = {
         awful.button({ }, 1, function(t) t:view_only() end),
@@ -78,7 +79,21 @@ local function taglist(s, args)
         }
     }
 
-    local widget = wibox.widget {
+    if args.taglist_tooltip then
+        local tooltip = awful.tooltip {
+            delay_show = 1,
+            align = 'bottom',
+        }
+
+        function template:create_callback(t, _, _)
+            tooltip:add_to_object(self)
+            self:connect_signal("mouse::enter", function()
+                tooltip.text = 'Tag '..t.index or 'Unknown'
+            end)
+        end
+    end
+
+    return wibox.widget {
         widget = wibox.container.place,
         {
             widget = container,
@@ -91,8 +106,6 @@ local function taglist(s, args)
             }
         }
     }
-
-    return widget
 end
 
 return taglist

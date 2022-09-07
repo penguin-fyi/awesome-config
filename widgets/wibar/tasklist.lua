@@ -12,12 +12,18 @@ local function tasklist(s, args)
     args = args or {}
     args.task_width = args.task_width or beautiful.tasklist_button_width or dpi(200)
     args.menu_width = args.menu_width or beautiful.tasklist_menu_width   or dpi(160)
+    if args.tasklist_tooltip == nil then args.tasklist_tooltip = false end
 
     local mouse_buttons = {
         awful.button({ }, 1, function (c)
             c:activate { context = 'tasklist', action = 'toggle_minimization' }
         end),
-        awful.button({ }, 3, function() awful.menu.client_list { theme = { width = args.menu_width } } end),
+        awful.button({ }, 2, function(c)
+            c:kill()
+        end),
+        awful.button({ }, 3, function()
+            awful.menu.client_list { theme = { width = args.menu_width } }
+        end),
         awful.button({ }, 4, function() awful.client.focus.byidx(-1) end),
         awful.button({ }, 5, function() awful.client.focus.byidx( 1) end),
     }
@@ -68,7 +74,21 @@ local function tasklist(s, args)
         }
     }
 
-    local widget = wibox.widget {
+    if args.tasklist_tooltip then
+        local tooltip = awful.tooltip {
+            delay_show = 1,
+            align = 'bottom',
+        }
+
+        function template:create_callback(c, _, _)
+            tooltip:add_to_object(self)
+            self:connect_signal("mouse::enter", function()
+                tooltip.text = c.name or "Unknown"
+            end)
+        end
+    end
+
+    return wibox.widget {
         widget = wibox.container.place,
         awful.widget.tasklist {
             screen  = s,
@@ -78,8 +98,6 @@ local function tasklist(s, args)
             widget_template = template,
         }
     }
-
-    return widget
 end
 
 return tasklist

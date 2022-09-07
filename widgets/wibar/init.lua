@@ -8,7 +8,7 @@ local dpi = beautiful.xresources.apply_dpi
 local function wibar(s, args)
 
     args = args or {}
-    args.height   = args.height   or dpi(24)
+    args.height   = args.height   or beautiful.wibar_height
     args.position = args.position or 'top'
 
     -- Import widgets

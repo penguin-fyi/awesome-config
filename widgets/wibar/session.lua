@@ -1,3 +1,4 @@
+-- Session menu button
 local awful     = require 'awful'
 local beautiful = require 'beautiful'
 local wibox     = require 'wibox'
@@ -13,6 +14,7 @@ local function session(args)
     args.session_icon     = args.session_icon     or beautiful.session_button_icon
     args.session_width    = args.session_width    or dpi(24)
     args.session_position = args.session_position or 'tr'
+    args.session_tooltip  = args.session_tooltip  or 'Session'
 
     local mouse_buttons = {
         awful.button({ }, 1, nil, function()
@@ -36,6 +38,15 @@ local function session(args)
             }
         }
     }
+
+    if args.session_tooltip ~= nil then
+        local tooltip = awful.tooltip {
+            text = args.session_tooltip,
+            align = 'bottom_left',
+            delay_show = 1,
+        }
+        tooltip:add_to_object(widget)
+    end
 
     return widget
 end

@@ -39,8 +39,12 @@ vars.screen_tags_auto = 4
 --vars.wibar_session_icon = nil
 --vars.wibar_session_width = 24
 --vars.wibar_session_position = 'tr'
+--vars.wibar_taglist_tooltips = false
+--vars.wibar_tasklist_tooltips = false
 vars.wibar_calendar_enabled = true
-vars.wibar_calendar_hover = false
+vars.wibar_taglist_tooltip = true
+vars.wibar_tasklist_tooltip = true
+
 
 --vars.desktop_open_with = 'xdg-open'
 --vars.desktop_font = theme.font_bold
@@ -60,10 +64,11 @@ vars.wibar_calendar_hover = false
 --vars.titlebar_height = 20
 --vars.titlebar_enable_tooltip = false
 --vars.titlebar_fallback_name = ''
-vars.titlebar_enable_tooltip = false
+vars.titlebar_enable_tooltip = true
 
-vars.client_focus_sloppy = false
-vars.client_focus_raise = true
+--vars.client_focus_sloppy = false
+--vars.client_focus_raise = true
+vars.client_focus_sloppy = true
 
 --vars.client_default_icon = theme.awesome_icon
 

@@ -51,14 +51,17 @@ screen_tags({
     tags_list           = cfg.vars.screen_tags_list,
     tags_auto           = cfg.vars.screen_tags_auto,
 })
-screen_wibar()
-screen_desktop({
-    open_with           = cfg.apps.files,
+screen_wibar({
+    taglist_tooltip     = cfg.vars.wibar_taglist_tooltip,
+    tasklist_tooltip    = cfg.vars.wibar_tasklist_tooltip,
 })
+screen_desktop()
 screen_session()
 screen_wallpaper()
 
-client_titlebars()
+client_titlebars({
+    tooltips            = cfg.vars.titlebar_enable_tooltip,
+})
 client_placement()
 client_focus()
 client_icon()
