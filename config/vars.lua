@@ -65,6 +65,7 @@ vars.wibar_tasklist_tooltip = true
 --vars.titlebar_enable_tooltip = false
 --vars.titlebar_fallback_name = ''
 vars.titlebar_enable_tooltip = true
+vars.titlebar_unfocus_fade = 0.25
 
 --vars.client_focus_sloppy = false
 --vars.client_focus_raise = true

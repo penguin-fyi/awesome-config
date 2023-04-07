@@ -61,6 +61,7 @@ screen_wallpaper()
 
 client_titlebars({
     tooltips            = cfg.vars.titlebar_enable_tooltip,
+    fade                = cfg.vars.titlebar_unfocus_fade,
 })
 client_placement()
 client_focus()
