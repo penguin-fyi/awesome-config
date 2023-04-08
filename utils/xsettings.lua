@@ -48,18 +48,20 @@ local function parse_conf(file)
     local l_arr = {}
     local fh = io.open(file, 'r');
 
-    for line in fh:lines() do
-        local words = split(line)
-        local first, rest
-        if #words >= 2 and contains(valid_keys, words[1]) then
-            first = trim(words[1])
-            table.remove(words, 1)
-            rest = trim(table.concat(words, ' '))
-            l_arr[first] = rest:gsub('%"', '')
-        end
-    end
+    if fh then
+      for line in fh:lines() do
+          local words = split(line)
+          local first, rest
+          if #words >= 2 and contains(valid_keys, words[1]) then
+              first = trim(words[1])
+              table.remove(words, 1)
+              rest = trim(table.concat(words, ' '))
+              l_arr[first] = rest:gsub('%"', '')
+          end
+      end
 
-    fh:close()
+      fh:close()
+    end
 
     return l_arr
 end

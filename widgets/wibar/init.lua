@@ -20,7 +20,7 @@ local function wibar(s, args)
     local tasklist  = require 'widgets.wibar.tasklist' (s, args)
 
     --local keyboard  = require 'widgets.wibar.keyboard' (args)
-    local systray   = require 'widgets.wibar.systray' (s, args)
+    local systray   = require 'widgets.wibar.systray' (s)
     local clock     = require 'widgets.wibar.clock' (args)
     local session   = require 'widgets.wibar.session' (args)
 
