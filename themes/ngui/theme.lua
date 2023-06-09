@@ -356,6 +356,8 @@ theme.rofi_fg                       = theme.fg_normal
 theme.rofi_bg                       = theme.bg_normal
 theme.rofi_focus                    = theme.bg_focus
 theme.rofi_width                    = theme.menu_width*dpi(2)
+theme.rofi_border                   = theme.border_width
+theme.rofi_border_color             = theme.border_color_active
 theme.rofi_radius                   = theme.border_radius
 theme.rofi_font                     = theme.font
 

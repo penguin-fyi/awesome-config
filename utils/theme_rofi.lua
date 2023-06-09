@@ -17,6 +17,8 @@ local theme_template = [[
 window {
     width: ##WIDTH##px;
     font: "##FONT##";
+    border: ##BORDER##;
+    border-color: ##BORDER_COLOR##;
     border-radius: ##RADIUS##;
 }
 
@@ -80,6 +82,8 @@ local function theme_rofi(args, style)
     style.width  = style.width  or beautiful.rofi_width
     style.radius = style.radius or beautiful.rofi_radius
     style.font   = style.font   or beautiful.rofi_font
+    style.border = style.border or beautiful.rofi_border
+    style.border_color = style.border_color or beautiful.rofi_border_color
 
     -- sub ##KEY## for value
     for k, v in pairs(style) do
