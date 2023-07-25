@@ -1,14 +1,16 @@
 local awful     = require 'awful'
 local beautiful = require 'beautiful'
+local dpi       = beautiful.xresources.apply_dpi
+local gears     = require 'gears'
+local rounded   = gears.shape.rounded_rect
 local wibox     = require 'wibox'
-
-local dpi = beautiful.xresources.apply_dpi
 
 local function titlebar(c, args)
 
     args = args or {}
-    args.width    = args.width    or beautiful.titlebar_width  or dpi(0)
-    args.height   = args.height   or beautiful.titlebar_height or dpi(24)
+    args.width    = args.width    or beautiful.titlebar_width  or dpi(2)
+    args.height   = args.height   or beautiful.titlebar_height or dpi(20)
+    args.radius   = args.radius   or beautiful.titlebar_radius or 0
     args.fade     = args.fade     or beautiful.titlebar_unfocus_fade or 1
     if args.tooltips == nil then args.tooltips = false end
 
@@ -18,7 +20,7 @@ local function titlebar(c, args)
       top    = awful.titlebar(c, { size = dpi(args.height), position = 'top'    }),
       left   = awful.titlebar(c, { size = dpi(args.width),  position = 'left'   }),
       right  = awful.titlebar(c, { size = dpi(args.width),  position = 'right'  }),
-      bottom = awful.titlebar(c, { size = dpi(args.width),  position = 'bottom' }),
+      bottom = awful.titlebar(c, { size = dpi(args.width+2),  position = 'bottom' }),
     }
 
     local buttons = {
@@ -102,6 +104,10 @@ local function titlebar(c, args)
             buttons = mouse_buttons,
         }
     }
+
+    c.shape = function(cr, w, h)
+        rounded(cr, w, h, args.radius)
+    end
 
   if args.fade < 1 then
     c:connect_signal('focus', function()
