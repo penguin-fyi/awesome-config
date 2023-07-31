@@ -5,8 +5,9 @@ local wibox     = require 'wibox'
 
 local dpi = beautiful.xresources.apply_dpi
 
-local container = require 'widgets.buttons'.menu
-local menu_position = require 'utils.common'.menus.get_position
+local button = require 'widgets.buttons'.menu
+local menu = require 'widgets.menus.session'
+local get_position = require 'utils.common'.menus.get_position
 
 local function session(args)
 
@@ -18,14 +19,14 @@ local function session(args)
 
     local mouse_buttons = {
         awful.button({ }, 1, nil, function()
-            _G.menus.session:toggle({coords=menu_position(args.session_position)})
+            menu:toggle({coords=get_position(args.session_position)})
         end)
     }
 
     local widget = wibox.widget {
         widget = wibox.container.place,
         {
-            widget  = container,
+            widget  = button,
             buttons = mouse_buttons,
             {
                 widget = awful.widget.button {

@@ -5,7 +5,8 @@ local wibox     = require 'wibox'
 
 local dpi = beautiful.xresources.apply_dpi
 
-local container = require 'widgets.buttons'.tasklist
+local button = require 'widgets.buttons'.tasklist
+local menu = require 'widgets.menus.tasklist'
 
 local function tasklist(s, args)
 
@@ -15,14 +16,14 @@ local function tasklist(s, args)
     if args.tasklist_tooltip == nil then args.tasklist_tooltip = false end
 
     local mouse_buttons = {
-        awful.button({ }, 1, function (c)
+        awful.button({ }, 1, function(c)
             c:activate { context = 'tasklist', action = 'toggle_minimization' }
         end),
         awful.button({ }, 2, function(c)
             c:kill()
         end),
-        awful.button({ }, 3, function()
-            awful.menu.client_list { theme = { width = args.menu_width } }
+        awful.button({ }, 3, function(c)
+            menu(c):show()
         end),
         awful.button({ }, 4, function() awful.client.focus.byidx(-1) end),
         awful.button({ }, 5, function() awful.client.focus.byidx( 1) end),
@@ -34,7 +35,7 @@ local function tasklist(s, args)
     }
 
     local template = {
-        widget = container,
+        widget = button,
         forced_width = dpi(args.task_width),
         {
             layout = wibox.layout.align.vertical,

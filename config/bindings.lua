@@ -6,7 +6,7 @@ local spawn         = awful.spawn
 local hotkeys_popup = require 'awful.hotkeys_popup'
 require 'awful.hotkeys_popup.keys'
 
-local menu_position = require 'utils.common'.menus.get_position
+local get_position = require 'utils.common'.menus.get_position
 local tag_edit = require 'utils.tag_editor'
 
 local mod = require 'config.modkeys'
@@ -31,8 +31,8 @@ local function init(args)
         -- Show main menu
         key({ mod.super }, 'w',
             function()
-                local pos = menu_position('tl')
-                _G.menus.main:show({coords=pos})
+                local menu = require 'widgets.menus.main'
+                menu:show({coords=get_position('tl')})
             end,
             {description = 'show main menu', group = 'awesome'}),
 
@@ -334,7 +334,8 @@ local function init(args)
         -- Show session menu
         awful.key({ mod.super, mod.ctrl }, 'q',
             function()
-                _G.menus.session:show({coords=menu_position('tr')})
+                local menu = require 'widgets.menus.session'
+                menu:show({coords=get_position('tr')})
             end,
             {description = 'show session menu', group = 'awesome'}),
     }
@@ -452,8 +453,6 @@ local function init(args)
 
         mouse.append_client_mousebindings(client_buttons)
     end)
-
-    return
 end
 
 return init

@@ -5,8 +5,9 @@ local wibox     = require 'wibox'
 
 local dpi = beautiful.xresources.apply_dpi
 
+local menu = require 'widgets.menus.main'
 local container = require 'widgets.buttons'.menu
-local menu_position = require 'utils.common'.menus.get_position
+local get_position = require 'utils.common'.menus.get_position
 
 local function launcher(args)
 
@@ -18,7 +19,7 @@ local function launcher(args)
 
     local mouse_buttons = {
         awful.button({ }, 1, nil, function()
-            _G.menus.main:toggle({coords=menu_position(args.launcher_position)})
+            menu:toggle({coords=get_position(args.launcher_position)})
         end),
     }
 

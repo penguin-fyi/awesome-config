@@ -109,9 +109,6 @@ theme.osd_fg                        = theme.gtk.osd_fg_color
 theme.osd_bg                        = theme.gtk.osd_bg_color
 theme.osd_border_color              = theme.gtk.osd_border_color
 
--- Wibar
-theme.wibar_height                  = dpi(26)
-
 -- Titlebar
 theme.titlebar_fg_normal            = theme.menubar_fg
 theme.titlebar_bg_normal            = theme.menubar_bg
@@ -177,8 +174,11 @@ theme.titlebar_close_button_focus                       = render(icons.titlebar.
 theme.titlebar_close_button_focus_hover                 = render(icons.titlebar.close_alt, theme.bg_error)
 theme.titlebar_close_button_focus_press                 = render(icons.titlebar.close_alt, theme.bg_focus)
 
+-- Wibar
+theme.wibar_height                  = dpi(26)
+
 -- Launcher widget
-theme.menu_button_icon              = render(icons.wibars.main_menu, theme.wibar_fg, nil, dpi(26))
+theme.menu_button_icon              = render(icons.wibars.main_menu, theme.wibar_fg, nil, theme.wibar_height)
 
 -- Taglist widget
 theme.taglist_fg_empty              = theme.header_border_color
@@ -221,15 +221,15 @@ theme.tasklist_fg_urgent            = theme.header_fg
 theme.tasklist_bg_urgent            = theme.bg_success
 theme.tasklist_fg_minimize          = theme.header_border_color
 theme.tasklist_bg_minimize          = theme.transparent
-theme.tasklist_sticky               = '  '
-theme.tasklist_ontop                = '  '
-theme.tasklist_above                = '  '
-theme.tasklist_below                = '  '
-theme.tasklist_floating             = '  '
-theme.tasklist_minimized            = '  '
-theme.tasklist_maximized            = '  '
-theme.tasklist_maximized_horizontal = '  '
-theme.tasklist_maximized_vertical   = '  '
+theme.tasklist_sticky               = ''
+theme.tasklist_ontop                = ''
+theme.tasklist_above                = ''
+theme.tasklist_below                = ''
+theme.tasklist_floating             = ''
+theme.tasklist_minimized            = ''
+theme.tasklist_maximized            = ''
+theme.tasklist_maximized_horizontal = ''
+theme.tasklist_maximized_vertical   = ''
 theme.tasklist_button_width         = dpi(200)
 theme.tasklist_menu_width           = dpi(160)
 
