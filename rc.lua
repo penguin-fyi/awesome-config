@@ -16,7 +16,6 @@ local client_titlebars  = require 'signals.client.titlebars'
 local naughty_display   = require 'signals.naughty.display'
 local naughty_icons     = require 'signals.naughty.icons'
 
---local screen_desktop    = require 'signals.screen.desktop'
 local screen_session    = require 'signals.screen.session'
 local screen_tags       = require 'signals.screen.tags'
 local screen_wallpaper  = require 'signals.screen.wallpaper'
@@ -55,7 +54,6 @@ screen_wibar({
     taglist_tooltip     = cfg.vars.wibar_taglist_tooltip,
     tasklist_tooltip    = cfg.vars.wibar_tasklist_tooltip,
 })
---screen_desktop()
 screen_session()
 screen_wallpaper()
 

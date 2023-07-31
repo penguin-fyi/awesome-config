@@ -46,16 +46,6 @@ vars.wibar_taglist_tooltip = true
 vars.wibar_tasklist_tooltip = true
 
 
---vars.desktop_open_with = 'xdg-open'
---vars.desktop_font = theme.font_bold
---vars.desktop_icons = {}
---vars.desktop_iconsize = 48
---vars.desktop_labelsize = 96
---vars.desktop_margin = { x = 20, y = 20 }
---vars.desktop_padding = 4
---vars.desktop_spacing = 4
---vars.desktop_spawn_opt = nil
-
 --vars.session_timeout = 10
 --vars.session_timeout_run = false
 --vars.session_confirm_icon = nil
