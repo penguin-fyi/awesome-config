@@ -70,12 +70,6 @@ naughty_icons({
     icon_dirs           = cfg.paths.icon_search_dirs,
 })
 
--- Load menus
-_G.menus = {
-    main                = require 'widgets.menus.main',
-    session             = require 'widgets.menus.session',
-}
-
 -- Load key and mouse bindings
 bindings({
     terminal            = cfg.apps.terminal,
