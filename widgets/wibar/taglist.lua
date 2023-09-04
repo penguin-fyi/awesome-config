@@ -7,7 +7,7 @@ local dpi = beautiful.xresources.apply_dpi
 
 local container = require 'widgets.buttons'.taglist
 
-local mod = require 'config.modkeys'
+local mod = require 'config.bindings'.mod_keys
 
 local function taglist(s, args)
 
@@ -88,7 +88,7 @@ local function taglist(s, args)
         function template:create_callback(t, _, _)
             tooltip:add_to_object(self)
             self:connect_signal("mouse::enter", function()
-                tooltip.text = 'Tag '..t.index or 'Unknown'
+                tooltip.text = 'Tag '..t.index
             end)
         end
     end
