@@ -6,7 +6,6 @@ local hotkeys_popup = require 'awful.hotkeys_popup'
 local position = require 'utils.common'.menus.get_position
 local tag_edit = require 'utils.tag_editor'
 
-local vars = require 'config.vars'
 local apps = require 'config.apps'
 
 local mod_keys = {
@@ -78,9 +77,9 @@ local global_keys = {
   key ({ mod.super }, 'Left',
     function ()
       awful.client.focus.bydirection ('left')
-      if client.focus and vars.focus_raise then
-        client.focus:raise ()
-      end
+      --if client.focus and vars.focus_raise then
+      --  client.focus:raise ()
+      --end
     end,
     {description = 'focus client to left', group = 'client'}),
 
@@ -88,9 +87,9 @@ local global_keys = {
   key ({ mod.super }, 'Down',
     function ()
       awful.client.focus.bydirection ('down')
-      if client.focus and vars.focus_raise then
-        client.focus:raise ()
-      end
+      --if client.focus and vars.focus_raise then
+      --  client.focus:raise ()
+      --end
     end,
     {description = 'focus client below', group = 'client'}),
 
@@ -98,19 +97,19 @@ local global_keys = {
   key ({ mod.super }, 'Up',
     function ()
       awful.client.focus.bydirection ('up')
-      if client.focus and vars.focus_raise then
-        client.focus:raise ()
-      end
+      --if client.focus and vars.focus_raise then
+      --  client.focus:raise ()
+      --end
     end,
     {description = 'focus client above', group = 'client'}),
 
   -- Focus client to right
   key ({ mod.super }, 'Right',
     function ()
-      awful.client.focus.bydirection('right')
-      if client.focus and vars.focus_raise then
-        client.focus:raise()
-      end
+      --awful.client.focus.bydirection('right')
+      --if client.focus and vars.focus_raise then
+      --  client.focus:raise()
+      --end
     end,
     {description = 'focus client to right', group = 'client'}),
 
@@ -118,9 +117,9 @@ local global_keys = {
   key ({ mod.super }, 'Tab',
     function ()
       awful.client.focus.byidx(-1)
-      if client.focus then
-        client.focus:raise()
-      end
+      --if client.focus then
+      --  client.focus:raise()
+      --end
     end,
     {description = 'focus previous client', group = 'client'}),
 
@@ -128,9 +127,9 @@ local global_keys = {
   key ({ mod.super, mod.shift }, 'Tab',
     function ()
       awful.client.focus.byidx( 1)
-      if client.focus then
-        client.focus:raise()
-      end
+      --if client.focus then
+      --  client.focus:raise()
+      --end
     end,
     {description = 'focus next client', group = 'client'}),
 

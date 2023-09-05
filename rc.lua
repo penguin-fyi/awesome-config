@@ -31,6 +31,9 @@ require 'signals.tag.layouts'({
   }
 })
 
+require 'signals.ruled.client'()
+require 'signals.ruled.notifications'()
+
 require 'signals.screen.tags'({
   tags_auto = 4,
 })
@@ -53,7 +56,6 @@ require 'signals.client.focus'({
 require 'signals.client.icon'()
 require 'signals.client.bindings'()
 
-
 require 'signals.naughty.display'()
 require 'signals.naughty.icons'({
   icon_dirs = {
@@ -69,7 +71,7 @@ keyboard.append_global_keybindings(cfg.bindings.extra_keys)
 mouse.append_global_mousebindings(cfg.bindings.global_buttons)
 
 -- Load rules
-require 'rules'
+--require 'rules'
 
 -- XDG autostart
 require 'utils.autostart'({
